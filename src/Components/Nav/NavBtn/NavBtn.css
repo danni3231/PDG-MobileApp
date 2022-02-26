@@ -12,4 +12,23 @@
     max-width: 20px;
 }
 
-    
+.nav__btn__dot{
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    background: #fff;
+}
+
+.nav__btn--active{
+   color: #7B61FF;
+}
+
+.nav__btn--active .nav__btn__img{
+    filter: invert(47%) sepia(96%) saturate(4679%) hue-rotate(234deg) brightness(105%) contrast(101%);;
+ }
+
+
+.nav__btn--active .nav__btn__dot{
+    background-color: #7B61FF;
+ }
+ 

@@ -1,6 +1,7 @@
 import * as React from "react";
 import "./Nav.css";
 import NavBtn from "./NavBtn/NavBtn";
+import { NavContext } from '../../Context/NavContext'
 
 //import {useHistory} from "react-router";
 
@@ -21,21 +22,14 @@ const Nav: React.FC<NavProps> = ({ }) => {
 
     return (
         <nav className="nav">
-            <NavBtn
-                label="Inicio"
-                img="home" />
 
-            <NavBtn
-                label="Visitas"
-                img="calendar" />
-
-            <NavBtn
-                label="Reservas"
-                img="place" />
-
-            <NavBtn
-                label="Social"
-                img="chat" />
+            {React.useContext(NavContext).map((navOption, id) => {
+                return <NavBtn
+                    key={id}
+                    label={navOption.label}
+                    img={navOption.img}
+                    url={navOption.url} />
+            })}
         </nav>
     );
 };
