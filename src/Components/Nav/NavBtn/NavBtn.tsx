@@ -31,7 +31,6 @@ const NavBtn: React.FC<NavBtnProps> = ({ label, img, url }) => {
 
         <div className={match ? "nav__btn nav__btn--active" : "nav__btn"}>
 
-
             <div className="nav__btn__dot" />
 
             <img className="nav__btn__img"

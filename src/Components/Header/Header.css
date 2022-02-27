@@ -1,0 +1,15 @@
+.header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 26px;
+}
+
+.header__burger{
+    max-width: 38px;
+}
+
+.header__profileImg{
+    max-width: 50px;
+}

@@ -1,6 +1,7 @@
 *{
   margin: 0;
   box-sizing: border-box;
+  font-family: 'Satoshi', sans-serif;
 }
 
 body {
@@ -15,5 +16,17 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+article{
+  padding:  26px;
+}
+
+/* text manage */
+
+h1{
+  text-align: left;
+  font-weight: bold;
+  font-size: 24px;
+  color: #111827;
 }
 

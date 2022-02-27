@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import './App.css';
 
 import Nav from '../Nav/Nav';
+import Home from '../Home/Home';
 
 
 function App() {
@@ -13,7 +14,7 @@ function App() {
       <Nav></Nav>
 
       <Routes>
-        <Route path="/" element={"home"} />
+        <Route path="/" element={<Home />} />
         <Route path="Visitas" element={"Visitas"} />
         <Route path="Reservas" element={"Reservas"} />
         <Route path="Social" element={"Social"} />
