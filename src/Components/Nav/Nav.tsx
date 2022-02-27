@@ -3,27 +3,16 @@ import "./Nav.css";
 import NavBtn from "./NavBtn/NavBtn";
 import { NavContext } from '../../Context/NavContext'
 
-//import {useHistory} from "react-router";
-
 interface NavProps { }
 
 const Nav: React.FC<NavProps> = ({ }) => {
-    /*
-   const history = useHistory();
 
-   const handleHomeClick: any = () => {
-      history.push("/");
-   };
-   */
-
-    const handleIconClick: any = () => {
-
-    }
+    const navOptions = React.useContext(NavContext)
 
     return (
         <nav className="nav">
 
-            {React.useContext(NavContext).map((navOption, id) => {
+            {navOptions.map((navOption, id) => {
                 return <NavBtn
                     key={id}
                     label={navOption.label}

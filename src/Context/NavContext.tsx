@@ -1,7 +1,7 @@
 import * as React from "react";
-import { NavOption } from "../Types/navOption";
+import { navOption } from "../Types/navOption";
 
-const navOptions: NavOption[] =
+const navOptions: navOption[] =
     [
         {
             label: "Inicio",

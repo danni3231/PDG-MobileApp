@@ -17,9 +17,7 @@ const NavBtn: React.FC<NavBtnProps> = ({ label, img, url }) => {
     let resolved = useResolvedPath(url);
     let match = useMatch({ path: resolved.pathname, end: true });
 
-    console.log(match)
-
-    const handleIconClick: any = () => {
+    const handleIconClick = () => {
         if (label === "Inicio") {
             navigate("/")
         } else {
@@ -29,14 +27,13 @@ const NavBtn: React.FC<NavBtnProps> = ({ label, img, url }) => {
 
     return (
 
-        <div className={match ? "nav__btn nav__btn--active" : "nav__btn"}>
+        <div onClick={handleIconClick} className={match ? "nav__btn nav__btn--active" : "nav__btn"}>
 
             <div className="nav__btn__dot" />
 
             <img className="nav__btn__img"
                 src={`${process.env.PUBLIC_URL}/Icons/${img}.svg`}
-                alt=""
-                onClick={handleIconClick} />
+                alt="" />
             <label className="nav__btn__label">
                 {label}
             </label>
