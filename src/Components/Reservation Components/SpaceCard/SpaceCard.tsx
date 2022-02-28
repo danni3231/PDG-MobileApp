@@ -18,7 +18,11 @@ const SpaceCard: React.FC<SpaceCardProps> = ({ name, img, id }) => {
 
   return (
     <section className="spaceCard" onClick={handleCardClick}>
-      <img className="spaceCard__img" src={img} alt="" />
+      <img
+        className="spaceCard__img"
+        src={`${process.env.PUBLIC_URL}${img}`}
+        alt=""
+      />
       <div className="spaceCard__content">
         <p>{name}</p>
       </div>
