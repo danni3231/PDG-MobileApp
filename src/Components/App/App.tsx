@@ -1,13 +1,16 @@
-import React from 'react';
+import * as React from "react";
 import { Route, Routes } from "react-router";
-import { BrowserRouter } from "react-router-dom";
-import './App.css';
+import "./App.css";
 
-import Nav from '../Nav/Nav';
-import Home from '../Home/Home';
-
+import Nav from "../Nav/Nav";
+import Home from "../Home/Home";
+import Reservations from "../Reservation Components/Reservations/Reservations";
+import SpaceList from "../Reservation Components/SpaceList/SpaceList";
+import { SpacesContext } from "../../Context/spacesContext";
 
 function App() {
+  const reservations: any[] = [];
+  let spaces = React.useContext(SpacesContext);
 
   return (
     <div className="App">
@@ -16,10 +19,13 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="Visitas" element={"Visitas"} />
-        <Route path="Reservas" element={"Reservas"} />
+        <Route
+          path="Reservas"
+          element={<Reservations reservations={reservations} />}
+        />
+        <Route path="Reservas/list" element={<SpaceList list={spaces} />} />
         <Route path="Social" element={"Social"} />
       </Routes>
-
     </div>
   );
 }

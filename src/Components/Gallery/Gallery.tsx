@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router';
 import { space } from '../../Types/space';
-import SpaceCard from '../Spaces/SpaceCard/SpaceCard';
+import SpaceCard from '../Reservation Components/SpaceCard/SpaceCard';
 
 import './Gallery.css';
 

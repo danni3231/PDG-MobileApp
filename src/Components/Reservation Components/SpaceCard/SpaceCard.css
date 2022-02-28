@@ -1,0 +1,30 @@
+.spaceCard {
+  width: 132px;
+  height: 185px;
+  border-radius: 26px;
+
+  overflow: hidden;
+  position: relative;
+}
+
+.spaceCard__img {
+  object-fit: contain;
+}
+
+.spaceCard__content {
+  width: 100%;
+  height: 62px;
+  background: rgba(17, 24, 39, 0.5);
+
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+
+  position: absolute;
+  bottom: 0;
+}
+
+.spaceCard__content p {
+  color: #fff !important;
+  font-weight: bold;
+}
