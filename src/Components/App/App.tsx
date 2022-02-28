@@ -23,7 +23,7 @@ function App() {
           path="Reservas"
           element={<Reservations reservations={reservations} />}
         />
-        <Route path="Reservas/list" element={<SpaceList list={spaces} />} />
+        <Route path="Reservas/list" element={<SpaceList />} />
         <Route path="Social" element={"Social"} />
       </Routes>
     </div>

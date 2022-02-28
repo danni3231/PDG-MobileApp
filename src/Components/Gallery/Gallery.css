@@ -1,30 +1,16 @@
-.gallery{
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
-.gallery__title{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.gallery__title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.gallery__btn{
-    font-size: 14px;
-    text-decoration: underline;
+.gallery__btn {
+  font-size: 14px;
+  text-decoration: underline;
 }
-
-.gallery__stripe{
-    overflow: scroll;
-}
-
-.gallery__stripe::-webkit-scrollbar {
-    display: none;
- }
-
-.gallery__stripe__row{
-    width: fit-content;
-    display: flex;
-    gap: 20px;
- }

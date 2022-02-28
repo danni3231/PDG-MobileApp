@@ -25,6 +25,29 @@ article {
   padding: 26px;
 }
 
+.scroll {
+  overflow: scroll;
+}
+
+.scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll__row {
+  width: fit-content;
+  display: flex;
+  gap: 20px;
+}
+
+.scroll__column {
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+
+  padding-bottom: 100px;
+}
+
 /* text manage */
 
 h1 {

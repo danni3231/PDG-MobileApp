@@ -7,9 +7,10 @@ interface SpaceCardProps {
   name: string;
   img: string;
   id: string;
+  big?: boolean;
 }
 
-const SpaceCard: React.FC<SpaceCardProps> = ({ name, img, id }) => {
+const SpaceCard: React.FC<SpaceCardProps> = ({ name, img, id, big }) => {
   let navigate = useNavigate();
 
   const handleCardClick = () => {
@@ -17,15 +18,26 @@ const SpaceCard: React.FC<SpaceCardProps> = ({ name, img, id }) => {
   };
 
   return (
-    <section className="spaceCard" onClick={handleCardClick}>
+    <section
+      className={big ? "spaceCard spaceCard--big" : "spaceCard"}
+      onClick={handleCardClick}
+    >
       <img
         className="spaceCard__img"
         src={`${process.env.PUBLIC_URL}${img}`}
         alt=""
       />
-      <div className="spaceCard__content">
-        <p>{name}</p>
-      </div>
+
+      {big ? (
+        <div className="spaceCard__content spaceCard__content--big">
+          <p>{name}</p>
+          <p className="spaceCard__content__smallText">ocupacion//</p>
+        </div>
+      ) : (
+        <div className="spaceCard__content">
+          <p>{name}</p>
+        </div>
+      )}
     </section>
   );
 };

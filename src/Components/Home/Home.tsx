@@ -5,12 +5,6 @@ import { space } from "../../Types/space";
 
 //firebase
 import { getSpacesCollection } from "../../Firebase/firebaseApi";
-import {
-  DocumentData,
-  QueryDocumentSnapshot,
-  QuerySnapshot,
-} from "firebase/firestore";
-import { FireObject } from "@testing-library/react";
 
 interface HomeProps {}
 
