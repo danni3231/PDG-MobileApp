@@ -35,7 +35,11 @@ const Home: React.FC<HomeProps> = ({}) => {
         ¿qué quiere hacer hoy?
       </h1>
 
-      <Gallery title="Reservar un espacio" list={spaces} url={""} />
+      <Gallery
+        title="Reservar un espacio"
+        list={spaces}
+        url={"Reservas/list"}
+      />
     </article>
   );
 };

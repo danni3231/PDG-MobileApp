@@ -1,7 +1,7 @@
 import * as React from "react";
+import { Navigate, useNavigate } from "react-router";
 import { getSpacesCollection } from "../../../Firebase/firebaseApi";
 import { space } from "../../../Types/space";
-import Gallery from "../../Gallery/Gallery";
 import SpaceCard from "../SpaceCard/SpaceCard";
 
 import "./SpaceList.css";
@@ -9,8 +9,14 @@ import "./SpaceList.css";
 interface SpaceListProps {}
 
 const SpaceList: React.FC<SpaceListProps> = () => {
+  const navigate = useNavigate();
   const [spaces, setSpaces] = React.useState<space[]>([]);
 
+  const goBack = () => () => {
+    navigate(-1);
+  };
+
+  //  firebase //
   const getSpaces = async () => {
     const snapshot = await getSpacesCollection;
 
@@ -29,6 +35,11 @@ const SpaceList: React.FC<SpaceListProps> = () => {
 
   return (
     <article className="spaceList">
+      <img
+        className="spaceList__backBtn"
+        src={`${process.env.PUBLIC_URL}/Icons/Arrow - Left Circle.svg`}
+        onClick={goBack()}
+      />
       <h1>Elige la zona que deseas reservar</h1>
 
       <div className="scroll scroll--h">

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 import "./SpaceCard.css";
 
@@ -14,7 +14,7 @@ const SpaceCard: React.FC<SpaceCardProps> = ({ name, img, id, big }) => {
   let navigate = useNavigate();
 
   const handleCardClick = () => {
-    navigate(`Reservas/form/${id}`);
+    navigate(`/Reservas/form?${id}`);
   };
 
   return (

@@ -7,6 +7,7 @@ import Home from "../Home/Home";
 import Reservations from "../Reservation Components/Reservations/Reservations";
 import SpaceList from "../Reservation Components/SpaceList/SpaceList";
 import { SpacesContext } from "../../Context/spacesContext";
+import SpaceView from "../Reservation Components/SpaceView/SpaceView";
 
 function App() {
   const reservations: any[] = [];
@@ -24,6 +25,7 @@ function App() {
           element={<Reservations reservations={reservations} />}
         />
         <Route path="Reservas/list" element={<SpaceList />} />
+        <Route path="Reservas/form" element={<SpaceView />} />
         <Route path="Social" element={"Social"} />
       </Routes>
     </div>
