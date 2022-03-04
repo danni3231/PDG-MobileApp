@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/PDG-MobileApp/static/css/main.594cea16.css",
+    "main.js": "/PDG-MobileApp/static/js/main.dbbf1a1e.js",
+    "static/js/787.a509baf1.chunk.js": "/PDG-MobileApp/static/js/787.a509baf1.chunk.js",
+    "index.html": "/PDG-MobileApp/index.html",
+    "main.594cea16.css.map": "/PDG-MobileApp/static/css/main.594cea16.css.map",
+    "main.dbbf1a1e.js.map": "/PDG-MobileApp/static/js/main.dbbf1a1e.js.map",
+    "787.a509baf1.chunk.js.map": "/PDG-MobileApp/static/js/787.a509baf1.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.594cea16.css",
+    "static/js/main.dbbf1a1e.js"
+  ]
+}
