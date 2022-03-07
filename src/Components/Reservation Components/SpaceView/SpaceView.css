@@ -59,6 +59,11 @@
   border: 1px solid #111827;
 }
 
+.spaceView__schedule__option--selected {
+  background-color: #7b61ff;
+  color: #fff;
+}
+
 .spaceView__scroll {
   gap: 12px;
   align-items: flex-start;
