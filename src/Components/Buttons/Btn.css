@@ -21,3 +21,9 @@
   background-color: transparent;
   color: #111827;
 }
+
+.btn--disabled {
+  background: transparent;
+  border: 1px solid #7b61ff;
+  color: #7b61ff;
+}

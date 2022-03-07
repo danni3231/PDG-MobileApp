@@ -14,7 +14,7 @@ const SpaceCard: React.FC<SpaceCardProps> = ({ name, img, id, big }) => {
   let navigate = useNavigate();
 
   const handleCardClick = () => {
-    navigate(`/Reservas/form?${id}`);
+    navigate(`/Reservas/form/${id}`);
   };
 
   return (

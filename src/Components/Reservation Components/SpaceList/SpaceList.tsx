@@ -37,13 +37,13 @@ const SpaceList: React.FC<SpaceListProps> = () => {
     <article className="spaceList">
       <img
         className="spaceList__backBtn"
-        src={`${process.env.PUBLIC_URL}/Icons/Arrow - Left Circle.svg`}
+        src={`${process.env.PUBLIC_URL}/Icons/ArrowLeft.svg`}
         onClick={goBack()}
       />
       <h1>Elige la zona que deseas reservar</h1>
 
       <div className="scroll scroll--h">
-        <div className="scroll__column">
+        <div className="scroll__column spaceList__column">
           {spaces.map((space) => {
             return (
               <SpaceCard

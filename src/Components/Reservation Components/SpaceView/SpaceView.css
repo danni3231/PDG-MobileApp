@@ -34,11 +34,6 @@
 }
 
 .spaceView__form {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-
   padding: 0px 26px;
 }
 
@@ -48,4 +43,23 @@
 
 .spaceView__form p {
   font-size: 14px;
+}
+
+.spaceView__schedule {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+
+  border: 1px solid #111827;
+}
+
+.spaceView__schedule__option {
+  text-align: left;
+  padding: 14px 30px;
+  border: 1px solid #111827;
+}
+
+.spaceView__scroll {
+  gap: 12px;
+  align-items: flex-start;
 }

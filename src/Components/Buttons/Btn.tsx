@@ -1,34 +1,47 @@
 import * as React from "react";
+import { Style } from "util";
 
 import "./Btn.css";
 
 interface BtnProps {
   text: string;
   variant: string;
+  margin?: string;
 
   action: () => void;
 }
 
-const Btn: React.FC<BtnProps> = ({ text, variant, action }) => {
+const Btn: React.FC<BtnProps> = ({ text, variant, action, margin }) => {
   const handleClick = () => {
     action();
   };
 
+  let styles: React.CSSProperties = {};
+
+  if (margin != undefined) {
+    styles = { ...styles, marginTop: margin };
+  }
+
+  let classname = "";
+
   switch (variant) {
     case "add":
-      return (
-        <button className="btn btn--add" onClick={handleClick}>
-          {text}
-        </button>
-      );
+      classname = "btn btn--add";
+      break;
+
+    case "disabled":
+      classname = "btn btn--disabled";
+      break;
 
     default:
-      return (
-        <button className="btn" onClick={handleClick}>
-          {text}
-        </button>
-      );
+      classname = "btn";
   }
+
+  return (
+    <button className={classname} style={styles} onClick={handleClick}>
+      {text}
+    </button>
+  );
 };
 
 export default Btn;
