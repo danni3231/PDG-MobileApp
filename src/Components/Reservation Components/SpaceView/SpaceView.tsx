@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import { getSpaceData } from "../../../Firebase/firebaseApi";
 import { space } from "../../../Types/space";
 import Btn from "../../Buttons/Btn";
+import ScheduleOption from "../ScheduleOption/ScheduleOption";
 
 import "./SpaceView.css";
 
@@ -24,6 +25,10 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
   const [schedule, setSchedule] = React.useState("");
   const [submit, setSubmit] = React.useState(false);
 
+  const [options, setOptions] = React.useState<
+    { start: number; end: number; selected: boolean }[]
+  >([]);
+
   const getSpace = async () => {
     const snapshot = await getSpaceData(id!);
 
@@ -33,20 +38,39 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
     t1.setHours(~~snapshot.data()!.schedule.end, 0, 0);
     t2.setHours(~~snapshot.data()!.schedule.start, 0, 0);
 
-    t1.setHours(
-      t1.getHours() - t2.getHours(),
-      t1.getMinutes() - t2.getMinutes(),
-      t1.getSeconds() - t2.getSeconds()
-    );
+    const t1Parse = t1.toLocaleTimeString("co", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
 
-    console.log(`diferencia ${t1.getHours()} horas`);
+    const t2Parse = t2.toLocaleTimeString("co", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
+    const diference = ~~t1.getHours() - ~~t2.getHours();
+    const newOptions = [];
+
+    for (let i = 0; i < diference; i++) {
+      let option = {
+        start: t2.getHours() + i,
+        end: t2.getHours() + (i + 1),
+        selected: false,
+      };
+      newOptions.push(option);
+    }
+
+    setOptions(newOptions);
 
     const space: space = {
       name: snapshot.data()!.name,
-      img: snapshot.data()!.name,
+      img: snapshot.data()!.img,
       occupation: snapshot.data()!.occupation,
       days: snapshot.data()!.days,
-      schedule: snapshot.data()!.schedule,
+      schedule: {
+        end: t1Parse,
+        start: t2Parse,
+      },
       id: id!,
     };
 
@@ -62,6 +86,18 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
     });
   };
 
+  const handleOptionClick = (index: number) => {
+    const optionsCopy = options.slice();
+
+    optionsCopy.forEach((option) => {
+      option.selected = false;
+    });
+
+    optionsCopy[index].selected = true;
+
+    setOptions(optionsCopy);
+  };
+
   React.useEffect(() => {
     getSpace();
 
@@ -75,7 +111,7 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
       <section className="spaceView__header">
         <img
           className="spaceView__header__img"
-          src={`${process.env.PUBLIC_URL}/Img/pool.png`}
+          src={`${process.env.PUBLIC_URL}${space.img}`}
           alt=""
         />
         <div className="spaceView__header__content">
@@ -89,7 +125,7 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
         <div className="scroll__column spaceView__scroll">
           <h1>Ocupacion: {space.occupation}</h1>
           <p>
-            horario: {space.schedule.start} a {space.schedule.end}
+            horario: {space.schedule.start} - {space.schedule.end}
           </p>
           <p>
             {space.days.start} a {space.days.end}
@@ -99,18 +135,30 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
           <h1>Horarios</h1>
 
           <section className="spaceView__schedule">
-            {}
-            <div className="spaceView__schedule__option spaceView__schedule__option--selected">
-              13:00 - 65 am
-            </div>
-            <div className="spaceView__schedule__option"> 13:00 - 65 am</div>
-            <div className="spaceView__schedule__option"> 13:00 - 65 am</div>
-            <div className="spaceView__schedule__option"> 13:00 - 65 am</div>
-            <div className="spaceView__schedule__option"> 13:00 - 65 am</div>
-            <div className="spaceView__schedule__option"> 13:00 - 65 am</div>
-            <div className="spaceView__schedule__option"> 13:00 - 65 am</div>
-            <div className="spaceView__schedule__option"> 13:00 - 65 am</div>
-            <div className="spaceView__schedule__option"> 13:00 - 65 am</div>
+            {options.map((option, i) => {
+              if (option.selected) {
+                return (
+                  <ScheduleOption
+                    key={i}
+                    update={handleOptionClick}
+                    start={option.start}
+                    end={option.end}
+                    index={i}
+                    selected
+                  />
+                );
+              } else {
+                return (
+                  <ScheduleOption
+                    key={i}
+                    update={handleOptionClick}
+                    start={option.start}
+                    end={option.end}
+                    index={i}
+                  />
+                );
+              }
+            })}
           </section>
 
           <Btn
