@@ -5,7 +5,13 @@ import { space } from "../../../Types/space";
 import Btn from "../../Buttons/Btn";
 import ScheduleOption from "../ScheduleOption/ScheduleOption";
 
+import TextField from "@mui/material/TextField";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
+
 import "./SpaceView.css";
+import styled from "@emotion/styled";
 
 interface SpaceViewProps {}
 
@@ -21,7 +27,7 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
     schedule: { end: "", start: "" },
   });
 
-  const [date, setDate] = React.useState("");
+  const [date, setDate] = React.useState<Date | null>(null);
   const [schedule, setSchedule] = React.useState("");
   const [submit, setSubmit] = React.useState(false);
 
@@ -80,6 +86,7 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (
     event: any
   ) => {
+    event.preventDefault();
     console.log({
       date: date,
       schedule: schedule,
@@ -101,10 +108,33 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
   React.useEffect(() => {
     getSpace();
 
-    if (date != "" && schedule != "") {
+    if (date != null && schedule != "") {
       setSubmit(true);
     }
   }, []);
+
+  const CustomTextField = styled(TextField)({
+    "& label.Mui-focused": {
+      color: "#7b61ff",
+    },
+    "& .MuiInput-underline:after": {
+      borderBottomColor: "#7b61ff",
+    },
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderRadius: "50px",
+      },
+      "&:hover fieldset": {
+        borderColor: "#7b61ff",
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "#7b61ff",
+      },
+    },
+    "& .MuiButtonBase-root": {
+      marginRight: "0px",
+    },
+  });
 
   return (
     <article className="spaceView">
@@ -131,7 +161,29 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
             {space.days.start} a {space.days.end}
           </p>
           <h1>Fecha de reserva</h1>
-          <input type="date" name="" id="" />
+          <LocalizationProvider
+            dateAdapter={AdapterDateFns}
+            style={{
+              width: "100%",
+            }}
+          >
+            <DesktopDatePicker
+              value={date}
+              onChange={(newValue) => {
+                setDate(newValue);
+              }}
+              renderInput={(params) => (
+                <CustomTextField
+                  style={{
+                    width: "100%",
+                    borderRadius: "16px",
+                  }}
+                  {...params}
+                />
+              )}
+            />
+          </LocalizationProvider>
+          {/*<input type="date" name="" id="" />*/}
           <h1>Horarios</h1>
 
           <section className="spaceView__schedule">
