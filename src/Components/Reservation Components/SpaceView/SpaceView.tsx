@@ -28,7 +28,9 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
   });
 
   const [date, setDate] = React.useState<Date | null>(null);
-  const [schedule, setSchedule] = React.useState("");
+  const [schedule, setSchedule] = React.useState<
+    { start: number; end: number } | undefined
+  >(undefined);
   const [submit, setSubmit] = React.useState(false);
 
   const [options, setOptions] = React.useState<
@@ -83,10 +85,7 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
     setSpace(space);
   };
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (
-    event: any
-  ) => {
-    event.preventDefault();
+  const handleSubmit = () => {
     console.log({
       date: date,
       schedule: schedule,
@@ -102,15 +101,16 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
 
     optionsCopy[index].selected = true;
 
+    setSchedule({
+      start: optionsCopy[index].start,
+      end: optionsCopy[index].end,
+    });
+
     setOptions(optionsCopy);
   };
 
   React.useEffect(() => {
     getSpace();
-
-    if (date != null && schedule != "") {
-      setSubmit(true);
-    }
   }, []);
 
   const CustomTextField = styled(TextField)({
@@ -148,10 +148,7 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
           <p>{space.name}</p>
         </div>
       </section>
-      <form
-        className="spaceView__form scroll scroll--h"
-        onSubmit={handleSubmit}
-      >
+      <section className="spaceView__form scroll scroll--h">
         <div className="scroll__column spaceView__scroll">
           <h1>Ocupacion: {space.occupation}</h1>
           <p>
@@ -215,12 +212,20 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
 
           <Btn
             text="Confirmar"
-            variant={submit ? "" : "disabled"}
-            action={() => {}}
+            variant={date !== null && schedule !== undefined ? "" : "disabled"}
+            action={() => {
+              console.log(
+                {
+                  date: date,
+                  schedule: schedule,
+                },
+                submit
+              );
+            }}
             margin="36px"
           />
         </div>
-      </form>
+      </section>
     </article>
   );
 };
