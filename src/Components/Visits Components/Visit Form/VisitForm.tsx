@@ -1,44 +1,27 @@
-import styled from "@emotion/styled";
 import { LocalizationProvider, MobileDatePicker } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import { TextField } from "@mui/material";
 import * as React from "react";
+import { CustomTextField } from "../../../utils/css";
 import Btn from "../../Buttons/Btn";
+
+import "./VisitForm.css";
 
 interface VisitFormProps {}
 
 const VisitForm: React.FC<VisitFormProps> = ({}) => {
   const [date, setDate] = React.useState<Date | null>(new Date());
 
-  const CustomTextField = styled(TextField)({
-    "& label.Mui-focused": {
-      color: "#7b61ff",
-    },
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "#7b61ff",
-    },
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        borderRadius: "50px",
-      },
-      "&:hover fieldset": {
-        borderColor: "#7b61ff",
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "#7b61ff",
-      },
-    },
-    "& .MuiButtonBase-root": {
-      marginRight: "0px",
-    },
-  });
-
   return (
-    <article>
+    <article className="visitForm">
+      <img
+        className="visitForm__back"
+        src={`${process.env.PUBLIC_URL}/Icons/ArrowLeft.svg`}
+        alt=""
+      />
       <h1>Información del visitante</h1>
       <p>Por favor, llena los siguientes campos</p>
       <div className="scroll scroll--h">
-        <div className="scroll__column spaceList__column">
+        <div className="scroll__column visitForm__column">
           <CustomTextField placeholder="Nombre" onChange={() => {}} />
           <CustomTextField placeholder="Apellido" onChange={() => {}} />
           <CustomTextField
@@ -73,7 +56,7 @@ const VisitForm: React.FC<VisitFormProps> = ({}) => {
             />
           </LocalizationProvider>
 
-          <Btn text={"Confirmar"} variant={""} action={() => {}} />
+          <Btn text={"Confirmar"} variant="" margin="16px" action={() => {}} />
           <Btn text={"Cancelar"} variant={"disabled"} action={() => {}} />
         </div>
       </div>
