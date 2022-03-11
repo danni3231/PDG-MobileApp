@@ -8,7 +8,7 @@ import ScheduleOption from "../ScheduleOption/ScheduleOption";
 import TextField from "@mui/material/TextField";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
+import MobileDatePicker from "@mui/lab/MobileDatePicker";
 
 import "./SpaceView.css";
 import styled from "@emotion/styled";
@@ -164,13 +164,14 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
               width: "100%",
             }}
           >
-            <DesktopDatePicker
+            <MobileDatePicker
               value={date}
               onChange={(newValue) => {
                 setDate(newValue);
               }}
               renderInput={(params) => (
                 <CustomTextField
+                  placeholder="dd/mm/aaaa"
                   style={{
                     width: "100%",
                     borderRadius: "16px",
@@ -180,7 +181,6 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
               )}
             />
           </LocalizationProvider>
-          {/*<input type="date" name="" id="" />*/}
           <h1>Horarios</h1>
 
           <section className="spaceView__schedule">
