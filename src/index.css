@@ -25,6 +25,7 @@ article {
   gap: 32px;
   padding: 26px;
   padding-top: 40px;
+  padding-bottom: 0px;
 }
 
 .scroll {
@@ -47,7 +48,7 @@ article {
   display: flex;
   flex-direction: column;
 
-  padding-bottom: 100px;
+  padding-bottom: 126px;
 }
 
 /* text manage */

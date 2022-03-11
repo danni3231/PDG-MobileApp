@@ -1,3 +1,7 @@
+.visitForm {
+  text-align: left;
+}
+
 .visitForm__back {
   width: 24px;
 }
@@ -7,6 +11,5 @@
 }
 
 .visitForm__column h2 {
-  text-align: left;
   margin: 8px 0px;
 }

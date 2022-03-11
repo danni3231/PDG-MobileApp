@@ -1,5 +1,6 @@
 import { LocalizationProvider, MobileDatePicker } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import { MenuItem, Select } from "@mui/material";
 import * as React from "react";
 import { CustomTextField } from "../../../utils/css";
 import Btn from "../../Buttons/Btn";
@@ -10,6 +11,10 @@ interface VisitFormProps {}
 
 const VisitForm: React.FC<VisitFormProps> = ({}) => {
   const [date, setDate] = React.useState<Date | null>(new Date());
+  const [name, setName] = React.useState("");
+  const [surname, setSurname] = React.useState("");
+  const [idType, setIdType] = React.useState("");
+  const [id, setId] = React.useState("");
 
   return (
     <article className="visitForm">
@@ -24,12 +29,17 @@ const VisitForm: React.FC<VisitFormProps> = ({}) => {
         <div className="scroll__column visitForm__column">
           <CustomTextField placeholder="Nombre" onChange={() => {}} />
           <CustomTextField placeholder="Apellido" onChange={() => {}} />
-          <CustomTextField
+          <Select
+            value={idType}
             placeholder="Tipo de Documento"
-            onChange={() => {}}
-          />
-          <CustomTextField placeholder="No. de Documento" onChange={() => {}} />
-          <CustomTextField placeholder="nombre" onChange={() => {}} />
+            onChange={(event) => {
+              setIdType(event.target.value);
+            }}
+          >
+            <MenuItem value={"T.I"}>Tarjeta de Identidad</MenuItem>
+            <MenuItem value={"C.C"}>Cédula de Ciudadanía</MenuItem>
+          </Select>
+          <CustomTextField placeholder="N° de Documento" onChange={() => {}} />
 
           <h2>Fecha de visita</h2>
           <LocalizationProvider
