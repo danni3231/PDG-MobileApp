@@ -1,9 +1,10 @@
 import * as React from "react";
 import { useNavigate } from "react-router";
-import { getSpacesCollection } from "../../../Firebase/firebaseApi";
+import { getBookingsCollection } from "../../../Firebase/firebaseApi";
 import { booking } from "../../../Types/booking";
 import Btn from "../../Buttons/Btn";
 import Header from "../../Header/Header";
+import ReservationCard from "../ReservationCard/ReservationCard";
 
 interface ReservationsProps {}
 
@@ -13,13 +14,15 @@ const Reservations: React.FC<ReservationsProps> = () => {
   const [reservations, setReservations] = React.useState<booking[]>([]);
 
   const getBookings = async () => {
-    const snapshot = await getSpacesCollection;
+    const snapshot = await getBookingsCollection;
+
+    console.log(snapshot);
 
     const newBookings: booking[] = [];
 
-    snapshot.forEach((space: any) => {
-      console.log(space.bookings);
-      //newBookings.push({ ...space.data(), id: space.id });
+    snapshot.forEach((booking: any) => {
+      console.log(new Date(booking.data().dateStart * 1000));
+      newBookings.push({ ...booking.data() });
     });
 
     setReservations(newBookings);
@@ -44,8 +47,16 @@ const Reservations: React.FC<ReservationsProps> = () => {
           para crear una nueva reserva.
         </p>
       ) : (
-        reservations.map((reservation) => {
-          return; //reservation card
+        reservations.map((reservation, i) => {
+          // let dateStart = new Date(reservation.dateStart * 1000);
+          // let formatHour: string = `${dateStart.getHours()}:${dateStart.getMinutes()}`;
+          return (
+            <ReservationCard
+              name={"algo"}
+              dateStart={reservation.dateStart}
+              dateEnd={reservation.dateEnd}
+            />
+          );
         })
       )}
       <Btn

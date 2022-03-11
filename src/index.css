@@ -60,6 +60,13 @@ h1 {
   color: #111827;
 }
 
+h2 {
+  text-align: left;
+  font-weight: bold;
+  font-size: 18px;
+  color: #111827;
+}
+
 p {
   font-size: 18px;
   color: #111827;

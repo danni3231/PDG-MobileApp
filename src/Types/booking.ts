@@ -1,6 +1,7 @@
 export type booking = {
   id: string,
-  space: string,
-  date: Date,
-  schedule: {end:string, start:string}
+  userId: string,
+  spaceId: string,
+  dateEnd: number,
+  dateStart: number,
 }
