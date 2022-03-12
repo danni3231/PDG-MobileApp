@@ -4,5 +4,5 @@ export type space = {
     id: string
     occupation: number,
     days: {end:string, start:string},
-    schedule: {end:string, start:string}
+    schedule: {end:number, start:number}
 }

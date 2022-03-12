@@ -12,6 +12,7 @@ import MobileDatePicker from "@mui/lab/MobileDatePicker";
 
 import "./SpaceView.css";
 import styled from "@emotion/styled";
+import { CustomTextField } from "../../../Utils/css";
 
 interface SpaceViewProps {}
 
@@ -24,7 +25,7 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
     id: "",
     occupation: 0,
     days: { end: "", start: "" },
-    schedule: { end: "", start: "" },
+    schedule: { end: 0, start: 0 },
   });
 
   const [date, setDate] = React.useState<Date | null>(null);
@@ -39,50 +40,24 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
 
   const getSpace = async () => {
     const snapshot = await getSpaceData(id!);
-
-    let t1 = new Date(),
-      t2 = new Date();
-
-    t1.setHours(~~snapshot.data()!.schedule.end, 0, 0);
-    t2.setHours(~~snapshot.data()!.schedule.start, 0, 0);
-
-    const t1Parse = t1.toLocaleTimeString("co", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-
-    const t2Parse = t2.toLocaleTimeString("co", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-
-    const diference = ~~t1.getHours() - ~~t2.getHours();
-    const newOptions = [];
-
-    for (let i = 0; i < diference; i++) {
-      let option = {
-        start: t2.getHours() + i,
-        end: t2.getHours() + (i + 1),
-        selected: false,
-      };
-      newOptions.push(option);
-    }
-
-    setOptions(newOptions);
-
-    const space: space = {
-      name: snapshot.data()!.name,
-      img: snapshot.data()!.img,
-      occupation: snapshot.data()!.occupation,
-      days: snapshot.data()!.days,
-      schedule: {
-        end: t1Parse,
-        start: t2Parse,
+    let data = snapshot.data();
+    let newSpace: space = {
+      name: data!.name,
+      img: data!.img,
+      id: data!.id,
+      occupation: data!.occupation,
+      days: {
+        end: data!.days.end,
+        start: data!.days.start,
       },
-      id: id!,
+      schedule: {
+        end: data!.schedule.end,
+        start: data!.schedule.start,
+      },
     };
 
-    setSpace(space);
+    setSpace(newSpace);
+    addOptions(newSpace.schedule.start, newSpace.schedule.end);
   };
 
   const handleSubmit = () => {
@@ -109,32 +84,36 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
     setOptions(optionsCopy);
   };
 
+  const addOptions = (hourStart: number, hourEnd: number) => {
+    const hourStartParse = new Date(hourStart * 1000).getHours();
+    const hourEndtParse = new Date(hourEnd * 1000).getHours();
+
+    const diference = hourEndtParse - hourStartParse;
+    const newOptions = [];
+
+    for (let i = 0; i < diference; i++) {
+      let option = {
+        start: hourStartParse + i,
+        end: hourStartParse + (i + 1),
+        selected: false,
+      };
+      newOptions.push(option);
+    }
+
+    console.log(newOptions);
+
+    setOptions(newOptions);
+  };
+
+  const parseHours = () => {
+    const hourStart = new Date(space.schedule.start * 1000).getHours();
+    const hourEnd = new Date(space.schedule.end * 1000).getHours();
+    return `Horario: ${hourStart}:00 - ${hourEnd}:00`;
+  };
+
   React.useEffect(() => {
     getSpace();
   }, []);
-
-  const CustomTextField = styled(TextField)({
-    "& label.Mui-focused": {
-      color: "#7b61ff",
-    },
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "#7b61ff",
-    },
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        borderRadius: "50px",
-      },
-      "&:hover fieldset": {
-        borderColor: "#7b61ff",
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "#7b61ff",
-      },
-    },
-    "& .MuiButtonBase-root": {
-      marginRight: "0px",
-    },
-  });
 
   return (
     <article className="spaceView">
@@ -151,9 +130,7 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
       <section className="spaceView__form scroll scroll--h">
         <div className="scroll__column spaceView__scroll">
           <h1>Ocupacion: {space.occupation}</h1>
-          <p>
-            horario: {space.schedule.start} - {space.schedule.end}
-          </p>
+          <p>{parseHours()}</p>
           <p>
             {space.days.start} a {space.days.end}
           </p>

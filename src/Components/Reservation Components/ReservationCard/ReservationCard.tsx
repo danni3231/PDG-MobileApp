@@ -28,7 +28,7 @@ const ReservationCard: React.FC<ReservationCardProps> = ({
     id: "",
     occupation: 0,
     days: { end: "", start: "" },
-    schedule: { end: "", start: "" },
+    schedule: { end: 0, start: 0 },
   });
 
   return (
