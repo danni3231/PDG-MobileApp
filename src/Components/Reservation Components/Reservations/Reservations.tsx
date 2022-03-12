@@ -48,11 +48,10 @@ const Reservations: React.FC<ReservationsProps> = () => {
         </p>
       ) : (
         reservations.map((reservation, i) => {
-          // let dateStart = new Date(reservation.dateStart * 1000);
-          // let formatHour: string = `${dateStart.getHours()}:${dateStart.getMinutes()}`;
           return (
             <ReservationCard
-              name={"algo"}
+              key={i}
+              spaceid={reservation.spaceId}
               dateStart={reservation.dateStart}
               dateEnd={reservation.dateEnd}
             />
