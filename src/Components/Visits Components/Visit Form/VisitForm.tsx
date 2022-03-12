@@ -1,8 +1,8 @@
 import { LocalizationProvider, MobileDatePicker } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import { MenuItem, Select } from "@mui/material";
+import { MenuItem, Select, TextField } from "@mui/material";
 import * as React from "react";
-import { CustomTextField } from "../../../Utils/css";
+
 import Btn from "../../Buttons/Btn";
 
 import "./VisitForm.css";
@@ -27,19 +27,25 @@ const VisitForm: React.FC<VisitFormProps> = ({}) => {
       <p>Por favor, llena los siguientes campos</p>
       <div className="scroll scroll--h">
         <div className="scroll__column visitForm__column">
-          <CustomTextField placeholder="Nombre" onChange={() => {}} />
-          <CustomTextField placeholder="Apellido" onChange={() => {}} />
+          <TextField placeholder="Nombre" onChange={() => {}} />
+          <TextField placeholder="Apellido" onChange={() => {}} />
           <Select
             value={idType}
-            placeholder="Tipo de Documento"
+            displayEmpty
+            renderValue={(v) => (v !== "" ? v : "Tipo de Documento")}
+            defaultValue="none"
             onChange={(event) => {
               setIdType(event.target.value);
             }}
           >
-            <MenuItem value={"T.I"}>Tarjeta de Identidad</MenuItem>
-            <MenuItem value={"C.C"}>Cédula de Ciudadanía</MenuItem>
+            <MenuItem value={"Tarjeta de Identidad"}>
+              Tarjeta de Identidad
+            </MenuItem>
+            <MenuItem value={"Cédula de Ciudadanía"}>
+              Cédula de Ciudadanía
+            </MenuItem>
           </Select>
-          <CustomTextField placeholder="N° de Documento" onChange={() => {}} />
+          <TextField placeholder="N° de Documento" onChange={() => {}} />
 
           <h2>Fecha de visita</h2>
           <LocalizationProvider
@@ -54,7 +60,7 @@ const VisitForm: React.FC<VisitFormProps> = ({}) => {
                 setDate(newValue);
               }}
               renderInput={(params) => (
-                <CustomTextField
+                <TextField
                   placeholder="dd/mm/aaaa"
                   style={{
                     width: "100%",

@@ -11,8 +11,6 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import MobileDatePicker from "@mui/lab/MobileDatePicker";
 
 import "./SpaceView.css";
-import styled from "@emotion/styled";
-import { CustomTextField } from "../../../Utils/css";
 
 interface SpaceViewProps {}
 
@@ -147,7 +145,7 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
                 setDate(newValue);
               }}
               renderInput={(params) => (
-                <CustomTextField
+                <TextField
                   placeholder="dd/mm/aaaa"
                   style={{
                     width: "100%",
