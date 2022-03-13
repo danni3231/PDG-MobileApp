@@ -1,4 +1,5 @@
 import * as React from "react";
+import { getSpaceData } from "../../../Firebase/firebaseApi";
 import { space } from "../../../Types/space";
 
 import "./ReservationCard.css";
@@ -31,6 +32,31 @@ const ReservationCard: React.FC<ReservationCardProps> = ({
     schedule: { end: 0, start: 0 },
   });
 
+  const getSpace = async () => {
+    const snapshot = await getSpaceData(spaceid);
+    let data = snapshot.data();
+    let newSpace: space = {
+      name: data!.name,
+      img: data!.img,
+      id: data!.id,
+      occupation: data!.occupation,
+      days: {
+        end: data!.days.end,
+        start: data!.days.start,
+      },
+      schedule: {
+        end: data!.schedule.end,
+        start: data!.schedule.start,
+      },
+    };
+
+    setSpace(newSpace);
+  };
+
+  React.useEffect(() => {
+    getSpace();
+  }, []);
+
   return (
     <section className="reservationCard">
       <div className="reservationCard__header">
@@ -38,7 +64,7 @@ const ReservationCard: React.FC<ReservationCardProps> = ({
         <img src={`${process.env.PUBLIC_URL}/Icons/edit.svg`} alt="" />
       </div>
       <div className="reservationCard__body">
-        <p className="reservationCard__body__title">{spaceid}</p>
+        <p className="reservationCard__body__title">{space.name}</p>
         <p>{`Hora: ${hourStartString} a ${hourEndString}`}</p>
         <p>{`Fecha: ${dateString}`}</p>
       </div>
