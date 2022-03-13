@@ -8,7 +8,7 @@ import Reservations from "../Reservation Components/Reservations/Reservations";
 import SpaceList from "../Reservation Components/SpaceList/SpaceList";
 import SpaceView from "../Reservation Components/SpaceView/SpaceView";
 import Visits from "../Visits Components/Visits/Visits";
-import VisitForm from "../Visits Components/Visit Form/VisitForm";
+import VisitForm from "../Visits Components/VisitForm/VisitForm";
 
 function App() {
   const reservations: any[] = [];

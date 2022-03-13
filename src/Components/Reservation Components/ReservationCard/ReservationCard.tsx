@@ -5,13 +5,13 @@ import { space } from "../../../Types/space";
 import "./ReservationCard.css";
 
 interface ReservationCardProps {
-  spaceid: string;
+  spaceId: string;
   dateStart: number;
   dateEnd: number;
 }
 
 const ReservationCard: React.FC<ReservationCardProps> = ({
-  spaceid,
+  spaceId,
   dateStart,
   dateEnd,
 }) => {
@@ -33,7 +33,7 @@ const ReservationCard: React.FC<ReservationCardProps> = ({
   });
 
   const getSpace = async () => {
-    const snapshot = await getSpaceData(spaceid);
+    const snapshot = await getSpaceData(spaceId);
     let data = snapshot.data();
     let newSpace: space = {
       name: data!.name,

@@ -51,7 +51,7 @@ const Reservations: React.FC<ReservationsProps> = () => {
           return (
             <ReservationCard
               key={i}
-              spaceid={reservation.spaceId}
+              spaceId={reservation.spaceId}
               dateStart={reservation.dateStart}
               dateEnd={reservation.dateEnd}
             />

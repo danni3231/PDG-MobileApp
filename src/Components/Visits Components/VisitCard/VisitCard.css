@@ -1,0 +1,36 @@
+.visitCard {
+  border-radius: 16px;
+  background-color: #7b61ff;
+  color: #fff !important;
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.visitCard h2,
+.visitCard p {
+  color: #fff !important;
+}
+
+.visitCard p {
+  font-size: 16px;
+}
+
+.visitCard__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.visitCard__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.visitCard__body__title {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
