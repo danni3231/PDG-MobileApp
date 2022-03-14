@@ -16,12 +16,12 @@ const ReservationCard: React.FC<ReservationCardProps> = ({
   dateEnd,
 }) => {
   let dateStartParse = new Date(dateStart * 1000);
-  let hourStartString: string = `${dateStartParse.getHours()}:${dateStartParse.getMinutes()}`;
+  let hourStartString: string = `${dateStartParse.getHours()}:0${dateStartParse.getMinutes()}`;
 
   let dateEndParse = new Date(dateEnd * 1000);
-  let hourEndString: string = `${dateEndParse.getHours()}:${dateEndParse.getMinutes()}`;
+  let hourEndString: string = `${dateEndParse.getHours()}:0${dateEndParse.getMinutes()}`;
 
-  let dateString: string = `${dateStartParse.getDay()}/${dateStartParse.getMonth()}/${dateStartParse.getFullYear()}`;
+  let dateString: string = `${dateStartParse.getDate()}/${dateStartParse.getMonth()}/${dateStartParse.getFullYear()}`;
 
   const [space, setSpace] = React.useState<space>({
     img: "",

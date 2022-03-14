@@ -1,6 +1,6 @@
 import * as React from "react";
-import { useParams } from "react-router";
-import { getSpaceData } from "../../../Firebase/firebaseApi";
+import { useNavigate, useParams } from "react-router";
+import { getSpaceData, uploadBooking } from "../../../Firebase/firebaseApi";
 import { space } from "../../../Types/space";
 import Btn from "../../Buttons/Btn";
 import ScheduleOption from "../ScheduleOption/ScheduleOption";
@@ -11,11 +11,13 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import MobileDatePicker from "@mui/lab/MobileDatePicker";
 
 import "./SpaceView.css";
+import { booking } from "../../../Types/booking";
 
 interface SpaceViewProps {}
 
 const SpaceView: React.FC<SpaceViewProps> = ({}) => {
   let { id } = useParams();
+  let navigate = useNavigate();
 
   const [space, setSpace] = React.useState<space>({
     img: "",
@@ -30,8 +32,6 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
   const [schedule, setSchedule] = React.useState<
     { start: number; end: number } | undefined
   >(undefined);
-  const [submit, setSubmit] = React.useState(false);
-
   const [options, setOptions] = React.useState<
     { start: number; end: number; selected: boolean }[]
   >([]);
@@ -59,10 +59,31 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
   };
 
   const handleSubmit = () => {
-    console.log({
-      date: date,
-      schedule: schedule,
-    });
+    if (validateData()) {
+      date?.setMinutes(0);
+
+      const dateStart = new Date(date!);
+      dateStart?.setHours(schedule?.start!);
+      const dateStartParse = parseInt((dateStart!.getTime() / 1000).toFixed(0));
+
+      const dateEnd = new Date(date!);
+      dateEnd?.setHours(schedule?.end!);
+      const dateEndParse = parseInt((dateEnd!.getTime() / 1000).toFixed(0));
+
+      console.log(dateStart, dateEnd);
+
+      let newBooking: booking = {
+        id: "",
+        userId: "Alfa",
+        spaceId: id!,
+        dateEnd: dateEndParse,
+        dateStart: dateStartParse,
+      };
+
+      uploadBooking(newBooking).then(() => {
+        navigate("/Reservas", { state: { reload: true } });
+      });
+    }
   };
 
   const handleOptionClick = (index: number) => {
@@ -98,8 +119,6 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
       newOptions.push(option);
     }
 
-    console.log(newOptions);
-
     setOptions(newOptions);
   };
 
@@ -107,6 +126,19 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
     const hourStart = new Date(space.schedule.start * 1000).getHours();
     const hourEnd = new Date(space.schedule.end * 1000).getHours();
     return `Horario: ${hourStart}:00 - ${hourEnd}:00`;
+  };
+
+  const validateData = () => {
+    if (date === null) {
+      console.log("no se puede enviar necesita fecha");
+      return false;
+    } else if (schedule === undefined) {
+      console.log("no se puede enviar necesita Horario");
+      return false;
+    } else {
+      console.log("se puede enviar");
+      return true;
+    }
   };
 
   React.useEffect(() => {
@@ -189,13 +221,7 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
             text="Confirmar"
             variant={date !== null && schedule !== undefined ? "" : "disabled"}
             action={() => {
-              console.log(
-                {
-                  date: date,
-                  schedule: schedule,
-                },
-                submit
-              );
+              handleSubmit();
             }}
             margin="36px"
           />

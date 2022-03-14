@@ -2,6 +2,7 @@ import { LocalizationProvider, MobileDatePicker } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { MenuItem, Select, TextField } from "@mui/material";
 import * as React from "react";
+import { useNavigate } from "react-router";
 
 import Btn from "../../Buttons/Btn";
 
@@ -10,17 +11,24 @@ import "./VisitForm.css";
 interface VisitFormProps {}
 
 const VisitForm: React.FC<VisitFormProps> = ({}) => {
-  const [date, setDate] = React.useState<Date | null>(new Date());
+  const [date, setDate] = React.useState<Date | null>(null);
   const [name, setName] = React.useState("");
   const [surname, setSurname] = React.useState("");
   const [idType, setIdType] = React.useState("");
   const [id, setId] = React.useState("");
+
+  const navigate = useNavigate();
+
+  const goBack = () => () => {
+    navigate(-1);
+  };
 
   return (
     <article className="visitForm">
       <img
         className="visitForm__back"
         src={`${process.env.PUBLIC_URL}/Icons/ArrowLeft.svg`}
+        onClick={goBack()}
         alt=""
       />
       <h1>Información del visitante</h1>
