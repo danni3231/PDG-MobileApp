@@ -27,7 +27,14 @@ function App() {
         <Route path="Reservas/list" element={<SpaceList />} />
         <Route path="Reservas/form/:id" element={<SpaceView />} />
 
-        <Route path="Social" element={"Social"} />
+        <Route
+          path="Social"
+          element={
+            <div className="comingSoon">
+              <h1 className="textLoading">Coming Soon...</h1>
+            </div>
+          }
+        />
       </Routes>
     </div>
   );

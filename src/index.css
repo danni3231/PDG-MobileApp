@@ -74,7 +74,8 @@ p {
 
 /*animations*/
 
-.loading {
+.loading,
+.comingSoon {
   display: flex;
   height: 100vh;
 
@@ -82,6 +83,11 @@ p {
   align-items: center;
   justify-content: center;
 }
+
+.comingSoon h1 {
+  color: #111827a1;
+}
+
 .lds-roller {
   display: inline-block;
   position: relative;

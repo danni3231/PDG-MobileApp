@@ -28,6 +28,8 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
     schedule: { end: 0, start: 0 },
   });
 
+  const [loading, setLoading] = React.useState(true);
+
   const [date, setDate] = React.useState<Date | null>(null);
   const [schedule, setSchedule] = React.useState<
     { start: number; end: number } | undefined
@@ -56,6 +58,7 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
 
     setSpace(newSpace);
     addOptions(newSpace.schedule.start, newSpace.schedule.end);
+    setLoading(false);
   };
 
   const handleSubmit = () => {
@@ -145,90 +148,109 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
     getSpace();
   }, []);
 
-  return (
-    <article className="spaceView">
-      <section className="spaceView__header">
-        <img
-          className="spaceView__header__img"
-          src={`${process.env.PUBLIC_URL}${space.img}`}
-          alt=""
-        />
-        <div className="spaceView__header__content">
-          <p>{space.name}</p>
-        </div>
+  if (loading) {
+    return (
+      <section className="loading">
+        <section className="lds-roller">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </section>
       </section>
-      <section className="spaceView__form scroll scroll--h">
-        <div className="scroll__column spaceView__scroll">
-          <h1>Ocupacion: {space.occupation}</h1>
-          <p>{parseHours()}</p>
-          <p>
-            {space.days.start} a {space.days.end}
-          </p>
-          <h1>Fecha de reserva</h1>
-          <LocalizationProvider
-            dateAdapter={AdapterDateFns}
-            style={{
-              width: "100%",
-            }}
-          >
-            <MobileDatePicker
-              value={date}
-              onChange={(newValue) => {
-                setDate(newValue);
-              }}
-              renderInput={(params) => (
-                <TextField
-                  placeholder="dd/mm/aaaa"
-                  style={{
-                    width: "100%",
-                    borderRadius: "16px",
-                  }}
-                  {...params}
-                />
-              )}
-            />
-          </LocalizationProvider>
-          <h1>Horarios</h1>
-
-          <section className="spaceView__schedule">
-            {options.map((option, i) => {
-              if (option.selected) {
-                return (
-                  <ScheduleOption
-                    key={i}
-                    update={handleOptionClick}
-                    start={option.start}
-                    end={option.end}
-                    index={i}
-                    selected
-                  />
-                );
-              } else {
-                return (
-                  <ScheduleOption
-                    key={i}
-                    update={handleOptionClick}
-                    start={option.start}
-                    end={option.end}
-                    index={i}
-                  />
-                );
-              }
-            })}
-          </section>
-
-          <Btn
-            text="Confirmar"
-            variant={date !== null && schedule !== undefined ? "" : "disabled"}
-            action={() => {
-              handleSubmit();
-            }}
-            margin="36px"
+    );
+  } else {
+    return (
+      <article className="spaceView">
+        <section className="spaceView__header">
+          <img
+            className="spaceView__header__img"
+            src={`${process.env.PUBLIC_URL}${space.img}`}
+            alt=""
           />
-        </div>
-      </section>
-    </article>
-  );
+          <div className="spaceView__header__content">
+            <p>{space.name}</p>
+          </div>
+        </section>
+        <section className="spaceView__form scroll scroll--h">
+          <div className="scroll__column spaceView__scroll">
+            <h1>Ocupacion: {space.occupation}</h1>
+            <p>{parseHours()}</p>
+            <p>
+              {space.days.start} a {space.days.end}
+            </p>
+            <h1>Fecha de reserva</h1>
+            <LocalizationProvider
+              dateAdapter={AdapterDateFns}
+              style={{
+                width: "100%",
+              }}
+            >
+              <MobileDatePicker
+                value={date}
+                onChange={(newValue) => {
+                  setDate(newValue);
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    placeholder="dd/mm/aaaa"
+                    style={{
+                      width: "100%",
+                      borderRadius: "16px",
+                    }}
+                    {...params}
+                  />
+                )}
+              />
+            </LocalizationProvider>
+            <h1>Horarios</h1>
+
+            <section className="spaceView__schedule">
+              {options.map((option, i) => {
+                if (option.selected) {
+                  return (
+                    <ScheduleOption
+                      key={i}
+                      update={handleOptionClick}
+                      start={option.start}
+                      end={option.end}
+                      index={i}
+                      selected
+                    />
+                  );
+                } else {
+                  return (
+                    <ScheduleOption
+                      key={i}
+                      update={handleOptionClick}
+                      start={option.start}
+                      end={option.end}
+                      index={i}
+                    />
+                  );
+                }
+              })}
+            </section>
+
+            <Btn
+              text="Confirmar"
+              variant={
+                date !== null && schedule !== undefined ? "" : "disabled"
+              }
+              action={() => {
+                handleSubmit();
+              }}
+              margin="36px"
+            />
+          </div>
+        </section>
+      </article>
+    );
+  }
 };
 
 export default SpaceView;

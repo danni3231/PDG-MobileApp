@@ -51,6 +51,7 @@ const SpaceList: React.FC<SpaceListProps> = () => {
                 id={space.id}
                 name={space.name}
                 img={space.img}
+                occupation={space.occupation}
                 big
               />
             );
