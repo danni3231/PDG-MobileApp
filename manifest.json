@@ -2,15 +2,15 @@
   "short_name": "Urban",
   "name": "Urban: condominium optimization app",
   "icons": [{
-    "src": "Icons/Logo/logo.svg",
+    "src": "Icons/logos/logo.svg",
     "sizes": "48x48",
     "type": "image/svg"
   },{
-    "src": "Icons/Logo/logo.png",
+    "src": "Icons/logos/logo.png",
     "sizes": "48x48",
     "type": "image/png"
   },{
-    "src": "Icons/Logo/logo.png",
+    "src": "Icons/logos/logo.png",
     "sizes": "144x144",
     "type": "image/png"
   }],
