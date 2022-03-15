@@ -3,18 +3,14 @@
   "name": "Urban: condominium optimization app",
   "icons": [{
     "src": "Icons/logos/logo.svg",
-    "sizes": "48x48",
-    "type": "image/svg"
-  },{
-    "src": "Icons/logos/logo.png",
-    "sizes": "48x48",
-    "type": "image/png"
+    "sizes": "144x144",
+    "type": "image/svg+xml"
   },{
     "src": "Icons/logos/logo.png",
     "sizes": "144x144",
     "type": "image/png"
   }],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
   "theme_color": "#7b61ff",
   "background_color": "#ffffff"
