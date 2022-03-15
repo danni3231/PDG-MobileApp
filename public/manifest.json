@@ -1,9 +1,16 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
-  "icons": [],
+  "short_name": "Urban",
+  "name": "Urban: condominium optimization app",
+  "icons": [{
+    "src": "Icons/Logo/logo.svg",
+    "sizes": "48x48"
+  },{
+    "src": "Icons/Logo/logo.png",
+    "sizes": "48x48",
+    "type": "image/png"
+  }],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#7b61ff",
   "background_color": "#ffffff"
 }
