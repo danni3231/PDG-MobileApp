@@ -197,7 +197,7 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
                 }}
                 renderInput={(params) => (
                   <TextField
-                    placeholder="dd/mm/aaaa"
+                    placeholder="mm/dd/aaaa"
                     style={{
                       width: "100%",
                       borderRadius: "16px",

@@ -129,7 +129,7 @@ const VisitForm: React.FC<VisitFormProps> = ({}) => {
               }}
               renderInput={(params) => (
                 <TextField
-                  placeholder="dd/mm/aaaa"
+                  placeholder="mm/dd/aaaa"
                   style={{
                     width: "100%",
                     borderRadius: "16px",
