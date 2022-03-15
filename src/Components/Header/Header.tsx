@@ -9,7 +9,7 @@ const Header: React.FC<HeaderProps> = ({}) => {
     <header className="header">
       <img
         className="header__burger"
-        src={`${process.env.PUBLIC_URL}/Icons/Burguer menu.svg`}
+        src={`${process.env.PUBLIC_URL}/Icons/BurguerMenu.svg`}
         alt=""
       />
     </header>

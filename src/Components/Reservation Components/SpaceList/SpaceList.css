@@ -1,3 +1,7 @@
 .spaceList__backBtn {
   width: 24px;
 }
+
+.spaceList__column {
+  gap: 26px;
+}

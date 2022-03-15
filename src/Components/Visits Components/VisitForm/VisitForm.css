@@ -1,0 +1,15 @@
+.visitForm {
+  text-align: left;
+}
+
+.visitForm__back {
+  width: 24px;
+}
+
+.visitForm__column {
+  gap: 20px;
+}
+
+.visitForm__column h2 {
+  margin: 8px 0px;
+}

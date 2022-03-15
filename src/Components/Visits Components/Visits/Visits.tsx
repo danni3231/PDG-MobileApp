@@ -1,38 +1,38 @@
 import * as React from "react";
 import { useLocation, useNavigate } from "react-router";
-import { getBookingsCollection } from "../../../Firebase/firebaseApi";
-import { booking } from "../../../Types/booking";
+
+import { getVisitorsCollection } from "../../../Firebase/firebaseApi";
+import { visitor } from "../../../Types/visitor";
 import Btn from "../../Buttons/Btn";
 import Header from "../../Header/Header";
-import ReservationCard from "../ReservationCard/ReservationCard";
+import VisitCard from "../VisitCard/VisitCard";
 
-import "./Reservations.css";
+import "./Visits.css";
 
-interface ReservationsProps {}
+interface VisitsProps {}
 
 interface CustomizedState {
   reload: boolean;
 }
 
-const Reservations: React.FC<ReservationsProps> = () => {
+const Visits: React.FC<VisitsProps> = ({}) => {
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as CustomizedState;
 
+  const [visits, setVisits] = React.useState<visitor[]>([]);
   const [loading, setLoading] = React.useState(true);
 
-  const [reservations, setReservations] = React.useState<booking[]>([]);
-
   const getBookings = async () => {
-    const snapshot = await getBookingsCollection;
+    const snapshot = await getVisitorsCollection;
 
-    const newBookings: booking[] = [];
+    const newVisitors: visitor[] = [];
 
-    snapshot.forEach((booking: any) => {
-      newBookings.push({ ...booking.data() });
+    snapshot.forEach((visitor: any) => {
+      newVisitors.push({ ...visitor.data() });
     });
 
-    setReservations(newBookings);
+    setVisits(newVisitors);
     setLoading(false);
   };
 
@@ -70,36 +70,37 @@ const Reservations: React.FC<ReservationsProps> = () => {
     return (
       <article>
         <Header />
-        <h1>Reservar zonas comunes</h1>
+        <h1>Agendar visitas</h1>
         <section className="scroll scroll--h">
-          <div className="scroll__column bookingList">
-            {reservations.length === 0 ? (
+          <div className="scroll__column visitList">
+            {visits.length == 0 ? (
               <p
                 style={{
                   width: "90%",
                   alignSelf: "center",
                 }}
               >
-                Aún no has reservado ninguna zona común. Presiona el botón
-                “reservar” para crear una nueva reserva.
+                Aún no has agendado ninguna visita. Presiona el botón “agendar”
+                para crear una nueva visita.
               </p>
             ) : (
-              reservations.map((reservation, i) => {
+              visits.map((visitor, i) => {
                 return (
-                  <ReservationCard
+                  <VisitCard
                     key={i}
-                    spaceId={reservation.spaceId}
-                    dateStart={reservation.dateStart}
-                    dateEnd={reservation.dateEnd}
+                    name={visitor.name}
+                    typeId={visitor.ccType}
+                    visitorId={visitor.cc}
+                    date={visitor.date}
                   />
                 );
               })
             )}
             <Btn
-              text="+ Reservar"
+              text="+ Agendar"
               variant="add"
               action={function (): void {
-                navigate("/Reservas/list");
+                navigate("/Visitas/form");
               }}
             />
           </div>
@@ -109,4 +110,4 @@ const Reservations: React.FC<ReservationsProps> = () => {
   }
 };
 
-export default Reservations;
+export default Visits;

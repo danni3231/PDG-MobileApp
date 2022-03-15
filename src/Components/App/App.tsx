@@ -6,12 +6,12 @@ import Nav from "../Nav/Nav";
 import Home from "../Home/Home";
 import Reservations from "../Reservation Components/Reservations/Reservations";
 import SpaceList from "../Reservation Components/SpaceList/SpaceList";
-import { SpacesContext } from "../../Context/spacesContext";
 import SpaceView from "../Reservation Components/SpaceView/SpaceView";
+import Visits from "../Visits Components/Visits/Visits";
+import VisitForm from "../Visits Components/VisitForm/VisitForm";
 
 function App() {
   const reservations: any[] = [];
-  let spaces = React.useContext(SpacesContext);
 
   return (
     <div className="App">
@@ -19,14 +19,22 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="Visitas" element={"Visitas"} />
-        <Route
-          path="Reservas"
-          element={<Reservations reservations={reservations} />}
-        />
+
+        <Route path="Visitas" element={<Visits />} />
+        <Route path="Visitas/form" element={<VisitForm />} />
+
+        <Route path="Reservas" element={<Reservations />} />
         <Route path="Reservas/list" element={<SpaceList />} />
-        <Route path="Reservas/form" element={<SpaceView />} />
-        <Route path="Social" element={"Social"} />
+        <Route path="Reservas/form/:id" element={<SpaceView />} />
+
+        <Route
+          path="Social"
+          element={
+            <div className="comingSoon">
+              <h1 className="textLoading">Coming Soon...</h1>
+            </div>
+          }
+        />
       </Routes>
     </div>
   );
