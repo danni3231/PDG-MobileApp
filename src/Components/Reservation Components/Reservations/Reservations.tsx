@@ -19,7 +19,8 @@ const Reservations: React.FC<ReservationsProps> = () => {
   const location = useLocation();
   const state = location.state as CustomizedState;
 
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
+
   const [reservations, setReservations] = React.useState<booking[]>([]);
 
   const getBookings = async () => {
@@ -32,11 +33,10 @@ const Reservations: React.FC<ReservationsProps> = () => {
     });
 
     setReservations(newBookings);
+    setLoading(false);
   };
 
   React.useEffect(() => {
-    getBookings();
-
     if (state !== null) {
       const { reload } = state;
 
@@ -47,47 +47,66 @@ const Reservations: React.FC<ReservationsProps> = () => {
         navigate(0);
       }
     }
+
+    getBookings();
   }, []);
 
-  return (
-    <article>
-      <Header />
-      <h1>Reservar zonas comunes</h1>
-      <section className="scroll scroll--h">
-        <div className="scroll__column bookingList">
-          {reservations.length === 0 ? (
-            <p
-              style={{
-                width: "90%",
-                alignSelf: "center",
-              }}
-            >
-              Aún no has reservado ninguna zona común. Presiona el botón
-              “reservar” para crear una nueva reserva.
-            </p>
-          ) : (
-            reservations.map((reservation, i) => {
-              return (
-                <ReservationCard
-                  key={i}
-                  spaceId={reservation.spaceId}
-                  dateStart={reservation.dateStart}
-                  dateEnd={reservation.dateEnd}
-                />
-              );
-            })
-          )}
-          <Btn
-            text="Reservar"
-            variant="add"
-            action={function (): void {
-              navigate("/Reservas/list");
-            }}
-          />
-        </div>
+  if (loading) {
+    return (
+      <section className="loading">
+        <section className="lds-roller">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </section>
       </section>
-    </article>
-  );
+    );
+  } else {
+    return (
+      <article>
+        <Header />
+        <h1>Reservar zonas comunes</h1>
+        <section className="scroll scroll--h">
+          <div className="scroll__column bookingList">
+            {reservations.length === 0 ? (
+              <p
+                style={{
+                  width: "90%",
+                  alignSelf: "center",
+                }}
+              >
+                Aún no has reservado ninguna zona común. Presiona el botón
+                “reservar” para crear una nueva reserva.
+              </p>
+            ) : (
+              reservations.map((reservation, i) => {
+                return (
+                  <ReservationCard
+                    key={i}
+                    spaceId={reservation.spaceId}
+                    dateStart={reservation.dateStart}
+                    dateEnd={reservation.dateEnd}
+                  />
+                );
+              })
+            )}
+            <Btn
+              text="Reservar"
+              variant="add"
+              action={function (): void {
+                navigate("/Reservas/list");
+              }}
+            />
+          </div>
+        </section>
+      </article>
+    );
+  }
 };
 
 export default Reservations;
