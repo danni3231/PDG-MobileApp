@@ -130,10 +130,10 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
 
   const validateData = () => {
     if (date === null) {
-      console.log("no se puede enviar necesita fecha");
+      console.log("no se puede enviar, se necesita una fecha");
       return false;
     } else if (schedule === undefined) {
-      console.log("no se puede enviar necesita Horario");
+      console.log("no se puede enviar, se necesita un horario");
       return false;
     } else {
       console.log("se puede enviar");

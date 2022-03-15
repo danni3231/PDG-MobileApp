@@ -96,7 +96,7 @@ const Reservations: React.FC<ReservationsProps> = () => {
               })
             )}
             <Btn
-              text="Reservar"
+              text="+ Reservar"
               variant="add"
               action={function (): void {
                 navigate("/Reservas/list");

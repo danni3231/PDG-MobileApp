@@ -1,26 +1,22 @@
 import * as React from "react";
-import { getSpaceData } from "../../../Firebase/firebaseApi";
-import { space } from "../../../Types/space";
 
 import "./VisitCard.css";
 
 interface VisitCardProps {
   name: string;
-  userId: string;
   typeId: string;
-  visitorId: string;
+  visitorId: number;
   date: number;
 }
 
 const VisitCard: React.FC<VisitCardProps> = ({
   name,
-  userId,
   typeId,
   visitorId,
   date,
 }) => {
   let dateParse = new Date(date * 1000);
-  let dateString: string = `${dateParse.getDay()}/${dateParse.getMonth()}/${dateParse.getFullYear()}`;
+  let dateString: string = `${dateParse.getDate()}/${dateParse.getMonth()}/${dateParse.getFullYear()}`;
   return (
     <section className="visitCard">
       <div className="visitCard__header">
@@ -29,7 +25,9 @@ const VisitCard: React.FC<VisitCardProps> = ({
       </div>
       <div className="visitCard__body">
         <p className="visitCard__body__title">{name}</p>
-        <p>{`${typeId} ${visitorId}`}</p>
+        <p>{`${
+          typeId == "Tarjeta de Identidad" ? "T.I" : "C.C"
+        } : ${visitorId}`}</p>
         <p>{`Fecha: ${dateString}`}</p>
       </div>
     </section>

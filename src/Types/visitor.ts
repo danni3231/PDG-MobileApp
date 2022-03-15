@@ -1,7 +1,7 @@
 export type visitor = {
-  name: string,
+  name: string
   id: string
-  date: Date,
-  ccType: string,
+  date: number
+  ccType: string
   cc: number
 }

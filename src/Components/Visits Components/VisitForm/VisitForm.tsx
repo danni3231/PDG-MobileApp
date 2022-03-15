@@ -5,8 +5,10 @@ import * as React from "react";
 import { useNavigate } from "react-router";
 
 import Btn from "../../Buttons/Btn";
+import { visitor } from "../../../Types/visitor";
 
 import "./VisitForm.css";
+import { uploadVisitor } from "../../../Firebase/firebaseApi";
 
 interface VisitFormProps {}
 
@@ -23,6 +25,49 @@ const VisitForm: React.FC<VisitFormProps> = ({}) => {
     navigate(-1);
   };
 
+  const handleSubmit = () => {
+    if (validateData()) {
+      let dateParse = parseInt((date!.getTime() / 1000).toFixed(0));
+
+      const visitor: visitor = {
+        name: `${name} ${surname}`,
+        id: "",
+        date: dateParse,
+        ccType: idType,
+        cc: ~~id,
+      };
+
+      console.log(visitor);
+
+      uploadVisitor(visitor).then(() => {
+        navigate("/Visitas", { state: { reload: true } });
+      });
+    }
+  };
+
+  const validateData = () => {
+    if (name === "") {
+      console.log("No se puede enviar, se necesita un nombre");
+      return false;
+    } else if (surname === "") {
+      console.log("No se puede enviar, se necesita un apellido");
+      return false;
+    } else if (idType === "") {
+      console.log("No se puede enviar, se necesita un tipo de identificación");
+      return false;
+    } else if (id === "") {
+      console.log(
+        "No se puede enviar, se necesita un numero de identificación"
+      );
+      return false;
+    } else if (date === null) {
+      console.log("No se puede enviar, se necesiata una fecha");
+      return false;
+    } else {
+      console.log("se puede enviar");
+      return true;
+    }
+  };
   return (
     <article className="visitForm">
       <img
@@ -35,8 +80,18 @@ const VisitForm: React.FC<VisitFormProps> = ({}) => {
       <p>Por favor, llena los siguientes campos</p>
       <div className="scroll scroll--h">
         <div className="scroll__column visitForm__column">
-          <TextField placeholder="Nombre" onChange={() => {}} />
-          <TextField placeholder="Apellido" onChange={() => {}} />
+          <TextField
+            placeholder="Nombre"
+            onChange={(event) => {
+              setName(event.target.value);
+            }}
+          />
+          <TextField
+            placeholder="Apellido"
+            onChange={(event) => {
+              setSurname(event.target.value);
+            }}
+          />
           <Select
             value={idType}
             displayEmpty
@@ -53,7 +108,12 @@ const VisitForm: React.FC<VisitFormProps> = ({}) => {
               Cédula de Ciudadanía
             </MenuItem>
           </Select>
-          <TextField placeholder="N° de Documento" onChange={() => {}} />
+          <TextField
+            placeholder="N° de Documento"
+            onChange={(event) => {
+              setId(event.target.value);
+            }}
+          />
 
           <h2>Fecha de visita</h2>
           <LocalizationProvider
@@ -80,7 +140,12 @@ const VisitForm: React.FC<VisitFormProps> = ({}) => {
             />
           </LocalizationProvider>
 
-          <Btn text={"Confirmar"} variant="" margin="16px" action={() => {}} />
+          <Btn
+            text={"Confirmar"}
+            variant=""
+            margin="16px"
+            action={handleSubmit}
+          />
           <Btn text={"Cancelar"} variant={"disabled"} action={() => {}} />
         </div>
       </div>
