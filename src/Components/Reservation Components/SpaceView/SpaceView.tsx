@@ -12,12 +12,18 @@ import MobileDatePicker from "@mui/lab/MobileDatePicker";
 
 import "./SpaceView.css";
 import { booking } from "../../../Types/booking";
+import { useDispatch, useSelector } from "react-redux";
+import { addBookings } from "../../../Redux/Actions";
+import { AppState } from "../../../Redux/Reducers";
 
 interface SpaceViewProps {}
 
 const SpaceView: React.FC<SpaceViewProps> = ({}) => {
-  let { id } = useParams();
-  let navigate = useNavigate();
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const bookings = useSelector<AppState>((state) => state.bookings);
 
   const [space, setSpace] = React.useState<space>({
     img: "",
@@ -83,9 +89,15 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
         dateStart: dateStartParse,
       };
 
+      /*
       uploadBooking(newBooking).then(() => {
         navigate("/Reservas", { state: { reload: true } });
       });
+      */
+
+      dispatch(addBookings(newBooking));
+
+      console.log(bookings);
     }
   };
 
