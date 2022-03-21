@@ -23,8 +23,6 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const bookings = useSelector<AppState>((state) => state.bookings);
-
   const [space, setSpace] = React.useState<space>({
     img: "",
     name: "",
@@ -89,15 +87,11 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
         dateStart: dateStartParse,
       };
 
-      /*
       uploadBooking(newBooking).then(() => {
+        dispatch(addBookings(newBooking));
+
         navigate("/Reservas", { state: { reload: true } });
       });
-      */
-
-      dispatch(addBookings(newBooking));
-
-      console.log(bookings);
     }
   };
 
