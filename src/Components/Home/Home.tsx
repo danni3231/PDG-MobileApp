@@ -1,15 +1,13 @@
 import * as React from "react";
 import Gallery from "../Gallery/Gallery";
 import Header from "../Header/Header";
-import { space } from "../../Types/space";
 
-import { useDispatch, useSelector } from "react-redux";
-import { getBookings, getSpaces } from "../../Redux/Actions";
+import { useSelector } from "react-redux";
 import { AppState } from "../../Redux/Reducers";
 
 interface HomeProps {}
 
-const Home: React.FC<HomeProps> = ({}) => {
+const Home: React.FC<HomeProps> = () => {
   const spaces = useSelector<AppState, AppState["spaces"]>(
     (state) => state.spaces
   );

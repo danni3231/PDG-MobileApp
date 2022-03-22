@@ -9,17 +9,19 @@ import { visitor } from "../../../Types/visitor";
 
 import "./VisitForm.css";
 import { uploadVisitor } from "../../../Firebase/firebaseApi";
+import { useDispatch } from "react-redux";
 
 interface VisitFormProps {}
 
 const VisitForm: React.FC<VisitFormProps> = ({}) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [date, setDate] = React.useState<Date | null>(null);
   const [name, setName] = React.useState("");
   const [surname, setSurname] = React.useState("");
   const [idType, setIdType] = React.useState("");
   const [id, setId] = React.useState("");
-
-  const navigate = useNavigate();
 
   const goBack = () => () => {
     navigate(-1);
@@ -39,7 +41,7 @@ const VisitForm: React.FC<VisitFormProps> = ({}) => {
 
       console.log(visitor);
 
-      uploadVisitor(visitor).then(() => {
+      uploadVisitor(visitor, dispatch).then(() => {
         navigate("/Visitas", { state: { reload: true } });
       });
     }
@@ -68,6 +70,7 @@ const VisitForm: React.FC<VisitFormProps> = ({}) => {
       return true;
     }
   };
+
   return (
     <article className="visitForm">
       <img

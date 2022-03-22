@@ -1,7 +1,7 @@
 import * as React from "react";
-import { Navigate, useNavigate } from "react-router";
-import { getSpacesCollection } from "../../../Firebase/firebaseApi";
-import { space } from "../../../Types/space";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { AppState } from "../../../Redux/Reducers";
 import SpaceCard from "../SpaceCard/SpaceCard";
 
 import "./SpaceList.css";
@@ -10,28 +10,15 @@ interface SpaceListProps {}
 
 const SpaceList: React.FC<SpaceListProps> = () => {
   const navigate = useNavigate();
-  const [spaces, setSpaces] = React.useState<space[]>([]);
+  const dispatch = useDispatch();
+
+  const spaces = useSelector<AppState, AppState["spaces"]>(
+    (state) => state.spaces
+  );
 
   const goBack = () => () => {
     navigate(-1);
   };
-
-  //  firebase //
-  const getSpaces = async () => {
-    const snapshot = await getSpacesCollection;
-
-    const newSpaces: space[] = [];
-
-    snapshot.forEach((space: any) => {
-      newSpaces.push({ ...space.data(), id: space.id });
-    });
-
-    setSpaces(newSpaces);
-  };
-
-  React.useEffect(() => {
-    getSpaces();
-  }, []);
 
   return (
     <article className="spaceList">

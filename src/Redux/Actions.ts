@@ -1,14 +1,11 @@
-import {
-  getBookingsCollection,
-  getSpacesCollection,
-} from "../Firebase/firebaseApi";
 import { booking } from "../Types/booking";
 import { space } from "../Types/space";
+import { visitor } from "../Types/visitor";
 
 export type Action = { type: string; payload: any };
 
-export const addBookings = (newBooking: booking): Action => ({
-  type: "@bookings/addBookings",
+export const addBooking = (newBooking: booking): Action => ({
+  type: "@bookings/addBooking",
   payload: newBooking,
 });
 
@@ -22,31 +19,18 @@ export const setSpaces = (spaces: space[]): Action => ({
   payload: spaces,
 });
 
-export const ADD_BOOKINGS = "@bookings/addBookings";
+export const addVisitor = (newVisitor: visitor): Action => ({
+  type: "@visits/addVisitor",
+  payload: newVisitor,
+});
+
+export const setVisits = (visits: visitor[]): Action => ({
+  type: "@visits/setVisits",
+  payload: visits,
+});
+
+export const ADD_BOOKINGS = "@bookings/addBooking";
 export const SET_BOOKINGS = "@bookings/setBookings";
 export const SET_SPACES = "@spaces/setSpaces";
-
-//async code for
-export const getSpaces = async (dispatch: any) => {
-  const snapshot = await getSpacesCollection;
-
-  const newSpaces: space[] = [];
-
-  snapshot.forEach((space: any) => {
-    newSpaces.push({ ...space.data(), id: space.id });
-  });
-
-  await dispatch(setSpaces(newSpaces));
-};
-
-export const getBookings = async (dispatch: any) => {
-  const snapshot = await getBookingsCollection;
-
-  const newBookings: booking[] = [];
-
-  snapshot.forEach((booking: any) => {
-    newBookings.push({ ...booking.data() });
-  });
-
-  await dispatch(setBookings(newBookings));
-};
+export const SET_VISITS = "@visits/setVisits";
+export const ADD_VISITOR = "@visits/addVisitor";

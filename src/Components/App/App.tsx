@@ -9,8 +9,9 @@ import SpaceList from "../Reservation Components/SpaceList/SpaceList";
 import SpaceView from "../Reservation Components/SpaceView/SpaceView";
 import Visits from "../Visits Components/Visits/Visits";
 import VisitForm from "../Visits Components/VisitForm/VisitForm";
-import { getBookings, getSpaces } from "../../Redux/Actions";
+
 import { useDispatch } from "react-redux";
+import { getBookings, getSpaces, getVisits } from "../../Firebase/firebaseApi";
 
 function App() {
   const dispatch = useDispatch();
@@ -18,10 +19,9 @@ function App() {
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    getSpaces(dispatch).then(() => {
-      setLoading(false);
-    });
-    getBookings(dispatch).then(() => {
+    getSpaces(dispatch);
+    getBookings(dispatch);
+    getVisits(dispatch).then(() => {
       setLoading(false);
     });
   }, []);
