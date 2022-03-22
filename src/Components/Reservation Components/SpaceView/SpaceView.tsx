@@ -9,11 +9,13 @@ import TextField from "@mui/material/TextField";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import MobileDatePicker from "@mui/lab/MobileDatePicker";
+import Alert from "@mui/material/Alert";
 
 import "./SpaceView.css";
 import { booking } from "../../../Types/booking";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "../../../Redux/Reducers";
+import Toast from "../../Toast/Toast";
 
 interface SpaceViewProps {}
 
@@ -26,6 +28,8 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
     (state) => state.spaces.find((spaces) => spaces.id === id!)
   );
 
+  const [isUploading, setIsUploading] = React.useState(false);
+
   const [date, setDate] = React.useState<Date | null>(null);
   const [schedule, setSchedule] = React.useState<
     { start: number; end: number } | undefined
@@ -36,6 +40,8 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
 
   const handleSubmit = () => {
     if (validateData()) {
+      setIsUploading(true);
+
       date?.setMinutes(0);
 
       const dateStart = new Date(date!);
@@ -203,6 +209,7 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
           />
         </div>
       </section>
+      {isUploading ? <Toast /> : ""}
     </article>
   );
 };
