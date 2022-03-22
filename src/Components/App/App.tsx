@@ -10,34 +10,64 @@ import SpaceView from "../Reservation Components/SpaceView/SpaceView";
 import Visits from "../Visits Components/Visits/Visits";
 import VisitForm from "../Visits Components/VisitForm/VisitForm";
 
+import { useDispatch } from "react-redux";
+import { getBookings, getSpaces, getVisits } from "../../Firebase/firebaseApi";
+
 function App() {
-  const reservations: any[] = [];
+  const dispatch = useDispatch();
 
-  return (
-    <div className="App">
-      <Nav></Nav>
+  const [loading, setLoading] = React.useState(true);
 
-      <Routes>
-        <Route path="/" element={<Home />} />
+  React.useEffect(() => {
+    getSpaces(dispatch);
+    getBookings(dispatch);
+    getVisits(dispatch).then(() => {
+      setLoading(false);
+    });
+  }, []);
 
-        <Route path="Visitas" element={<Visits />} />
-        <Route path="Visitas/form" element={<VisitForm />} />
+  if (loading) {
+    return (
+      <section className="loading">
+        <section className="lds-roller">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </section>
+      </section>
+    );
+  } else {
+    return (
+      <div className="App">
+        <Nav></Nav>
 
-        <Route path="Reservas" element={<Reservations />} />
-        <Route path="Reservas/list" element={<SpaceList />} />
-        <Route path="Reservas/form/:id" element={<SpaceView />} />
+        <Routes>
+          <Route path="/" element={<Home />} />
 
-        <Route
-          path="Social"
-          element={
-            <div className="comingSoon">
-              <h1 className="textLoading">Coming Soon...</h1>
-            </div>
-          }
-        />
-      </Routes>
-    </div>
-  );
+          <Route path="Visitas" element={<Visits />} />
+          <Route path="Visitas/form" element={<VisitForm />} />
+
+          <Route path="Reservas" element={<Reservations />} />
+          <Route path="Reservas/list" element={<SpaceList />} />
+          <Route path="Reservas/form/:id" element={<SpaceView />} />
+
+          <Route
+            path="Social"
+            element={
+              <div className="comingSoon">
+                <h1 className="textLoading">Coming Soon...</h1>
+              </div>
+            }
+          />
+        </Routes>
+      </div>
+    );
+  }
 }
 
 export default App;

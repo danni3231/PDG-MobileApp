@@ -1,5 +1,6 @@
 import * as React from "react";
-import { getSpaceData } from "../../../Firebase/firebaseApi";
+import { useSelector } from "react-redux";
+import { AppState } from "../../../Redux/Reducers";
 import { space } from "../../../Types/space";
 
 import "./ReservationCard.css";
@@ -23,39 +24,9 @@ const ReservationCard: React.FC<ReservationCardProps> = ({
 
   let dateString: string = `${dateStartParse.getDate()}/${dateStartParse.getMonth()}/${dateStartParse.getFullYear()}`;
 
-  const [space, setSpace] = React.useState<space>({
-    img: "",
-    name: "",
-    id: "",
-    occupation: 0,
-    days: { end: "", start: "" },
-    schedule: { end: 0, start: 0 },
-  });
-
-  const getSpace = async () => {
-    const snapshot = await getSpaceData(spaceId);
-    let data = snapshot.data();
-    let newSpace: space = {
-      name: data!.name,
-      img: data!.img,
-      id: data!.id,
-      occupation: data!.occupation,
-      days: {
-        end: data!.days.end,
-        start: data!.days.start,
-      },
-      schedule: {
-        end: data!.schedule.end,
-        start: data!.schedule.start,
-      },
-    };
-
-    setSpace(newSpace);
-  };
-
-  React.useEffect(() => {
-    getSpace();
-  }, []);
+  const space: space | undefined = useSelector<AppState, space | undefined>(
+    (state) => state.spaces.find((spaces) => spaces.id === spaceId)
+  );
 
   return (
     <section className="reservationCard">
@@ -64,7 +35,7 @@ const ReservationCard: React.FC<ReservationCardProps> = ({
         <img src={`${process.env.PUBLIC_URL}/Icons/edit.svg`} alt="" />
       </div>
       <div className="reservationCard__body">
-        <p className="reservationCard__body__title">{space.name}</p>
+        <p className="reservationCard__body__title">{space!.name}</p>
         <p>{`Hora: ${hourStartString} a ${hourEndString}`}</p>
         <p>{`Fecha: ${dateString}`}</p>
       </div>

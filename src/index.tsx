@@ -6,12 +6,16 @@ import reportWebVitals from "./reportWebVitals";
 import { HashRouter } from "react-router-dom";
 import { ThemeProvider } from "@emotion/react";
 import { theme } from "./Utils/Theme";
+import { Provider } from "react-redux";
+import { store } from "./Redux/Store";
 
 ReactDOM.render(
   <React.StrictMode>
     <HashRouter>
       <ThemeProvider theme={theme}>
-        <App />
+        <Provider store={store}>
+          <App />
+        </Provider>
       </ThemeProvider>
     </HashRouter>
   </React.StrictMode>,

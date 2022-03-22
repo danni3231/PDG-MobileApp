@@ -20,7 +20,7 @@ const VisitCard: React.FC<VisitCardProps> = ({
   return (
     <section className="visitCard">
       <div className="visitCard__header">
-        <h2>Zona Reservada</h2>
+        <h2>Visita autorizada</h2>
         <img src={`${process.env.PUBLIC_URL}/Icons/edit.svg`} alt="" />
       </div>
       <div className="visitCard__body">
