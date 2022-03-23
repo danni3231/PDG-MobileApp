@@ -1,25 +1,30 @@
-import {createTheme} from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
 
 export const theme = createTheme({
-   palette: {
-      primary: {
-         main: "#7b61ff",
-      },
-      secondary: {
-         main: "#7b61ff",
-      },
-   },
+  palette: {
+    primary: {
+      main: "#7b61ff",
+    },
+    secondary: {
+      main: "#7b61ff",
+    },
+  },
 
-   components: {
-    MuiOutlinedInput:{
+  components: {
+    MuiOutlinedInput: {
       styleOverrides: {
         root: {
           borderRadius: "50px",
           fontSize: "14px",
-          fontFamily: "Satoshi"
+          fontFamily: "Satoshi",
         },
-      }
-    }
+      },
+    },
 
-   }
+    MuiAlert: {
+      styleOverrides: {
+        root: { backgroundColor: "#7b61ff" },
+      },
+    },
+  },
 });

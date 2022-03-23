@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Style } from "util";
 
 import "./Btn.css";
 
@@ -18,7 +17,7 @@ const Btn: React.FC<BtnProps> = ({ text, variant, action, margin }) => {
 
   let styles: React.CSSProperties = {};
 
-  if (margin != undefined) {
+  if (margin !== undefined) {
     styles = { ...styles, marginTop: margin };
   }
 

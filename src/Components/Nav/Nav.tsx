@@ -5,7 +5,7 @@ import { NavContext } from "../../Context/NavContext";
 
 interface NavProps {}
 
-const Nav: React.FC<NavProps> = ({}) => {
+const Nav: React.FC<NavProps> = () => {
   const navOptions = React.useContext(NavContext);
 
   return (

@@ -14,10 +14,11 @@ import "./SpaceView.css";
 import { booking } from "../../../Types/booking";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "../../../Redux/Reducers";
+import Toast from "../../Toast/Toast";
 
 interface SpaceViewProps {}
 
-const SpaceView: React.FC<SpaceViewProps> = ({}) => {
+const SpaceView: React.FC<SpaceViewProps> = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -25,6 +26,8 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
   const space: space | undefined = useSelector<AppState, space | undefined>(
     (state) => state.spaces.find((spaces) => spaces.id === id!)
   );
+
+  const [isUploading, setIsUploading] = React.useState(false);
 
   const [date, setDate] = React.useState<Date | null>(null);
   const [schedule, setSchedule] = React.useState<
@@ -36,6 +39,8 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
 
   const handleSubmit = () => {
     if (validateData()) {
+      setIsUploading(true);
+
       date?.setMinutes(0);
 
       const dateStart = new Date(date!);
@@ -203,6 +208,7 @@ const SpaceView: React.FC<SpaceViewProps> = ({}) => {
           />
         </div>
       </section>
+      {isUploading ? <Toast /> : ""}
     </article>
   );
 };

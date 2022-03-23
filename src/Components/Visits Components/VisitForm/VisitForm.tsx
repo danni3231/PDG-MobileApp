@@ -10,12 +10,15 @@ import { visitor } from "../../../Types/visitor";
 import "./VisitForm.css";
 import { uploadVisitor } from "../../../Firebase/firebaseApi";
 import { useDispatch } from "react-redux";
+import Toast from "../../Toast/Toast";
 
 interface VisitFormProps {}
 
-const VisitForm: React.FC<VisitFormProps> = ({}) => {
+const VisitForm: React.FC<VisitFormProps> = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [isUploading, setIsUploading] = React.useState(false);
 
   const [date, setDate] = React.useState<Date | null>(null);
   const [name, setName] = React.useState("");
@@ -29,6 +32,8 @@ const VisitForm: React.FC<VisitFormProps> = ({}) => {
 
   const handleSubmit = () => {
     if (validateData()) {
+      setIsUploading(true);
+
       let dateParse = parseInt((date!.getTime() / 1000).toFixed(0));
 
       const visitor: visitor = {
@@ -152,6 +157,7 @@ const VisitForm: React.FC<VisitFormProps> = ({}) => {
           <Btn text={"Cancelar"} variant={"disabled"} action={() => {}} />
         </div>
       </div>
+      {isUploading ? <Toast /> : ""}
     </article>
   );
 };
