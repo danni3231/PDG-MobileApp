@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Route, Routes } from "react-router";
+import { Route, Routes, useLocation } from "react-router";
 import "./App.css";
 
 import Nav from "../Nav/Nav";
@@ -12,9 +12,11 @@ import VisitForm from "../Visits Components/VisitForm/VisitForm";
 
 import { useDispatch } from "react-redux";
 import { getBookings, getSpaces, getVisits } from "../../Firebase/firebaseApi";
+import Login from "../Login/Login";
 
 function App() {
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const [loading, setLoading] = React.useState(true);
 
@@ -44,10 +46,12 @@ function App() {
   } else {
     return (
       <div className="App">
-        <Nav></Nav>
+        {location.pathname !== "/" ? <Nav></Nav> : ""}
 
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Login />} />
+
+          <Route path="/Inicio" element={<Home />} />
 
           <Route path="Visitas" element={<Visits />} />
           <Route path="Visitas/form" element={<VisitForm />} />

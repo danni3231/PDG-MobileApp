@@ -1,0 +1,36 @@
+.login {
+  background-color: #7b61ff;
+  padding: 0px;
+  padding-top: 40px;
+}
+.login__header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20%;
+}
+
+.login__header__img {
+  width: 40%;
+}
+
+.login__form,
+.login__form__container {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  text-align: left;
+}
+
+.login__form__container {
+  height: 80%;
+  padding: 0px 26px;
+  text-align: center;
+  border-radius: 80px 0px 0px 0px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 30px;
+}

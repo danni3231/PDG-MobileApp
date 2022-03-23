@@ -11,16 +11,9 @@ interface NavBtnProps {
 const NavBtn: React.FC<NavBtnProps> = ({ label, img }) => {
   let navigate = useNavigate();
   let path = useLocation().pathname.split("/");
-  if (path[1] === "") {
-    path[1] = "Inicio";
-  }
 
   const handleIconClick = () => {
-    if (label === "Inicio") {
-      navigate("/");
-    } else {
-      navigate(label);
-    }
+    navigate(label);
   };
 
   return (
