@@ -14,7 +14,7 @@ import Toast from "../../Toast/Toast";
 
 interface VisitFormProps {}
 
-const VisitForm: React.FC<VisitFormProps> = ({}) => {
+const VisitForm: React.FC<VisitFormProps> = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

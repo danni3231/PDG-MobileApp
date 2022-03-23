@@ -9,7 +9,6 @@ import TextField from "@mui/material/TextField";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import MobileDatePicker from "@mui/lab/MobileDatePicker";
-import Alert from "@mui/material/Alert";
 
 import "./SpaceView.css";
 import { booking } from "../../../Types/booking";
@@ -19,7 +18,7 @@ import Toast from "../../Toast/Toast";
 
 interface SpaceViewProps {}
 
-const SpaceView: React.FC<SpaceViewProps> = ({}) => {
+const SpaceView: React.FC<SpaceViewProps> = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();

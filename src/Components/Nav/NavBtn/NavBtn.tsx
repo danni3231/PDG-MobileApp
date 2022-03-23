@@ -11,7 +11,7 @@ interface NavBtnProps {
 const NavBtn: React.FC<NavBtnProps> = ({ label, img }) => {
   let navigate = useNavigate();
   let path = useLocation().pathname.split("/");
-  if (path[1] == "") {
+  if (path[1] === "") {
     path[1] = "Inicio";
   }
 

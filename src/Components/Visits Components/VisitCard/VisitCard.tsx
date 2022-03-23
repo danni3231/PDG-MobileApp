@@ -26,7 +26,7 @@ const VisitCard: React.FC<VisitCardProps> = ({
       <div className="visitCard__body">
         <p className="visitCard__body__title">{name}</p>
         <p>{`${
-          typeId == "Tarjeta de Identidad" ? "T.I" : "C.C"
+          typeId === "Tarjeta de Identidad" ? "T.I" : "C.C"
         } : ${visitorId}`}</p>
         <p>{`Fecha: ${dateString}`}</p>
       </div>

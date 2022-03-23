@@ -5,7 +5,7 @@ import "./Toast.css";
 
 interface ToastProps {}
 
-const Toast: React.FC<ToastProps> = ({}) => {
+const Toast: React.FC<ToastProps> = () => {
   return (
     <section className="toast">
       <Alert variant="filled">Subiendo la informacion, por favor espera</Alert>

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { AppState } from "../../../Redux/Reducers";
 import SpaceCard from "../SpaceCard/SpaceCard";
@@ -10,7 +10,6 @@ interface SpaceListProps {}
 
 const SpaceList: React.FC<SpaceListProps> = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const spaces = useSelector<AppState, AppState["spaces"]>(
     (state) => state.spaces
@@ -26,6 +25,7 @@ const SpaceList: React.FC<SpaceListProps> = () => {
         className="spaceList__backBtn"
         src={`${process.env.PUBLIC_URL}/Icons/ArrowLeft.svg`}
         onClick={goBack()}
+        alt="backBtn.png"
       />
       <h1>Elige la zona que deseas reservar</h1>
 

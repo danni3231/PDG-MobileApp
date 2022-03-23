@@ -1,9 +1,8 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { AppState } from "../../../Redux/Reducers";
 
-import { visitor } from "../../../Types/visitor";
 import Btn from "../../Buttons/Btn";
 import Header from "../../Header/Header";
 import VisitCard from "../VisitCard/VisitCard";
