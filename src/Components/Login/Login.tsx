@@ -8,6 +8,12 @@ interface LoginProps {}
 
 const Login: React.FC<LoginProps> = () => {
   const [condominium, setCondominium] = React.useState<string>("");
+  const [id, setId] = React.useState<string>("");
+  const [password, setPassword] = React.useState<string>("");
+
+  const handleSubmit = () => () => {
+    console.log(id, password);
+  };
 
   return (
     <article className="login">
@@ -21,8 +27,20 @@ const Login: React.FC<LoginProps> = () => {
       <section className="login__form__container">
         <h1 className="purple">Iniciar Sesión</h1>
         <section className="login__form">
-          <TextField placeholder="Número de documento" />
-          <TextField placeholder="Contraseña" />
+          <TextField
+            placeholder="Número de documento"
+            type="number"
+            onChange={(event) => {
+              setId(event.target.value);
+            }}
+          />
+          <TextField
+            placeholder="Contraseña"
+            type="password"
+            onChange={(event) => {
+              setPassword(event.target.value);
+            }}
+          />
           <Select
             value={condominium}
             displayEmpty
@@ -40,7 +58,7 @@ const Login: React.FC<LoginProps> = () => {
             text={"Iniciar sesión"}
             variant={""}
             margin="18px"
-            action={() => {}}
+            action={handleSubmit()}
           ></Btn>
         </section>
         <p className="purple">

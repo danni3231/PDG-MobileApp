@@ -118,6 +118,7 @@ const VisitForm: React.FC<VisitFormProps> = () => {
           </Select>
           <TextField
             placeholder="N° de Documento"
+            type="number"
             onChange={(event) => {
               setId(event.target.value);
             }}
