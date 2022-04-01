@@ -1,32 +1,51 @@
 import { MenuItem, Select, TextField } from "@mui/material";
 import * as React from "react";
-import Btn from "../Buttons/Btn";
+import { useNavigate } from "react-router";
+import Btn from "../../UI/Buttons/Btn";
 
-import "./Login.css";
+import "../Login/Login.css";
 
-interface LoginProps {}
+interface RegisterProps {}
 
-const Login: React.FC<LoginProps> = () => {
-  const [condominium, setCondominium] = React.useState<string>("");
+const Register: React.FC<RegisterProps> = ({}) => {
+  const navigate = useNavigate();
   const [id, setId] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
+  const [condominium, setCondominium] = React.useState<string>("");
+
+  const validateData = () => {
+    if (condominium === "") {
+      // alert
+      return false;
+    } else if (id === "") {
+      //alert
+      return false;
+    } else if (password === "") {
+      //alert
+      return false;
+    } else {
+      return true;
+    }
+  };
 
   const handleSubmit = () => () => {
-    console.log(id, password);
+    if (validateData()) {
+      //register
+    }
   };
 
   return (
-    <article className="login">
-      <section className="login__header">
+    <article className="register">
+      <section className="register__header">
         <img
-          className="login__header__img"
+          className="register__header__img"
           src={`${process.env.PUBLIC_URL}/Icons/logos/logo__large.svg`}
           alt="logo__large.svg"
         />
       </section>
-      <section className="login__form__container">
-        <h1 className="purple">Iniciar Sesión</h1>
-        <section className="login__form">
+      <section className="register__form__container">
+        <h1 className="purple">Registrarse</h1>
+        <section className="register__form">
           <TextField
             placeholder="Número de documento"
             type="number"
@@ -34,6 +53,7 @@ const Login: React.FC<LoginProps> = () => {
               setId(event.target.value);
             }}
           />
+
           <TextField
             placeholder="Contraseña"
             type="password"
@@ -41,6 +61,15 @@ const Login: React.FC<LoginProps> = () => {
               setPassword(event.target.value);
             }}
           />
+
+          <TextField
+            placeholder="Confirmar Contraseña"
+            type="password"
+            onChange={(event) => {
+              setPassword(event.target.value);
+            }}
+          />
+
           <Select
             value={condominium}
             displayEmpty
@@ -61,12 +90,12 @@ const Login: React.FC<LoginProps> = () => {
             action={handleSubmit()}
           ></Btn>
         </section>
-        <p className="purple">
-          ¿No tienes una cuenta? <b>Registrate</b>{" "}
+        <p className="purple" onClick={() => navigate("/")}>
+          ¿Ya tienes una cuenta? <b>Inicia sesión</b>
         </p>
       </section>
     </article>
   );
 };
 
-export default Login;
+export default Register;

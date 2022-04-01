@@ -4,13 +4,13 @@ import { MenuItem, Select, TextField } from "@mui/material";
 import * as React from "react";
 import { useNavigate } from "react-router";
 
-import Btn from "../../Buttons/Btn";
+import Btn from "../../UI/Buttons/Btn";
 import { visitor } from "../../../Types/visitor";
 
 import "./VisitForm.css";
 import { uploadVisitor } from "../../../Firebase/firebaseApi";
 import { useDispatch } from "react-redux";
-import Toast from "../../Toast/Toast";
+import Toast from "../../UI/Toast/Toast";
 
 interface VisitFormProps {}
 

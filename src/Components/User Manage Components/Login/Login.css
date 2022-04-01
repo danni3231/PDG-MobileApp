@@ -1,21 +1,26 @@
-.login {
+.login,
+.register {
   background-color: #7b61ff;
   padding: 0px;
   padding-top: 40px;
 }
-.login__header {
+.login__header,
+.register__header {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 20%;
 }
 
-.login__header__img {
+.login__header__img,
+.register__header__img {
   width: 40%;
 }
 
 .login__form,
-.login__form__container {
+.login__form__container,
+.register__form,
+.register__form__container {
   background-color: #fff;
   display: flex;
   flex-direction: column;
@@ -23,7 +28,8 @@
   text-align: left;
 }
 
-.login__form__container {
+.login__form__container,
+.register__form__container {
   height: 80%;
   padding: 0px 26px;
   text-align: center;

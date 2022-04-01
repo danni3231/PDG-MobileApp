@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { AppState } from "../../../Redux/Reducers";
 
-import Btn from "../../Buttons/Btn";
-import Header from "../../Header/Header";
+import Btn from "../../UI/Buttons/Btn";
+import Header from "../../UI/Header/Header";
 import VisitCard from "../VisitCard/VisitCard";
 
 import "./Visits.css";

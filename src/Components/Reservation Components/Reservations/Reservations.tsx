@@ -2,8 +2,8 @@ import * as React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { AppState } from "../../../Redux/Reducers";
-import Btn from "../../Buttons/Btn";
-import Header from "../../Header/Header";
+import Btn from "../../UI/Buttons/Btn";
+import Header from "../../UI/Header/Header";
 import ReservationCard from "../ReservationCard/ReservationCard";
 
 import "./Reservations.css";

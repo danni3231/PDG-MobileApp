@@ -2,7 +2,7 @@ import * as React from "react";
 import { Route, Routes, useLocation } from "react-router";
 import "./App.css";
 
-import Nav from "../Nav/Nav";
+import Nav from "../UI/Nav/Nav";
 import Home from "../Home/Home";
 import Reservations from "../Reservation Components/Reservations/Reservations";
 import SpaceList from "../Reservation Components/SpaceList/SpaceList";
@@ -12,7 +12,8 @@ import VisitForm from "../Visits Components/VisitForm/VisitForm";
 
 import { useDispatch } from "react-redux";
 import { getBookings, getSpaces, getVisits } from "../../Firebase/firebaseApi";
-import Login from "../Login/Login";
+import Login from "../User Manage Components/Login/Login";
+import Register from "../User Manage Components/Register/Register";
 
 function App() {
   const dispatch = useDispatch();
@@ -46,12 +47,18 @@ function App() {
   } else {
     return (
       <div className="App">
-        {location.pathname !== "/" ? <Nav></Nav> : ""}
+        {location.pathname === "/" || location.pathname === "/Registro" ? (
+          ""
+        ) : (
+          <Nav></Nav>
+        )}
 
         <Routes>
           <Route path="/" element={<Login />} />
 
-          <Route path="/Inicio" element={<Home />} />
+          <Route path="Registro" element={<Register />} />
+
+          <Route path="Inicio" element={<Home />} />
 
           <Route path="Visitas" element={<Visits />} />
           <Route path="Visitas/form" element={<VisitForm />} />

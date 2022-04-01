@@ -1,6 +1,6 @@
 import * as React from "react";
-import Gallery from "../Gallery/Gallery";
-import Header from "../Header/Header";
+import Gallery from "../UI/Gallery/Gallery";
+import Header from "../UI/Header/Header";
 
 import { useSelector } from "react-redux";
 import { AppState } from "../../Redux/Reducers";

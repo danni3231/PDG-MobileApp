@@ -2,7 +2,7 @@ import * as React from "react";
 import { useNavigate, useParams } from "react-router";
 import { uploadBooking } from "../../../Firebase/firebaseApi";
 import { space } from "../../../Types/space";
-import Btn from "../../Buttons/Btn";
+import Btn from "../../UI/Buttons/Btn";
 import ScheduleOption from "../ScheduleOption/ScheduleOption";
 
 import TextField from "@mui/material/TextField";
@@ -14,7 +14,7 @@ import "./SpaceView.css";
 import { booking } from "../../../Types/booking";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "../../../Redux/Reducers";
-import Toast from "../../Toast/Toast";
+import Toast from "../../UI/Toast/Toast";
 
 interface SpaceViewProps {}
 

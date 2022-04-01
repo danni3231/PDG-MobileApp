@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./Nav.css";
 import NavBtn from "./NavBtn/NavBtn";
-import { NavContext } from "../../Context/NavContext";
+import { NavContext } from "../../../Context/NavContext";
 
 interface NavProps {}
 
