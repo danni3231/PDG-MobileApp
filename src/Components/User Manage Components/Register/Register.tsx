@@ -1,6 +1,7 @@
 import { MenuItem, Select, TextField } from "@mui/material";
 import * as React from "react";
 import { useNavigate } from "react-router";
+import { findUserInDB } from "../../../Firebase/firebaseApi";
 import Btn from "../../UI/Buttons/Btn";
 
 import "../Login/Login.css";
@@ -32,6 +33,8 @@ const Register: React.FC<RegisterProps> = ({}) => {
     if (validateData()) {
       //register
     }
+
+    findUserInDB(id);
   };
 
   return (

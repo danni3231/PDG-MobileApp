@@ -24,6 +24,7 @@ import { space } from "../Types/space";
 import { visitor } from "../Types/visitor";
 import { db } from "./firebaseConfig";
 
+const usersDBRef = collection(db, "usersDB");
 const spacesCollectionRef = "condominiums/q4CPmR9IIHrA6k1H2SdS/spaces";
 const bookingsCollectionRef = "condominiums/q4CPmR9IIHrA6k1H2SdS/bookings";
 const visitorsCollectionRef = "condominiums/q4CPmR9IIHrA6k1H2SdS/visitors";
@@ -96,4 +97,10 @@ export const uploadVisitor = async (visitor: visitor, dispatch: any) => {
   } catch (e) {
     console.error("Error adding document: ", e);
   }
+};
+
+export const findUserInDB = async (id: string) => {
+  const q = await query(usersDBRef, where("id", "==", id));
+
+  console.log(q.firestore);
 };

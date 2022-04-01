@@ -4,6 +4,15 @@ import { visitor } from "../Types/visitor";
 
 export type Action = { type: string; payload: any };
 
+// Space actions
+
+export const setSpaces = (spaces: space[]): Action => ({
+  type: "@spaces/setSpaces",
+  payload: spaces,
+});
+
+// Bookings actions
+
 export const addBooking = (newBooking: booking): Action => ({
   type: "@bookings/addBooking",
   payload: newBooking,
@@ -14,10 +23,7 @@ export const setBookings = (bookings: booking[]): Action => ({
   payload: bookings,
 });
 
-export const setSpaces = (spaces: space[]): Action => ({
-  type: "@spaces/setSpaces",
-  payload: spaces,
-});
+// Visits actions
 
 export const addVisitor = (newVisitor: visitor): Action => ({
   type: "@visits/addVisitor",
@@ -28,6 +34,8 @@ export const setVisits = (visits: visitor[]): Action => ({
   type: "@visits/setVisits",
   payload: visits,
 });
+
+// Users Actions
 
 export const ADD_BOOKINGS = "@bookings/addBooking";
 export const SET_BOOKINGS = "@bookings/setBookings";
