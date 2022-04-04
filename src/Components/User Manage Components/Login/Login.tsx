@@ -10,7 +10,7 @@ interface LoginProps {}
 const Login: React.FC<LoginProps> = () => {
   const navigate = useNavigate();
 
-  const [id, setId] = React.useState<string>("");
+  const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
   const [condominium, setCondominium] = React.useState<string>("");
 
@@ -18,7 +18,7 @@ const Login: React.FC<LoginProps> = () => {
     if (condominium === "") {
       // alert
       return false;
-    } else if (id === "") {
+    } else if (email === "") {
       //alert
       return false;
     } else if (password === "") {
@@ -48,12 +48,12 @@ const Login: React.FC<LoginProps> = () => {
         <h1 className="purple">Iniciar Sesión</h1>
         <section className="login__form">
           <TextField
-            placeholder="Número de documento"
-            type="number"
+            placeholder="Correo electrónico"
             onChange={(event) => {
-              setId(event.target.value);
+              setEmail(event.target.value);
             }}
           />
+
           <TextField
             placeholder="Contraseña"
             type="password"
@@ -61,6 +61,7 @@ const Login: React.FC<LoginProps> = () => {
               setPassword(event.target.value);
             }}
           />
+
           <Select
             value={condominium}
             displayEmpty
@@ -79,7 +80,7 @@ const Login: React.FC<LoginProps> = () => {
             variant={""}
             margin="18px"
             action={handleSubmit()}
-          ></Btn>
+          />
         </section>
         <p className="purple" onClick={() => navigate("/Registro")}>
           ¿No tienes una cuenta? <b>Registrate</b>

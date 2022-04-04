@@ -1,5 +1,6 @@
 import { booking } from "../Types/booking";
 import { space } from "../Types/space";
+import { User } from "../Types/user";
 import { visitor } from "../Types/visitor";
 
 export type Action = { type: string; payload: any };
@@ -37,8 +38,20 @@ export const setVisits = (visits: visitor[]): Action => ({
 
 // Users Actions
 
+export const setUserState = (state: boolean): Action => ({
+  type: "@user/setUserState",
+  payload: state,
+});
+
+export const setUser = (user: User): Action => ({
+  type: "@user/setUser",
+  payload: user,
+});
+
+export const SET_SPACES = "@spaces/setSpaces";
 export const ADD_BOOKINGS = "@bookings/addBooking";
 export const SET_BOOKINGS = "@bookings/setBookings";
-export const SET_SPACES = "@spaces/setSpaces";
 export const SET_VISITS = "@visits/setVisits";
 export const ADD_VISITOR = "@visits/addVisitor";
+export const SET_USER = "@user/setUser";
+export const SET_USER_STATE = "@user/setUserState";

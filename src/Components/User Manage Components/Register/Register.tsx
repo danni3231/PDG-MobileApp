@@ -1,7 +1,8 @@
 import { MenuItem, Select, TextField } from "@mui/material";
 import * as React from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { findUserInDB } from "../../../Firebase/firebaseApi";
+import { registerUser, validateUserInDB } from "../../../Firebase/firebaseApi";
 import Btn from "../../UI/Buttons/Btn";
 
 import "../Login/Login.css";
@@ -10,31 +11,58 @@ interface RegisterProps {}
 
 const Register: React.FC<RegisterProps> = ({}) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [email, setEmail] = React.useState<string>("");
   const [id, setId] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
   const [condominium, setCondominium] = React.useState<string>("");
 
-  const validateData = () => {
+  const validateInputs = () => {
     if (condominium === "") {
       // alert
+      console.log("falta condominio");
       return false;
     } else if (id === "") {
       //alert
+      console.log("falta id");
       return false;
     } else if (password === "") {
       //alert
+      console.log("falta contraseña");
       return false;
     } else {
       return true;
     }
   };
 
-  const handleSubmit = () => () => {
-    if (validateData()) {
-      //register
-    }
+  const castCondominiumId = (condominium: string) => {
+    switch (condominium) {
+      case "Guadalupe alto":
+        return "q4CPmR9IIHrA6k1H2SdS";
 
-    findUserInDB(id);
+      case "El Coral":
+        return "q4CPmR9IIHrA6k1H2SdS";
+
+      case "Boho u living":
+        return "q4CPmR9IIHrA6k1H2SdS";
+
+      default:
+        return "";
+    }
+  };
+
+  const handleSubmit = () => async () => {
+    if (validateInputs()) {
+      const condominiumId = castCondominiumId(condominium);
+      const exist = await validateUserInDB(id, condominiumId, dispatch);
+
+      if (exist) {
+        // registerUser(email, password, navigate, dispatch);
+      } else {
+        console.log("Tu identificación no aparece en la base de datos");
+      }
+    }
   };
 
   return (
@@ -50,6 +78,13 @@ const Register: React.FC<RegisterProps> = ({}) => {
         <h1 className="purple">Registrarse</h1>
         <section className="register__form">
           <TextField
+            placeholder="Correo electrónico"
+            onChange={(event) => {
+              setEmail(event.target.value);
+            }}
+          />
+
+          <TextField
             placeholder="Número de documento"
             type="number"
             onChange={(event) => {
@@ -59,14 +94,6 @@ const Register: React.FC<RegisterProps> = ({}) => {
 
           <TextField
             placeholder="Contraseña"
-            type="password"
-            onChange={(event) => {
-              setPassword(event.target.value);
-            }}
-          />
-
-          <TextField
-            placeholder="Confirmar Contraseña"
             type="password"
             onChange={(event) => {
               setPassword(event.target.value);

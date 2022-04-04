@@ -1,4 +1,9 @@
 import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import {
   collection,
   addDoc,
   updateDoc,
@@ -17,14 +22,19 @@ import {
   addVisitor,
   setBookings,
   setSpaces,
+  setUser,
+  setUserState,
   setVisits,
 } from "../Redux/Actions";
 import { booking } from "../Types/booking";
 import { space } from "../Types/space";
+import { User } from "../Types/user";
 import { visitor } from "../Types/visitor";
-import { db } from "./firebaseConfig";
+import { auth, db } from "./firebaseConfig";
 
-const usersDBRef = collection(db, "usersDB");
+const usersDBRef = (condominiumId: string) => {
+  return `condominiums/${condominiumId}/users`;
+};
 const spacesCollectionRef = "condominiums/q4CPmR9IIHrA6k1H2SdS/spaces";
 const bookingsCollectionRef = "condominiums/q4CPmR9IIHrA6k1H2SdS/bookings";
 const visitorsCollectionRef = "condominiums/q4CPmR9IIHrA6k1H2SdS/visitors";
@@ -43,17 +53,7 @@ export const getSpaces = async (dispatch: any) => {
   await dispatch(setSpaces(newSpaces));
 };
 
-export const getBookings = async (dispatch: any) => {
-  const snapshot = await getDocs(collection(db, bookingsCollectionRef));
-
-  const newBookings: booking[] = [];
-
-  snapshot.forEach((booking: any) => {
-    newBookings.push({ ...booking.data() });
-  });
-
-  await dispatch(setBookings(newBookings));
-};
+//Visits async functions
 
 export const getVisits = async (dispatch: any) => {
   const snapshot = await getDocs(collection(db, visitorsCollectionRef));
@@ -65,22 +65,6 @@ export const getVisits = async (dispatch: any) => {
   });
 
   await dispatch(setVisits(newVisits));
-};
-
-export const uploadBooking = async (booking: booking, dispatch: any) => {
-  try {
-    const docRef = await addDoc(collection(db, bookingsCollectionRef), booking);
-
-    await updateDoc(docRef, {
-      id: docRef.id,
-    });
-
-    const updateBooking: booking = { ...booking, id: docRef.id };
-
-    await dispatch(addBooking(updateBooking));
-  } catch (e) {
-    console.error("Error adding document: ", e);
-  }
 };
 
 export const uploadVisitor = async (visitor: visitor, dispatch: any) => {
@@ -99,8 +83,105 @@ export const uploadVisitor = async (visitor: visitor, dispatch: any) => {
   }
 };
 
-export const findUserInDB = async (id: string) => {
-  const q = await query(usersDBRef, where("id", "==", id));
+//Booking async functions
 
-  console.log(q.firestore);
+export const getBookings = async (dispatch: any) => {
+  const snapshot = await getDocs(collection(db, bookingsCollectionRef));
+
+  const newBookings: booking[] = [];
+
+  snapshot.forEach((booking: any) => {
+    newBookings.push({ ...booking.data() });
+  });
+
+  await dispatch(setBookings(newBookings));
+};
+
+export const uploadBooking = async (booking: booking, dispatch: any) => {
+  try {
+    const docRef = await addDoc(collection(db, bookingsCollectionRef), booking);
+
+    await updateDoc(docRef, {
+      id: docRef.id,
+    });
+
+    const updateBooking: booking = { ...booking, id: docRef.id };
+
+    await dispatch(addBooking(updateBooking));
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+};
+
+//User async functions
+
+export const validateUserInDB = async (
+  id: string,
+  condominium: string,
+  dispatch: any
+) => {
+  const docSnap = await getDoc(doc(db, usersDBRef(condominium), id));
+
+  if (docSnap.exists()) {
+    console.log(docSnap.data());
+
+    const user: User = {
+      firstname: docSnap.data().firstname,
+      lastname: docSnap.data().lastname,
+      condominiumId: docSnap.data().condominiumId,
+      apartment: docSnap.data().apartment,
+      id: docSnap.data().id,
+    };
+
+    await dispatch(setUser(user));
+
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export const registerUser = (
+  email: string,
+  password: string,
+  navigate: any,
+  dispatch: any
+) => {
+  createUserWithEmailAndPassword(auth, email, password)
+    .then(async (userCredential) => {
+      const userId = userCredential.user.uid;
+
+      await dispatch(setUserState(true));
+
+      navigate("/Inicio");
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
+};
+
+export const loginUser = (email: string, password: string) => {
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
+};
+
+export const validateUserState = async (navigate: any) => {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const uid = user.uid;
+      console.log(uid);
+      // ...
+    } else {
+      // User is signed out
+      navigate("/");
+    }
+  });
 };
