@@ -58,7 +58,7 @@ const Register: React.FC<RegisterProps> = ({}) => {
       const exist = await validateUserInDB(id, condominiumId, dispatch);
 
       if (exist) {
-        // registerUser(email, password, navigate, dispatch);
+        registerUser(email, password, navigate, dispatch);
       } else {
         console.log("Tu identificación no aparece en la base de datos");
       }

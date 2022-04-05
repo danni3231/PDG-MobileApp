@@ -1,6 +1,8 @@
 import { MenuItem, Select, TextField } from "@mui/material";
 import * as React from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
+import { loginUser } from "../../../Firebase/firebaseApi";
 import Btn from "../../UI/Buttons/Btn";
 
 import "./Login.css";
@@ -9,6 +11,7 @@ interface LoginProps {}
 
 const Login: React.FC<LoginProps> = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
@@ -29,9 +32,26 @@ const Login: React.FC<LoginProps> = () => {
     }
   };
 
+  const castCondominiumId = (condominium: string) => {
+    switch (condominium) {
+      case "Guadalupe alto":
+        return "q4CPmR9IIHrA6k1H2SdS";
+
+      case "El Coral":
+        return "q4CPmR9IIHrA6k1H2SdS";
+
+      case "Boho u living":
+        return "q4CPmR9IIHrA6k1H2SdS";
+
+      default:
+        return "";
+    }
+  };
+
   const handleSubmit = () => () => {
     if (validateData()) {
-      //login
+      const condominiumId = castCondominiumId(condominium);
+      loginUser(email, password, condominiumId, navigate, dispatch);
     }
   };
 

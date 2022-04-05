@@ -2,6 +2,7 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import {
   collection,
@@ -123,8 +124,6 @@ export const validateUserInDB = async (
   const docSnap = await getDoc(doc(db, usersDBRef(condominium), id));
 
   if (docSnap.exists()) {
-    console.log(docSnap.data());
-
     const user: User = {
       firstname: docSnap.data().firstname,
       lastname: docSnap.data().lastname,
@@ -148,9 +147,48 @@ export const registerUser = (
   dispatch: any
 ) => {
   createUserWithEmailAndPassword(auth, email, password)
-    .then(async (userCredential) => {
-      const userId = userCredential.user.uid;
+    .then((userCredential) => {
+      const user = userCredential.user;
 
+      updateProfile(user, {
+        displayName: "1111",
+      }).then(async () => {
+        await dispatch(setUserState(true));
+
+        navigate("/Inicio");
+      });
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
+};
+
+export const loginUser = (
+  email: string,
+  password: string,
+  condominium: string,
+  navigate: any,
+  dispatch: any
+) => {
+  signInWithEmailAndPassword(auth, email, password)
+    .then(async (userCredential) => {
+      const user = userCredential.user;
+      console.log(user);
+
+      const docSnap = await getDoc(
+        doc(db, usersDBRef(condominium), user.displayName!)
+      );
+
+      const userData: User = {
+        firstname: docSnap.data()!.firstname,
+        lastname: docSnap.data()!.lastname,
+        condominiumId: docSnap.data()!.condominiumId,
+        apartment: docSnap.data()!.apartment,
+        id: docSnap.data()!.id,
+      };
+
+      await dispatch(setUser(userData));
       await dispatch(setUserState(true));
 
       navigate("/Inicio");
@@ -161,23 +199,10 @@ export const registerUser = (
     });
 };
 
-export const loginUser = (email: string, password: string) => {
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-    });
-};
-
 export const validateUserState = (navigate: any) => {
-  onAuthStateChanged(auth, (user) => {
+  onAuthStateChanged(auth, async (user) => {
     if (user) {
-      const uid = user.uid;
-      console.log(uid);
+      console.log(user);
     } else {
       // User is signed out
       navigate("/");

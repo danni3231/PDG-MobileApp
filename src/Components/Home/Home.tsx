@@ -33,6 +33,8 @@ const Home: React.FC<HomeProps> = () => {
     getVisits(dispatch).then(() => {
       setLoading(false);
     });
+
+    console.log(user);
   }, []);
 
   if (loading) {
