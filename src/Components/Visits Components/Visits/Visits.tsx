@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { validateUserState } from "../../../Firebase/firebaseApi";
 import { AppState } from "../../../Redux/Reducers";
 
 import Btn from "../../UI/Buttons/Btn";
@@ -21,6 +22,10 @@ const Visits: React.FC<VisitsProps> = ({}) => {
   const visits = useSelector<AppState, AppState["visits"]>(
     (state) => state.visits
   );
+
+  React.useEffect(() => {
+    validateUserState(navigate);
+  }, []);
 
   return (
     <article>

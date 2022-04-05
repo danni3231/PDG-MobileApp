@@ -173,12 +173,11 @@ export const loginUser = (email: string, password: string) => {
     });
 };
 
-export const validateUserState = async (navigate: any) => {
+export const validateUserState = (navigate: any) => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       const uid = user.uid;
       console.log(uid);
-      // ...
     } else {
       // User is signed out
       navigate("/");

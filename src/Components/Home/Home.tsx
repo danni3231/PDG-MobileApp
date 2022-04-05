@@ -4,12 +4,19 @@ import Header from "../UI/Header/Header";
 
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "../../Redux/Reducers";
-import { getBookings, getSpaces, getVisits } from "../../Firebase/firebaseApi";
+import {
+  getBookings,
+  getSpaces,
+  getVisits,
+  validateUserState,
+} from "../../Firebase/firebaseApi";
+import { useNavigate } from "react-router";
 
 interface HomeProps {}
 
 const Home: React.FC<HomeProps> = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const spaces = useSelector<AppState, AppState["spaces"]>(
     (state) => state.spaces
@@ -20,6 +27,7 @@ const Home: React.FC<HomeProps> = () => {
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
+    validateUserState(navigate);
     getSpaces(dispatch);
     getBookings(dispatch);
     getVisits(dispatch).then(() => {

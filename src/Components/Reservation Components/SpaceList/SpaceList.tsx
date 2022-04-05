@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { validateUserState } from "../../../Firebase/firebaseApi";
 import { AppState } from "../../../Redux/Reducers";
 import SpaceCard from "../SpaceCard/SpaceCard";
 
@@ -18,6 +19,10 @@ const SpaceList: React.FC<SpaceListProps> = () => {
   const goBack = () => () => {
     navigate(-1);
   };
+
+  React.useEffect(() => {
+    validateUserState(navigate);
+  }, []);
 
   return (
     <article className="spaceList">

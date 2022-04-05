@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { validateUserState } from "../../../Firebase/firebaseApi";
 import { AppState } from "../../../Redux/Reducers";
 import Btn from "../../UI/Buttons/Btn";
 import Header from "../../UI/Header/Header";
@@ -16,6 +17,10 @@ const Reservations: React.FC<ReservationsProps> = () => {
   const bookings = useSelector<AppState, AppState["bookings"]>(
     (state) => state.bookings
   );
+
+  React.useEffect(() => {
+    validateUserState(navigate);
+  }, []);
 
   return (
     <article>

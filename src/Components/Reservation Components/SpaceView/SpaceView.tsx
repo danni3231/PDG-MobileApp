@@ -1,6 +1,9 @@
 import * as React from "react";
 import { useNavigate, useParams } from "react-router";
-import { uploadBooking } from "../../../Firebase/firebaseApi";
+import {
+  uploadBooking,
+  validateUserState,
+} from "../../../Firebase/firebaseApi";
 import { space } from "../../../Types/space";
 import Btn from "../../UI/Buttons/Btn";
 import ScheduleOption from "../ScheduleOption/ScheduleOption";
@@ -124,6 +127,8 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
 
   React.useEffect(() => {
     addOptions(space!.schedule.start, space!.schedule.end);
+
+    validateUserState(navigate);
   }, []);
 
   return (

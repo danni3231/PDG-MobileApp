@@ -8,7 +8,10 @@ import Btn from "../../UI/Buttons/Btn";
 import { visitor } from "../../../Types/visitor";
 
 import "./VisitForm.css";
-import { uploadVisitor } from "../../../Firebase/firebaseApi";
+import {
+  uploadVisitor,
+  validateUserState,
+} from "../../../Firebase/firebaseApi";
 import { useDispatch } from "react-redux";
 import Toast from "../../UI/Toast/Toast";
 
@@ -75,6 +78,10 @@ const VisitForm: React.FC<VisitFormProps> = () => {
       return true;
     }
   };
+
+  React.useEffect(() => {
+    validateUserState(navigate);
+  }, []);
 
   return (
     <article className="visitForm">
