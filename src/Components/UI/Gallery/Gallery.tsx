@@ -1,17 +1,27 @@
 import * as React from "react";
 import { useNavigate } from "react-router";
+import { notice } from "../../../Types/notice";
 import { space } from "../../../Types/space";
 import SpaceCard from "../../Reservation Components/SpaceCard/SpaceCard";
+import NoticeCard from "../../Social components/Notices/NoticeCard/NoticeCard";
 
 import "./Gallery.css";
 
 interface GalleryProps {
   title: string;
-  list: space[];
+  listSpace?: space[];
+  listNotice?: notice[];
   url: string;
+  isNotice?: boolean;
 }
 
-const Gallery: React.FC<GalleryProps> = ({ title, list, url }) => {
+const Gallery: React.FC<GalleryProps> = ({
+  title,
+  listSpace,
+  listNotice,
+  url,
+  isNotice,
+}) => {
   let navigate = useNavigate();
 
   const handleBtnClick = () => {
@@ -29,16 +39,28 @@ const Gallery: React.FC<GalleryProps> = ({ title, list, url }) => {
 
       <div className="gallery__stripe scroll">
         <div className="gallery__stripe__row scroll__row">
-          {list.map((space) => {
-            return (
-              <SpaceCard
-                key={space.id}
-                id={space.id}
-                name={space.name}
-                img={space.img}
-              />
-            );
-          })}
+          {isNotice
+            ? listNotice!.map((notice) => {
+                return (
+                  <NoticeCard
+                    key={notice.id}
+                    id={notice.id}
+                    title={notice.title}
+                    img={notice.img}
+                    content={""}
+                  />
+                );
+              })
+            : listSpace!.map((space) => {
+                return (
+                  <SpaceCard
+                    key={space.id}
+                    id={space.id}
+                    name={space.name}
+                    img={space.img}
+                  />
+                );
+              })}
         </div>
       </div>
     </section>

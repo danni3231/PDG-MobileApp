@@ -26,6 +26,16 @@ const Home: React.FC<HomeProps> = () => {
 
   const [loading, setLoading] = React.useState(true);
 
+  const testNoticeCard = [
+    {
+      title: "noticia 1",
+      img: "/Img/field.png",
+      id: "0",
+      content:
+        "En el pasillo principal del tercer piso del edificio H hay ya desde hace semanas, una gotera que está generando humendad en el techo y no ha sido arreglada. La gotera está muy cerca de la puerta de mi apartamento y cuando llueve muy fuerte, el agua entra por la puerta. Solicito a los vecinos que se unan a mi petición porque no soy el único afectado y, a la administración, que por favor dé solución a este problema lo más pronto posible porque afecta gravemente la calidad de vida.",
+    },
+  ];
+
   React.useEffect(() => {
     validateUserState(navigate);
     getSpaces(dispatch);
@@ -63,12 +73,16 @@ const Home: React.FC<HomeProps> = () => {
 
         <Gallery
           title="Reservar un espacio"
-          list={spaces}
+          listSpace={spaces}
           url={"Reservas/list"}
         />
-        <div className="comingSoon">
-          <h1 className="textLoading">Coming Soon...</h1>
-        </div>
+
+        <Gallery
+          title="Noticias"
+          listNotice={testNoticeCard}
+          url={"Social"}
+          isNotice
+        />
       </article>
     );
   }
