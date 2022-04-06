@@ -143,25 +143,31 @@ export const validateUserInDB = async (
 export const registerUser = (
   email: string,
   password: string,
+  id: string,
+  condominiumId: string,
   navigate: any,
   dispatch: any
 ) => {
   createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
+    .then(async (userCredential) => {
       const user = userCredential.user;
 
-      updateProfile(user, {
-        displayName: "1111",
-      }).then(async () => {
-        await dispatch(setUserState(true));
-
+      updateProfileFirestore(id, condominiumId).then(() => {
         navigate("/Inicio");
       });
+
+      await dispatch(setUserState(true));
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
     });
+};
+
+const updateProfileFirestore = (userId: string, condominiumId: string) => {
+  return updateDoc(doc(db, usersDBRef(condominiumId)), {
+    uid: userId,
+  });
 };
 
 export const loginUser = (
