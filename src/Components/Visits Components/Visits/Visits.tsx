@@ -24,10 +24,6 @@ const Visits: React.FC<VisitsProps> = ({}) => {
     (state) => state.visits
   );
 
-  React.useEffect(() => {
-    validateUserState(navigate, dispatch);
-  }, []);
-
   return (
     <article>
       <Header />

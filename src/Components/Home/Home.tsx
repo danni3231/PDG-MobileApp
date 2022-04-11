@@ -24,7 +24,7 @@ const Home: React.FC<HomeProps> = () => {
 
   const user = useSelector<AppState, AppState["user"]>((state) => state.user);
 
-  const [loading, setLoading] = React.useState(true);
+  console.log(user);
 
   const testNoticeCard = [
     {
@@ -36,50 +36,28 @@ const Home: React.FC<HomeProps> = () => {
     },
   ];
 
-  React.useEffect(() => {
-    validateUserState(navigate, dispatch);
+  return (
+    <article className="home">
+      <Header />
 
-    console.log(user);
-  }, []);
+      <h1>
+        Hola Sr. {`${user.firstname} ${user.lastname}`}, <br />
+        ¿qué quiere hacer hoy?
+      </h1>
 
-  if (loading) {
-    return (
-      <section className="loading">
-        <section className="lds-roller">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </section>
-      </section>
-    );
-  } else {
-    return (
-      <article className="home">
-        <Header />
-        <h1>
-          Hola Sr. {`${user.firstname} ${user.lastname}`}, <br />
-          ¿qué quiere hacer hoy?
-        </h1>
+      <Gallery
+        title="Reservar un espacio"
+        listSpace={spaces}
+        url={"Reservas/list"}
+      />
 
-        <Gallery
-          title="Reservar un espacio"
-          listSpace={spaces}
-          url={"Reservas/list"}
-        />
-
-        <Gallery
-          title="Noticias"
-          listNotice={testNoticeCard}
-          url={"Social"}
-          isNotice
-        />
-      </article>
-    );
-  }
+      <Gallery
+        title="Noticias"
+        listNotice={testNoticeCard}
+        url={"Social"}
+        isNotice
+      />
+    </article>
+  );
 };
 export default Home;

@@ -1,5 +1,6 @@
 import {
   createUserWithEmailAndPassword,
+  getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   updateProfile,
@@ -229,7 +230,11 @@ export const loginUser = (
     });
 };
 
-export const validateUserState = async (navigate: any, dispatch: any) => {
+export const validateUserState = (
+  location: string,
+  navigate: any,
+  dispatch: any
+) => {
   onAuthStateChanged(auth, async (user) => {
     if (user) {
       console.log(user);
@@ -259,7 +264,9 @@ export const validateUserState = async (navigate: any, dispatch: any) => {
       await getBookings(dispatch);
       await getVisits(dispatch);
 
-      navigate("/Inicio");
+      if (location === "/" || location === "/Registro") {
+        navigate("/Inicio");
+      }
     } else {
       // User is signed out
       navigate("/");

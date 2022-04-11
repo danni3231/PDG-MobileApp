@@ -19,10 +19,6 @@ const Reservations: React.FC<ReservationsProps> = () => {
     (state) => state.bookings
   );
 
-  React.useEffect(() => {
-    validateUserState(navigate, dispatch);
-  }, []);
-
   return (
     <article>
       <Header />

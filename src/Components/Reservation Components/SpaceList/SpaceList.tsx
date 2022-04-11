@@ -21,10 +21,6 @@ const SpaceList: React.FC<SpaceListProps> = () => {
     navigate(-1);
   };
 
-  React.useEffect(() => {
-    validateUserState(navigate, dispatch);
-  }, []);
-
   return (
     <article className="spaceList">
       <img

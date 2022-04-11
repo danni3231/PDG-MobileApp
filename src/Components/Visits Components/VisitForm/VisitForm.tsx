@@ -79,10 +79,6 @@ const VisitForm: React.FC<VisitFormProps> = () => {
     }
   };
 
-  React.useEffect(() => {
-    validateUserState(navigate, dispatch);
-  }, []);
-
   return (
     <article className="visitForm">
       <img

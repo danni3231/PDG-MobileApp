@@ -12,50 +12,62 @@ import VisitForm from "../Visits Components/VisitForm/VisitForm";
 import { validateUserState } from "../../Firebase/firebaseApi";
 import Login from "../User Manage Components/Login/Login";
 import Register from "../User Manage Components/Register/Register";
-import { useDispatch } from "react-redux";
+import LoadingScreen from "../UI/loadingScreen/loadingScreen";
+import { useDispatch, useSelector } from "react-redux";
+import { AppState } from "../../Redux/Reducers";
 
 function App() {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const [loading, setLoading] = React.useState(true);
+
   React.useEffect(() => {
-    validateUserState(navigate, dispatch);
+    validateUserState(location.pathname, navigate, dispatch);
+
+    window.setInterval(() => {
+      setLoading(false);
+    }, 5000);
   }, []);
 
-  return (
-    <div className="App">
-      {location.pathname === "/" || location.pathname === "/Registro" ? (
-        ""
-      ) : (
-        <Nav></Nav>
-      )}
+  if (loading) {
+    return <LoadingScreen />;
+  } else {
+    return (
+      <div className="App">
+        {location.pathname === "/" || location.pathname === "/Registro" ? (
+          ""
+        ) : (
+          <Nav></Nav>
+        )}
 
-      <Routes>
-        <Route path="/" element={<Login />} />
+        <Routes>
+          <Route path="/" element={<Login />} />
 
-        <Route path="Registro" element={<Register />} />
+          <Route path="Registro" element={<Register />} />
 
-        <Route path="Inicio" element={<Home />} />
+          <Route path="Inicio" element={<Home />} />
 
-        <Route path="Visitas" element={<Visits />} />
-        <Route path="Visitas/form" element={<VisitForm />} />
+          <Route path="Visitas" element={<Visits />} />
+          <Route path="Visitas/form" element={<VisitForm />} />
 
-        <Route path="Reservas" element={<Reservations />} />
-        <Route path="Reservas/list" element={<SpaceList />} />
-        <Route path="Reservas/form/:id" element={<SpaceView />} />
+          <Route path="Reservas" element={<Reservations />} />
+          <Route path="Reservas/list" element={<SpaceList />} />
+          <Route path="Reservas/form/:id" element={<SpaceView />} />
 
-        <Route
-          path="Social"
-          element={
-            <div className="comingSoon">
-              <h1 className="textLoading">Coming Soon...</h1>
-            </div>
-          }
-        />
-      </Routes>
-    </div>
-  );
+          <Route
+            path="Social"
+            element={
+              <div className="comingSoon">
+                <h1 className="textLoading">Coming Soon...</h1>
+              </div>
+            }
+          />
+        </Routes>
+      </div>
+    );
+  }
 }
 
 export default App;
