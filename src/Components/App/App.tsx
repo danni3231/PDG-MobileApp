@@ -12,13 +12,15 @@ import VisitForm from "../Visits Components/VisitForm/VisitForm";
 import { validateUserState } from "../../Firebase/firebaseApi";
 import Login from "../User Manage Components/Login/Login";
 import Register from "../User Manage Components/Register/Register";
+import { useDispatch } from "react-redux";
 
 function App() {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
-    validateUserState(navigate);
+    validateUserState(navigate, dispatch);
   }, []);
 
   return (

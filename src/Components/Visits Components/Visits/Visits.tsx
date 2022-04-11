@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { validateUserState } from "../../../Firebase/firebaseApi";
 import { AppState } from "../../../Redux/Reducers";
@@ -18,13 +18,14 @@ interface CustomizedState {
 
 const Visits: React.FC<VisitsProps> = ({}) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const visits = useSelector<AppState, AppState["visits"]>(
     (state) => state.visits
   );
 
   React.useEffect(() => {
-    validateUserState(navigate);
+    validateUserState(navigate, dispatch);
   }, []);
 
   return (

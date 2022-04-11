@@ -80,7 +80,7 @@ const VisitForm: React.FC<VisitFormProps> = () => {
   };
 
   React.useEffect(() => {
-    validateUserState(navigate);
+    validateUserState(navigate, dispatch);
   }, []);
 
   return (

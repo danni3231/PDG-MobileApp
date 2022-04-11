@@ -51,7 +51,7 @@ const Login: React.FC<LoginProps> = () => {
   const handleSubmit = () => () => {
     if (validateData()) {
       const condominiumId = castCondominiumId(condominium);
-      loginUser(email, password, condominiumId, navigate, dispatch);
+      loginUser(email, password, navigate, dispatch);
     }
   };
 

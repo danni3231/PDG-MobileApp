@@ -127,8 +127,7 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
 
   React.useEffect(() => {
     addOptions(space!.schedule.start, space!.schedule.end);
-
-    validateUserState(navigate);
+    validateUserState(navigate, dispatch);
   }, []);
 
   return (

@@ -17,6 +17,7 @@ import {
   query,
   limit,
   orderBy,
+  setDoc,
 } from "firebase/firestore";
 import {
   addBooking,
@@ -36,6 +37,8 @@ import { auth, db } from "./firebaseConfig";
 const usersDBRef = (condominiumId: string) => {
   return `condominiums/${condominiumId}/users`;
 };
+
+const relationBranchRef = "relationBranch";
 const spacesCollectionRef = "condominiums/q4CPmR9IIHrA6k1H2SdS/spaces";
 const bookingsCollectionRef = "condominiums/q4CPmR9IIHrA6k1H2SdS/bookings";
 const visitorsCollectionRef = "condominiums/q4CPmR9IIHrA6k1H2SdS/visitors";
@@ -116,6 +119,20 @@ export const uploadBooking = async (booking: booking, dispatch: any) => {
 
 //User async functions
 
+const createRelationBranch = (
+  id: string,
+  condominiumId: string,
+  uid: string
+) => {
+  const relationBranch = {
+    id: id,
+    condominiumId: condominiumId,
+    uid: uid,
+  };
+
+  return setDoc(doc(db, relationBranchRef, uid), relationBranch);
+};
+
 export const validateUserInDB = async (
   id: string,
   condominium: string,
@@ -152,11 +169,14 @@ export const registerUser = (
     .then(async (userCredential) => {
       const user = userCredential.user;
 
-      updateProfileFirestore(id, condominiumId).then(() => {
+      await dispatch(setUserState(true));
+      await getSpaces(dispatch);
+      await getBookings(dispatch);
+      await getVisits(dispatch);
+
+      createRelationBranch(id, condominiumId, user.uid).then(() => {
         navigate("/Inicio");
       });
-
-      await dispatch(setUserState(true));
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -164,16 +184,9 @@ export const registerUser = (
     });
 };
 
-const updateProfileFirestore = (userId: string, condominiumId: string) => {
-  return updateDoc(doc(db, usersDBRef(condominiumId)), {
-    uid: userId,
-  });
-};
-
 export const loginUser = (
   email: string,
   password: string,
-  condominium: string,
   navigate: any,
   dispatch: any
 ) => {
@@ -182,20 +195,31 @@ export const loginUser = (
       const user = userCredential.user;
       console.log(user);
 
-      const docSnap = await getDoc(
-        doc(db, usersDBRef(condominium), user.displayName!)
+      const userRelationSnap = await getDoc(
+        doc(db, relationBranchRef, user.uid)
+      );
+
+      const userSnap = await getDoc(
+        doc(
+          db,
+          usersDBRef(userRelationSnap.data()!.condominiumId),
+          userRelationSnap.data()!.id
+        )
       );
 
       const userData: User = {
-        firstname: docSnap.data()!.firstname,
-        lastname: docSnap.data()!.lastname,
-        condominiumId: docSnap.data()!.condominiumId,
-        apartment: docSnap.data()!.apartment,
-        id: docSnap.data()!.id,
+        firstname: userSnap.data()!.firstname,
+        lastname: userSnap.data()!.lastname,
+        condominiumId: userSnap.data()!.condominiumId,
+        apartment: userSnap.data()!.apartment,
+        id: userSnap.data()!.id,
       };
 
       await dispatch(setUser(userData));
       await dispatch(setUserState(true));
+      await getSpaces(dispatch);
+      await getBookings(dispatch);
+      await getVisits(dispatch);
 
       navigate("/Inicio");
     })
@@ -205,10 +229,37 @@ export const loginUser = (
     });
 };
 
-export const validateUserState = (navigate: any) => {
+export const validateUserState = async (navigate: any, dispatch: any) => {
   onAuthStateChanged(auth, async (user) => {
     if (user) {
       console.log(user);
+      const userRelationSnap = await getDoc(
+        doc(db, relationBranchRef, user.uid)
+      );
+
+      const userSnap = await getDoc(
+        doc(
+          db,
+          usersDBRef(userRelationSnap.data()!.condominiumId),
+          userRelationSnap.data()!.id
+        )
+      );
+
+      const userData: User = {
+        firstname: userSnap.data()!.firstname,
+        lastname: userSnap.data()!.lastname,
+        condominiumId: userSnap.data()!.condominiumId,
+        apartment: userSnap.data()!.apartment,
+        id: userSnap.data()!.id,
+      };
+
+      await dispatch(setUser(userData));
+      await dispatch(setUserState(true));
+      await getSpaces(dispatch);
+      await getBookings(dispatch);
+      await getVisits(dispatch);
+
+      navigate("/Inicio");
     } else {
       // User is signed out
       navigate("/");

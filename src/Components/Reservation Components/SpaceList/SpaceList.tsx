@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { validateUserState } from "../../../Firebase/firebaseApi";
 import { AppState } from "../../../Redux/Reducers";
@@ -11,6 +11,7 @@ interface SpaceListProps {}
 
 const SpaceList: React.FC<SpaceListProps> = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const spaces = useSelector<AppState, AppState["spaces"]>(
     (state) => state.spaces
@@ -21,7 +22,7 @@ const SpaceList: React.FC<SpaceListProps> = () => {
   };
 
   React.useEffect(() => {
-    validateUserState(navigate);
+    validateUserState(navigate, dispatch);
   }, []);
 
   return (

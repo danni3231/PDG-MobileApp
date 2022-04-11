@@ -37,12 +37,7 @@ const Home: React.FC<HomeProps> = () => {
   ];
 
   React.useEffect(() => {
-    validateUserState(navigate);
-    getSpaces(dispatch);
-    getBookings(dispatch);
-    getVisits(dispatch).then(() => {
-      setLoading(false);
-    });
+    validateUserState(navigate, dispatch);
 
     console.log(user);
   }, []);
