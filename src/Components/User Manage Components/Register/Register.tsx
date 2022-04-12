@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { registerUser, validateUserInDB } from "../../../Firebase/firebaseApi";
 import Btn from "../../UI/Buttons/Btn";
+import Toast from "../../UI/Toast/Toast";
 
 import "../Login/Login.css";
 
@@ -18,18 +19,26 @@ const Register: React.FC<RegisterProps> = ({}) => {
   const [password, setPassword] = React.useState<string>("");
   const [condominium, setCondominium] = React.useState<string>("");
 
+  const [isRegister, setIsRegister] = React.useState(false);
+  const [error, setError] = React.useState(false);
+  const [errorMsg, setErrorMsg] = React.useState("default msg");
+
   const validateInputs = () => {
-    if (condominium === "") {
-      // alert
-      console.log("falta condominio");
+    if (email === "") {
+      setErrorMsg("Falta ingresar tu correo");
+      setError(true);
       return false;
     } else if (id === "") {
-      //alert
-      console.log("falta id");
+      setErrorMsg("Falta ingresar tu numero de identificación");
+      setError(true);
       return false;
     } else if (password === "") {
-      //alert
-      console.log("falta contraseña");
+      setErrorMsg("Falta ingresar tu contraseña");
+      setError(true);
+      return false;
+    } else if (condominium === "") {
+      setErrorMsg("Falta seleccionar tu conjunto");
+      setError(true);
       return false;
     } else {
       return true;
@@ -58,15 +67,48 @@ const Register: React.FC<RegisterProps> = ({}) => {
       const exist = await validateUserInDB(id, condominiumId, dispatch);
 
       if (exist) {
-        registerUser(email, password, id, condominiumId, navigate, dispatch);
+        setIsRegister(true);
+        registerUser(
+          email,
+          password,
+          id,
+          condominiumId,
+          navigate,
+          dispatch
+        ).catch((error) => {
+          const errorMessage = error.message;
+          console.log(errorMessage);
+          setIsRegister(false);
+          setErrorMsg(error.message);
+          setError(true);
+        });
       } else {
-        console.log("Tu identificación no aparece en la base de datos");
+        setErrorMsg("Tu identificación no aparece en la base de datos");
+        setError(true);
       }
     }
   };
 
   return (
     <article className="register">
+      {isRegister ? (
+        <Toast text="Registrandose en Urban, por favor espera" type="success" />
+      ) : (
+        ""
+      )}
+
+      {error ? (
+        <Toast
+          text={errorMsg}
+          type="error"
+          btn
+          closeAction={() => {
+            setError(false);
+          }}
+        />
+      ) : (
+        ""
+      )}
       <section className="register__header">
         <img
           className="register__header__img"

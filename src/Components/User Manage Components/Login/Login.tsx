@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { loginUser } from "../../../Firebase/firebaseApi";
 import Btn from "../../UI/Buttons/Btn";
+import Toast from "../../UI/Toast/Toast";
 
 import "./Login.css";
 
@@ -17,46 +18,62 @@ const Login: React.FC<LoginProps> = () => {
   const [password, setPassword] = React.useState<string>("");
   const [condominium, setCondominium] = React.useState<string>("");
 
+  const [isLogin, setIsLogin] = React.useState(false);
+  const [error, setError] = React.useState(false);
+  const [errorMsg, setErrorMsg] = React.useState("default msg");
+
   const validateData = () => {
-    if (condominium === "") {
-      // alert
-      return false;
-    } else if (email === "") {
-      //alert
+    if (email === "") {
+      setErrorMsg("Falta ingresar tu correo");
+      setError(true);
       return false;
     } else if (password === "") {
-      //alert
+      setErrorMsg("Falta ingresar tu contraseña");
+      setError(true);
+      return false;
+    } else if (condominium === "") {
+      setErrorMsg("Falta seleccionar tu conjunto");
+      setError(true);
       return false;
     } else {
       return true;
     }
   };
 
-  const castCondominiumId = (condominium: string) => {
-    switch (condominium) {
-      case "Guadalupe alto":
-        return "q4CPmR9IIHrA6k1H2SdS";
-
-      case "El Coral":
-        return "q4CPmR9IIHrA6k1H2SdS";
-
-      case "Boho u living":
-        return "q4CPmR9IIHrA6k1H2SdS";
-
-      default:
-        return "";
-    }
-  };
-
   const handleSubmit = () => () => {
     if (validateData()) {
-      const condominiumId = castCondominiumId(condominium);
-      loginUser(email, password, navigate, dispatch);
+      setIsLogin(true);
+      loginUser(email, password, navigate, dispatch).catch((error) => {
+        const errorMessage = error.message;
+        console.log(errorMessage);
+        setIsLogin(false);
+        setErrorMsg(error.message);
+        setError(true);
+      });
     }
   };
 
   return (
     <article className="login">
+      {isLogin ? (
+        <Toast text="Ingresando a Urban, por favor espera" type="success" />
+      ) : (
+        ""
+      )}
+
+      {error ? (
+        <Toast
+          text={errorMsg}
+          type="error"
+          btn
+          closeAction={() => {
+            setError(false);
+          }}
+        />
+      ) : (
+        ""
+      )}
+
       <section className="login__header">
         <img
           className="login__header__img"

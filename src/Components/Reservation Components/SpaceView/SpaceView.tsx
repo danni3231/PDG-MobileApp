@@ -31,6 +31,8 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
   );
 
   const [isUploading, setIsUploading] = React.useState(false);
+  const [error, setError] = React.useState(false);
+  const [errorMsg, setErrorMsg] = React.useState("default msg");
 
   const [date, setDate] = React.useState<Date | null>(null);
   const [schedule, setSchedule] = React.useState<
@@ -114,13 +116,14 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
 
   const validateData = () => {
     if (date === null) {
-      console.log("no se puede enviar, se necesita una fecha");
+      setErrorMsg("Falta la fecha de reserva");
+      setError(true);
       return false;
     } else if (schedule === undefined) {
-      console.log("no se puede enviar, se necesita un horario");
+      setErrorMsg("Falta el horario de reserva");
+      setError(true);
       return false;
     } else {
-      console.log("se puede enviar");
       return true;
     }
   };
@@ -131,6 +134,28 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
 
   return (
     <article className="spaceView">
+      {isUploading ? (
+        <Toast
+          text="Subiendo la información de la reserva, por favor espera"
+          type="success"
+        />
+      ) : (
+        ""
+      )}
+
+      {error ? (
+        <Toast
+          text={errorMsg}
+          type="error"
+          btn
+          closeAction={() => {
+            setError(false);
+          }}
+        />
+      ) : (
+        ""
+      )}
+
       <section className="spaceView__header">
         <img
           className="spaceView__header__img"
@@ -211,7 +236,6 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
           />
         </div>
       </section>
-      {isUploading ? <Toast /> : ""}
     </article>
   );
 };

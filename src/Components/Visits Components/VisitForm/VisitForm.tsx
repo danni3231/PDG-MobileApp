@@ -21,7 +21,10 @@ const VisitForm: React.FC<VisitFormProps> = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  //toast manage
   const [isUploading, setIsUploading] = React.useState(false);
+  const [error, setError] = React.useState(false);
+  const [errorMsg, setErrorMsg] = React.useState("default msg");
 
   const [date, setDate] = React.useState<Date | null>(null);
   const [name, setName] = React.useState("");
@@ -57,30 +60,54 @@ const VisitForm: React.FC<VisitFormProps> = () => {
 
   const validateData = () => {
     if (name === "") {
-      console.log("No se puede enviar, se necesita un nombre");
+      setErrorMsg("Falta el nombre del visitante");
+      setError(true);
       return false;
     } else if (surname === "") {
-      console.log("No se puede enviar, se necesita un apellido");
+      setErrorMsg("Falta el apellido del visitante");
+      setError(true);
       return false;
     } else if (idType === "") {
-      console.log("No se puede enviar, se necesita un tipo de identificación");
+      setErrorMsg("Falta el tipo de identificación del visitante");
+      setError(true);
       return false;
     } else if (id === "") {
-      console.log(
-        "No se puede enviar, se necesita un numero de identificación"
-      );
+      setErrorMsg("Falta el numero de identificación del visitante");
+      setError(true);
       return false;
     } else if (date === null) {
-      console.log("No se puede enviar, se necesiata una fecha");
+      setErrorMsg("Falta la fecha de visita");
+      setError(true);
       return false;
     } else {
-      console.log("se puede enviar");
       return true;
     }
   };
 
   return (
     <article className="visitForm">
+      {isUploading ? (
+        <Toast
+          text="Subiendo la información del visitante, por favor espera"
+          type="success"
+        />
+      ) : (
+        ""
+      )}
+
+      {error ? (
+        <Toast
+          text={errorMsg}
+          type="error"
+          btn
+          closeAction={() => {
+            setError(false);
+          }}
+        />
+      ) : (
+        ""
+      )}
+
       <img
         className="visitForm__back"
         src={`${process.env.PUBLIC_URL}/Icons/ArrowLeft.svg`}
@@ -161,7 +188,6 @@ const VisitForm: React.FC<VisitFormProps> = () => {
           <Btn text={"Cancelar"} variant={"disabled"} action={() => {}} />
         </div>
       </div>
-      {isUploading ? <Toast /> : ""}
     </article>
   );
 };

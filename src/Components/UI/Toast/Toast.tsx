@@ -3,12 +3,25 @@ import * as React from "react";
 
 import "./Toast.css";
 
-interface ToastProps {}
+interface ToastProps {
+  text: string;
+  type: "error" | "warning" | "info" | "success";
+  btn?: boolean;
+  closeAction?: () => void;
+}
 
-const Toast: React.FC<ToastProps> = () => {
+const Toast: React.FC<ToastProps> = ({ text, type, btn, closeAction }) => {
   return (
     <section className="toast">
-      <Alert variant="filled">Subiendo la informacion, por favor espera</Alert>
+      {btn ? (
+        <Alert variant="filled" severity={type} onClose={closeAction}>
+          {text}
+        </Alert>
+      ) : (
+        <Alert variant="filled" severity={type}>
+          {text}
+        </Alert>
+      )}
     </section>
   );
 };

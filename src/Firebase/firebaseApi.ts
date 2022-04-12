@@ -166,8 +166,8 @@ export const registerUser = (
   navigate: any,
   dispatch: any
 ) => {
-  createUserWithEmailAndPassword(auth, email, password)
-    .then(async (userCredential) => {
+  return createUserWithEmailAndPassword(auth, email, password).then(
+    async (userCredential) => {
       const user = userCredential.user;
 
       await dispatch(setUserState(true));
@@ -178,11 +178,8 @@ export const registerUser = (
       createRelationBranch(id, condominiumId, user.uid).then(() => {
         navigate("/Inicio");
       });
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-    });
+    }
+  );
 };
 
 export const loginUser = (
@@ -191,8 +188,8 @@ export const loginUser = (
   navigate: any,
   dispatch: any
 ) => {
-  signInWithEmailAndPassword(auth, email, password)
-    .then(async (userCredential) => {
+  return signInWithEmailAndPassword(auth, email, password).then(
+    async (userCredential) => {
       const user = userCredential.user;
       console.log(user);
 
@@ -223,11 +220,8 @@ export const loginUser = (
       await getVisits(dispatch);
 
       navigate("/Inicio");
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-    });
+    }
+  );
 };
 
 export const validateUserState = (
