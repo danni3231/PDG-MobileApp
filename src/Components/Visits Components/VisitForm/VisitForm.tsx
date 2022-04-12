@@ -14,6 +14,7 @@ import {
 } from "../../../Firebase/firebaseApi";
 import { useDispatch } from "react-redux";
 import Toast from "../../UI/Toast/Toast";
+import { es } from "date-fns/locale";
 
 interface VisitFormProps {}
 
@@ -156,12 +157,14 @@ const VisitForm: React.FC<VisitFormProps> = () => {
 
           <h2>Fecha de visita</h2>
           <LocalizationProvider
+            locale={es}
             dateAdapter={AdapterDateFns}
             style={{
               width: "100%",
             }}
           >
             <MobileDatePicker
+              minDate={new Date()}
               value={date}
               onChange={(newValue) => {
                 setDate(newValue);

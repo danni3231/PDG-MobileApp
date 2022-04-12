@@ -11,6 +11,7 @@ import ScheduleOption from "../ScheduleOption/ScheduleOption";
 import TextField from "@mui/material/TextField";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import { es } from "date-fns/locale";
 import MobileDatePicker from "@mui/lab/MobileDatePicker";
 
 import "./SpaceView.css";
@@ -175,12 +176,14 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
           </p>
           <h1>Fecha de reserva</h1>
           <LocalizationProvider
+            locale={es}
             dateAdapter={AdapterDateFns}
             style={{
               width: "100%",
             }}
           >
             <MobileDatePicker
+              minDate={new Date()}
               value={date}
               onChange={(newValue) => {
                 setDate(newValue);
