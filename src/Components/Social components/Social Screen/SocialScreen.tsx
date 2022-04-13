@@ -3,6 +3,7 @@ import { InputAdornment, TextField } from "@mui/material";
 
 import * as React from "react";
 import { useNavigate } from "react-router";
+import ChatList from "../Chat/ChatList/ChatList";
 import NewsList from "../News/NewsList/NewsList";
 import SocialNav from "./SocialNav/SocialNav";
 
@@ -53,8 +54,8 @@ const SocialScreen: React.FC<SocialScreenProps> = ({}) => {
         }
       />
 
-      {activeView === "chat" ? <NewsList /> : ""}
-      {activeView === "news" ? <p>notices</p> : ""}
+      {activeView === "chat" ? <ChatList /> : ""}
+      {activeView === "news" ? <NewsList /> : ""}
       {activeView === "pqr" ? <p>pqr</p> : ""}
     </article>
   );

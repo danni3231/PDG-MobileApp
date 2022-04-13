@@ -1,0 +1,12 @@
+.chatList {
+  height: 100%;
+  overflow: hidden;
+}
+
+.chatList__scroll {
+  height: 100%;
+}
+
+.chatList__column {
+  gap: 24px;
+}
