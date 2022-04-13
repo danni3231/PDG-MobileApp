@@ -17,9 +17,7 @@ const Home: React.FC<HomeProps> = () => {
     (state) => state.spaces
   );
 
-  const notices = useSelector<AppState, AppState["notices"]>(
-    (state) => state.notices
-  );
+  const news = useSelector<AppState, AppState["news"]>((state) => state.news);
 
   const user = useSelector<AppState, AppState["user"]>((state) => state.user);
 
@@ -38,7 +36,7 @@ const Home: React.FC<HomeProps> = () => {
         url={"Reservas/list"}
       />
 
-      <Gallery title="Noticias" listNotice={notices} url={"Social"} isNotice />
+      <Gallery title="Noticias" listNews={news} url={"Social"} isNotice />
     </article>
   );
 };

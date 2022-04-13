@@ -16,7 +16,9 @@ const VisitCard: React.FC<VisitCardProps> = ({
   date,
 }) => {
   let dateParse = new Date(date * 1000);
-  let dateString: string = `${dateParse.getDate()}/${dateParse.getMonth()}/${dateParse.getFullYear()}`;
+  let dateString: string = `${dateParse.getDate()}/${
+    dateParse.getMonth() + 1
+  }/${dateParse.getFullYear()}`;
   return (
     <section className="visitCard">
       <div className="visitCard__header">

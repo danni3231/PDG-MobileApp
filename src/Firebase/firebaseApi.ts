@@ -24,14 +24,14 @@ import {
   addBooking,
   addVisitor,
   setBookings,
-  setNotices,
+  setNews,
   setSpaces,
   setUser,
   setUserState,
   setVisits,
 } from "../Redux/Actions";
 import { booking } from "../Types/booking";
-import { notice } from "../Types/notice";
+import { news } from "../Types/news";
 import { space } from "../Types/space";
 import { User } from "../Types/user";
 import { visitor } from "../Types/visitor";
@@ -151,20 +151,20 @@ export const uploadBooking = async (
   }
 };
 
-// notices async functions
+// news async functions
 
-export const getNotices = async (condominiumId: string, dispatch: any) => {
+export const getNews = async (condominiumId: string, dispatch: any) => {
   const snapshot = await getDocs(
     collection(db, noticesCollectionRef(condominiumId))
   );
 
-  const newNotices: notice[] = [];
+  const newNews: news[] = [];
 
   snapshot.forEach((notice: any) => {
-    newNotices.push({ ...notice.data() });
+    newNews.push({ ...notice.data() });
   });
 
-  await dispatch(setNotices(newNotices));
+  await dispatch(setNews(newNews));
 };
 
 //User async functions
@@ -223,7 +223,7 @@ export const registerUser = (
       await getSpaces(condominiumId, dispatch);
       await getBookings(condominiumId, dispatch);
       await getVisits(condominiumId, dispatch);
-      await getNotices(condominiumId, dispatch);
+      await getNews(condominiumId, dispatch);
 
       createRelationBranch(id, condominiumId, user.uid).then(() => {
         navigate("/Inicio");
@@ -268,7 +268,7 @@ export const loginUser = (
       await getSpaces(userData.condominiumId, dispatch);
       await getBookings(userData.condominiumId, dispatch);
       await getVisits(userData.condominiumId, dispatch);
-      await getNotices(userData.condominiumId, dispatch);
+      await getNews(userData.condominiumId, dispatch);
 
       navigate("/Inicio");
     }
@@ -308,7 +308,7 @@ export const validateUserState = (
       await getSpaces(userData.condominiumId, dispatch);
       await getBookings(userData.condominiumId, dispatch);
       await getVisits(userData.condominiumId, dispatch);
-      await getNotices(userData.condominiumId, dispatch);
+      await getNews(userData.condominiumId, dispatch);
 
       if (location === "/" || location === "/Registro") {
         navigate("/Inicio");

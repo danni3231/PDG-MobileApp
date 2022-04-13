@@ -1,0 +1,18 @@
+.socialNav {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.socialNav__text {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.socialNav__text__active {
+  font-weight: bold;
+}
+
+.socialNav__indicator {
+  border: 1px solid #7b61ff;
+}

@@ -1,4 +1,4 @@
-export type notice = {
+export type news = {
   title: string;
   img: string;
   content: string;

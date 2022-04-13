@@ -1,16 +1,16 @@
 import * as React from "react";
 import { useNavigate } from "react-router";
-import { notice } from "../../../Types/notice";
+import { news } from "../../../Types/news";
 import { space } from "../../../Types/space";
 import SpaceCard from "../../Reservation Components/SpaceCard/SpaceCard";
-import NoticeCard from "../../Social components/Notices/NoticeCard/NoticeCard";
+import NewsCard from "../../Social components/News/NewsCard/NewsCard";
 
 import "./Gallery.css";
 
 interface GalleryProps {
   title: string;
   listSpace?: space[];
-  listNotice?: notice[];
+  listNews?: news[];
   url: string;
   isNotice?: boolean;
 }
@@ -18,7 +18,7 @@ interface GalleryProps {
 const Gallery: React.FC<GalleryProps> = ({
   title,
   listSpace,
-  listNotice,
+  listNews,
   url,
   isNotice,
 }) => {
@@ -40,14 +40,14 @@ const Gallery: React.FC<GalleryProps> = ({
       <div className="gallery__stripe scroll">
         <div className="gallery__stripe__row scroll__row">
           {isNotice
-            ? listNotice!.map((notice) => {
+            ? listNews!.map((news) => {
                 return (
-                  <NoticeCard
-                    key={notice.id}
-                    id={notice.id}
-                    title={notice.title}
-                    img={notice.img}
-                    content={notice.content}
+                  <NewsCard
+                    key={news.id}
+                    id={news.id}
+                    title={news.title}
+                    img={news.img}
+                    content={news.content}
                   />
                 );
               })

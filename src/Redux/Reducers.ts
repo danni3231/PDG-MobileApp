@@ -3,7 +3,7 @@ import { booking } from "../Types/booking";
 import { space } from "../Types/space";
 import { User } from "../Types/user";
 import { visitor } from "../Types/visitor";
-import { notice } from "../Types/notice";
+import { news } from "../Types/news";
 
 export interface AppState {
   user: User;
@@ -11,7 +11,7 @@ export interface AppState {
   spaces: space[];
   bookings: booking[];
   visits: visitor[];
-  notices: notice[];
+  news: news[];
 }
 
 const initState = {
@@ -26,7 +26,7 @@ const initState = {
   spaces: [],
   bookings: [],
   visits: [],
-  notices: [],
+  news: [],
 };
 
 export const appReducer = (
@@ -59,9 +59,9 @@ export const appReducer = (
     case Actions.SET_USER_STATE:
       return { ...state, useState: action.payload };
 
-    // Notices actions
-    case Actions.SET_NOTICES:
-      return { ...state, notices: action.payload };
+    // news actions
+    case Actions.SET_NEWS:
+      return { ...state, news: action.payload };
 
     default:
       return state;

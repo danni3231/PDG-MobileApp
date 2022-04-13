@@ -15,6 +15,7 @@ import Register from "../User Manage Components/Register/Register";
 import LoadingScreen from "../UI/loadingScreen/loadingScreen";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "../../Redux/Reducers";
+import SocialScreen from "../Social components/Social Screen/SocialScreen";
 
 function App() {
   const location = useLocation();
@@ -56,14 +57,7 @@ function App() {
           <Route path="Reservas/list" element={<SpaceList />} />
           <Route path="Reservas/form/:id" element={<SpaceView />} />
 
-          <Route
-            path="Social"
-            element={
-              <div className="comingSoon">
-                <h1 className="textLoading">Coming Soon...</h1>
-              </div>
-            }
-          />
+          <Route path="Social" element={<SocialScreen />} />
         </Routes>
       </div>
     );

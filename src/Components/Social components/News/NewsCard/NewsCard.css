@@ -1,4 +1,4 @@
-.noticeCard {
+.newsCard {
   width: 284px;
   height: 200px;
   border-radius: 26px;
@@ -7,14 +7,14 @@
   position: relative;
 }
 
-.noticeCard__img {
+.newsCard__img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
 }
 
-.noticeCard__content {
+.newsCard__content {
   width: 100%;
   height: 72px;
   background: rgba(17, 24, 39, 0.5);
@@ -29,13 +29,13 @@
   bottom: 0;
 }
 
-.noticeCard__content p {
+.newsCard__content p {
   color: #fff !important;
   font-weight: bold;
   text-align: left;
 }
 
-.noticeCard__content__title {
+.newsCard__content__title {
   width: 100%;
   white-space: nowrap;
   overflow: hidden;
@@ -43,7 +43,7 @@
   font-size: 14px;
 }
 
-.noticeCard__content__smallText {
+.newsCard__content__smallText {
   width: 100%;
   white-space: nowrap;
   overflow: hidden;
