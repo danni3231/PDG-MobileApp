@@ -1,3 +1,4 @@
+import { Share, ShareOutlined } from "@mui/icons-material";
 import * as React from "react";
 import { useNavigate } from "react-router";
 
@@ -16,7 +17,7 @@ const NewsPreview: React.FC<NewsPreviewProps> = ({ title, img, date, id }) => {
   const dateParse = new Date(date * 1000);
   const dateString = `${dateParse.getDate()}/${
     dateParse.getMonth() + 1
-  } /${dateParse.getFullYear()}`;
+  }/${dateParse.getFullYear()}`;
 
   const handleCardClick = () => {
     navigate(`/Reservas/form/${id}`);
@@ -28,7 +29,13 @@ const NewsPreview: React.FC<NewsPreviewProps> = ({ title, img, date, id }) => {
 
       <p className="newsPreview__title">{title}</p>
 
-      <p className="newsPreview__date">{dateString}</p>
+      <div className="newsPreview__row">
+        <p className="newsPreview__date">{dateString}</p>
+        <div className="newsPreview__icons">
+          <img src={`${process.env.PUBLIC_URL}/Icons/share.svg`} alt="" />
+          <img src={`${process.env.PUBLIC_URL}/Icons/bookmark.svg`} alt="" />
+        </div>
+      </div>
     </section>
   );
 };

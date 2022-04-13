@@ -48,10 +48,9 @@ const SocialScreen: React.FC<SocialScreenProps> = ({}) => {
 
       <SocialNav
         activeView={activeView}
-        handleClick={(btnClicked: "chat" | "news" | "pqr") => {
-          setActiveView(btnClicked);
-          console.log(activeView);
-        }}
+        handleClick={(btnClicked: "chat" | "news" | "pqr") =>
+          setActiveView(btnClicked)
+        }
       />
 
       {activeView === "chat" ? <NewsList /> : ""}

@@ -19,6 +19,17 @@
   font-weight: bold;
 }
 
+.newsPreview__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.newsPreview__icons {
+  display: flex;
+  gap: 12px;
+}
+
 .newsPreview__date {
   font-size: 12px;
 }
