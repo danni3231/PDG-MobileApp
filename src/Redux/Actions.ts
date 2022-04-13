@@ -1,4 +1,5 @@
 import { booking } from "../Types/booking";
+import { notice } from "../Types/notice";
 import { space } from "../Types/space";
 import { User } from "../Types/user";
 import { visitor } from "../Types/visitor";
@@ -48,6 +49,13 @@ export const setUser = (user: User): Action => ({
   payload: user,
 });
 
+// Notices Actions
+
+export const setNotices = (notices: notice[]): Action => ({
+  type: "@notice/setNotices",
+  payload: notices,
+});
+
 export const SET_SPACES = "@spaces/setSpaces";
 export const ADD_BOOKINGS = "@bookings/addBooking";
 export const SET_BOOKINGS = "@bookings/setBookings";
@@ -55,3 +63,4 @@ export const SET_VISITS = "@visits/setVisits";
 export const ADD_VISITOR = "@visits/addVisitor";
 export const SET_USER = "@user/setUser";
 export const SET_USER_STATE = "@user/setUserState";
+export const SET_NOTICES = "@notice/setNotices";

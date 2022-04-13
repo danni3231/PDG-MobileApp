@@ -47,7 +47,7 @@ const Gallery: React.FC<GalleryProps> = ({
                     id={notice.id}
                     title={notice.title}
                     img={notice.img}
-                    content={""}
+                    content={notice.content}
                   />
                 );
               })

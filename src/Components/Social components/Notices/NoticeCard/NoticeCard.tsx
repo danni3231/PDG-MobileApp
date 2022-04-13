@@ -19,14 +19,10 @@ const NoticeCard: React.FC<NoticeCardProps> = ({ title, img, content, id }) => {
 
   return (
     <section className={"noticeCard"} onClick={handleCardClick}>
-      <img
-        className="noticeCard__img"
-        src={`${process.env.PUBLIC_URL}${img}`}
-        alt=""
-      />
+      <img className="noticeCard__img" src={img} alt="" />
 
       <div className="noticeCard__content">
-        <p>{title}</p>
+        <p className="noticeCard__content__title">{title}</p>
         <p className="noticeCard__content__smallText">{content}</p>
       </div>
     </section>

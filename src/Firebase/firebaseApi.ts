@@ -24,12 +24,14 @@ import {
   addBooking,
   addVisitor,
   setBookings,
+  setNotices,
   setSpaces,
   setUser,
   setUserState,
   setVisits,
 } from "../Redux/Actions";
 import { booking } from "../Types/booking";
+import { notice } from "../Types/notice";
 import { space } from "../Types/space";
 import { User } from "../Types/user";
 import { visitor } from "../Types/visitor";
@@ -37,6 +39,10 @@ import { auth, db } from "./firebaseConfig";
 
 const usersDBRef = (condominiumId: string) => {
   return `condominiums/${condominiumId}/users`;
+};
+
+const noticesCollectionRef = (condominiumId: string) => {
+  return `condominiums/${condominiumId}/notices`;
 };
 
 const relationBranchRef = "relationBranch";
@@ -118,6 +124,22 @@ export const uploadBooking = async (booking: booking, dispatch: any) => {
   }
 };
 
+// notices async functions
+
+export const getNotices = async (condominiumId: string, dispatch: any) => {
+  const snapshot = await getDocs(
+    collection(db, noticesCollectionRef(condominiumId))
+  );
+
+  const newNotices: notice[] = [];
+
+  snapshot.forEach((notice: any) => {
+    newNotices.push({ ...notice.data() });
+  });
+
+  await dispatch(setNotices(newNotices));
+};
+
 //User async functions
 
 const createRelationBranch = (
@@ -174,6 +196,7 @@ export const registerUser = (
       await getSpaces(dispatch);
       await getBookings(dispatch);
       await getVisits(dispatch);
+      await getNotices(condominiumId, dispatch);
 
       createRelationBranch(id, condominiumId, user.uid).then(() => {
         navigate("/Inicio");
@@ -218,6 +241,7 @@ export const loginUser = (
       await getSpaces(dispatch);
       await getBookings(dispatch);
       await getVisits(dispatch);
+      await getNotices(userData.condominiumId, dispatch);
 
       navigate("/Inicio");
     }
@@ -257,6 +281,7 @@ export const validateUserState = (
       await getSpaces(dispatch);
       await getBookings(dispatch);
       await getVisits(dispatch);
+      await getNotices(userData.condominiumId, dispatch);
 
       if (location === "/" || location === "/Registro") {
         navigate("/Inicio");
