@@ -1,9 +1,6 @@
 import * as React from "react";
 import { useNavigate, useParams } from "react-router";
-import {
-  uploadBooking,
-  validateUserState,
-} from "../../../Firebase/firebaseApi";
+import { uploadBooking } from "../../../Firebase/firebaseApi";
 import { space } from "../../../Types/space";
 import Btn from "../../UI/Buttons/Btn";
 import ScheduleOption from "../ScheduleOption/ScheduleOption";
@@ -19,6 +16,7 @@ import { booking } from "../../../Types/booking";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "../../../Redux/Reducers";
 import Toast from "../../UI/Toast/Toast";
+import { User } from "../../../Types/user";
 
 interface SpaceViewProps {}
 
@@ -26,6 +24,10 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const user: User = useSelector<AppState, AppState["user"]>(
+    (state) => state.user
+  );
 
   const space: space | undefined = useSelector<AppState, space | undefined>(
     (state) => state.spaces.find((spaces) => spaces.id === id!)
@@ -67,7 +69,7 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
         dateStart: dateStartParse,
       };
 
-      uploadBooking(newBooking, dispatch).then(() => {
+      uploadBooking(newBooking, user.condominiumId, dispatch).then(() => {
         navigate("/Reservas");
       });
     }

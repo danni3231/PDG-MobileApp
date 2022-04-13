@@ -37,23 +37,32 @@ import { User } from "../Types/user";
 import { visitor } from "../Types/visitor";
 import { auth, db } from "./firebaseConfig";
 
+const relationBranchRef = "relationBranch";
+
 const usersDBRef = (condominiumId: string) => {
   return `condominiums/${condominiumId}/users`;
 };
 
-const noticesCollectionRef = (condominiumId: string) => {
-  return `condominiums/${condominiumId}/notices`;
-};
+const noticesCollectionRef = (condominiumId: string) =>
+  `condominiums/${condominiumId}/notices`;
 
-const relationBranchRef = "relationBranch";
-const spacesCollectionRef = "condominiums/q4CPmR9IIHrA6k1H2SdS/spaces";
-const bookingsCollectionRef = "condominiums/q4CPmR9IIHrA6k1H2SdS/bookings";
-const visitorsCollectionRef = "condominiums/q4CPmR9IIHrA6k1H2SdS/visitors";
+const spacesCollectionRef = (condominiumId: string) =>
+  `condominiums/${condominiumId}/spaces`;
+
+const bookingsCollectionRef = (condominiumId: string) =>
+  `condominiums/${condominiumId}/bookings`;
+
+const visitorsCollectionRef = (condominiumId: string) =>
+  `condominiums/${condominiumId}/visitors`;
 
 //export const getBookingsCollection = getDocs(query(collection(db, bookingsCollection),where('userId','==','alfa'), orderBy("dateStart"), limit(5)))
 
-export const getSpaces = async (dispatch: any) => {
-  const snapshot = await getDocs(collection(db, spacesCollectionRef));
+export const getSpaces = async (condominiumId: string, dispatch: any) => {
+  const snapshot = await getDocs(
+    collection(db, spacesCollectionRef(condominiumId))
+  );
+
+  console.log(snapshot);
 
   const newSpaces: space[] = [];
 
@@ -66,8 +75,10 @@ export const getSpaces = async (dispatch: any) => {
 
 //Visits async functions
 
-export const getVisits = async (dispatch: any) => {
-  const snapshot = await getDocs(collection(db, visitorsCollectionRef));
+export const getVisits = async (condominiumId: string, dispatch: any) => {
+  const snapshot = await getDocs(
+    collection(db, visitorsCollectionRef(condominiumId))
+  );
 
   const newVisits: visitor[] = [];
 
@@ -78,9 +89,16 @@ export const getVisits = async (dispatch: any) => {
   await dispatch(setVisits(newVisits));
 };
 
-export const uploadVisitor = async (visitor: visitor, dispatch: any) => {
+export const uploadVisitor = async (
+  visitor: visitor,
+  condominiumId: string,
+  dispatch: any
+) => {
   try {
-    const docRef = await addDoc(collection(db, visitorsCollectionRef), visitor);
+    const docRef = await addDoc(
+      collection(db, visitorsCollectionRef(condominiumId)),
+      visitor
+    );
 
     await updateDoc(docRef, {
       id: docRef.id,
@@ -96,8 +114,10 @@ export const uploadVisitor = async (visitor: visitor, dispatch: any) => {
 
 //Booking async functions
 
-export const getBookings = async (dispatch: any) => {
-  const snapshot = await getDocs(collection(db, bookingsCollectionRef));
+export const getBookings = async (condominiumId: string, dispatch: any) => {
+  const snapshot = await getDocs(
+    collection(db, bookingsCollectionRef(condominiumId))
+  );
 
   const newBookings: booking[] = [];
 
@@ -108,9 +128,16 @@ export const getBookings = async (dispatch: any) => {
   await dispatch(setBookings(newBookings));
 };
 
-export const uploadBooking = async (booking: booking, dispatch: any) => {
+export const uploadBooking = async (
+  booking: booking,
+  condominiumId: string,
+  dispatch: any
+) => {
   try {
-    const docRef = await addDoc(collection(db, bookingsCollectionRef), booking);
+    const docRef = await addDoc(
+      collection(db, bookingsCollectionRef(condominiumId)),
+      booking
+    );
 
     await updateDoc(docRef, {
       id: docRef.id,
@@ -193,9 +220,9 @@ export const registerUser = (
       const user = userCredential.user;
 
       await dispatch(setUserState(true));
-      await getSpaces(dispatch);
-      await getBookings(dispatch);
-      await getVisits(dispatch);
+      await getSpaces(condominiumId, dispatch);
+      await getBookings(condominiumId, dispatch);
+      await getVisits(condominiumId, dispatch);
       await getNotices(condominiumId, dispatch);
 
       createRelationBranch(id, condominiumId, user.uid).then(() => {
@@ -238,9 +265,9 @@ export const loginUser = (
 
       await dispatch(setUser(userData));
       await dispatch(setUserState(true));
-      await getSpaces(dispatch);
-      await getBookings(dispatch);
-      await getVisits(dispatch);
+      await getSpaces(userData.condominiumId, dispatch);
+      await getBookings(userData.condominiumId, dispatch);
+      await getVisits(userData.condominiumId, dispatch);
       await getNotices(userData.condominiumId, dispatch);
 
       navigate("/Inicio");
@@ -278,9 +305,9 @@ export const validateUserState = (
 
       await dispatch(setUser(userData));
       await dispatch(setUserState(true));
-      await getSpaces(dispatch);
-      await getBookings(dispatch);
-      await getVisits(dispatch);
+      await getSpaces(userData.condominiumId, dispatch);
+      await getBookings(userData.condominiumId, dispatch);
+      await getVisits(userData.condominiumId, dispatch);
       await getNotices(userData.condominiumId, dispatch);
 
       if (location === "/" || location === "/Registro") {

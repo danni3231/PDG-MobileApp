@@ -12,15 +12,18 @@ import {
   uploadVisitor,
   validateUserState,
 } from "../../../Firebase/firebaseApi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Toast from "../../UI/Toast/Toast";
 import { es } from "date-fns/locale";
+import { AppState } from "../../../Redux/Reducers";
 
 interface VisitFormProps {}
 
 const VisitForm: React.FC<VisitFormProps> = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const user = useSelector<AppState, AppState["user"]>((state) => state.user);
 
   //toast manage
   const [isUploading, setIsUploading] = React.useState(false);
@@ -53,7 +56,7 @@ const VisitForm: React.FC<VisitFormProps> = () => {
 
       console.log(visitor);
 
-      uploadVisitor(visitor, dispatch).then(() => {
+      uploadVisitor(visitor, user.condominiumId, dispatch).then(() => {
         navigate("/Visitas", { state: { reload: true } });
       });
     }
