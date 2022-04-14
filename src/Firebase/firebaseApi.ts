@@ -27,6 +27,7 @@ import {
   setNews,
   setSpaces,
   setUser,
+  setUsers,
   setUserState,
   setVisits,
 } from "../Redux/Actions";
@@ -39,7 +40,7 @@ import { auth, db } from "./firebaseConfig";
 
 const relationBranchRef = "relationBranch";
 
-const usersDBRef = (condominiumId: string) => {
+const usersCollectionRef = (condominiumId: string) => {
   return `condominiums/${condominiumId}/users`;
 };
 
@@ -73,7 +74,7 @@ export const getSpaces = async (condominiumId: string, dispatch: any) => {
   await dispatch(setSpaces(newSpaces));
 };
 
-//Visits async functions
+// * Visits async functions
 
 export const getVisits = async (condominiumId: string, dispatch: any) => {
   const snapshot = await getDocs(
@@ -112,7 +113,7 @@ export const uploadVisitor = async (
   }
 };
 
-//Booking async functions
+// * Booking async functions
 
 export const getBookings = async (condominiumId: string, dispatch: any) => {
   const snapshot = await getDocs(
@@ -151,7 +152,7 @@ export const uploadBooking = async (
   }
 };
 
-// news async functions
+// * news async functions
 
 export const getNews = async (condominiumId: string, dispatch: any) => {
   const snapshot = await getDocs(
@@ -167,7 +168,7 @@ export const getNews = async (condominiumId: string, dispatch: any) => {
   await dispatch(setNews(newNews));
 };
 
-//User async functions
+// * User async functions
 
 const createRelationBranch = (
   id: string,
@@ -183,12 +184,32 @@ const createRelationBranch = (
   return setDoc(doc(db, relationBranchRef, uid), relationBranch);
 };
 
+const getUsers = async (
+  condominiumId: string,
+  currentUserId: string,
+  dispatch: any
+) => {
+  const snapshot = await getDocs(
+    collection(db, usersCollectionRef(condominiumId))
+  );
+
+  const newUsers: User[] = [];
+
+  snapshot.forEach((notice: any) => {
+    if (notice.data().id !== currentUserId) {
+    }
+    newUsers.push({ ...notice.data() });
+  });
+
+  await dispatch(setUsers(newUsers));
+};
+
 export const validateUserInDB = async (
   id: string,
   condominium: string,
   dispatch: any
 ) => {
-  const docSnap = await getDoc(doc(db, usersDBRef(condominium), id));
+  const docSnap = await getDoc(doc(db, usersCollectionRef(condominium), id));
 
   if (docSnap.exists()) {
     const user: User = {
@@ -196,6 +217,7 @@ export const validateUserInDB = async (
       lastname: docSnap.data().lastname,
       condominiumId: docSnap.data().condominiumId,
       apartment: docSnap.data().apartment,
+      profileImg: docSnap.data().profileImg,
       id: docSnap.data().id,
     };
 
@@ -224,6 +246,7 @@ export const registerUser = (
       await getBookings(condominiumId, dispatch);
       await getVisits(condominiumId, dispatch);
       await getNews(condominiumId, dispatch);
+      await getUsers(condominiumId, id, dispatch);
 
       createRelationBranch(id, condominiumId, user.uid).then(() => {
         navigate("/Inicio");
@@ -250,7 +273,7 @@ export const loginUser = (
       const userSnap = await getDoc(
         doc(
           db,
-          usersDBRef(userRelationSnap.data()!.condominiumId),
+          usersCollectionRef(userRelationSnap.data()!.condominiumId),
           userRelationSnap.data()!.id
         )
       );
@@ -260,6 +283,7 @@ export const loginUser = (
         lastname: userSnap.data()!.lastname,
         condominiumId: userSnap.data()!.condominiumId,
         apartment: userSnap.data()!.apartment,
+        profileImg: userSnap.data()!.profileImg,
         id: userSnap.data()!.id,
       };
 
@@ -269,6 +293,7 @@ export const loginUser = (
       await getBookings(userData.condominiumId, dispatch);
       await getVisits(userData.condominiumId, dispatch);
       await getNews(userData.condominiumId, dispatch);
+      await getUsers(userData.condominiumId, userData.id, dispatch);
 
       navigate("/Inicio");
     }
@@ -290,7 +315,7 @@ export const validateUserState = (
       const userSnap = await getDoc(
         doc(
           db,
-          usersDBRef(userRelationSnap.data()!.condominiumId),
+          usersCollectionRef(userRelationSnap.data()!.condominiumId),
           userRelationSnap.data()!.id
         )
       );
@@ -300,6 +325,7 @@ export const validateUserState = (
         lastname: userSnap.data()!.lastname,
         condominiumId: userSnap.data()!.condominiumId,
         apartment: userSnap.data()!.apartment,
+        profileImg: userSnap.data()!.profileImg,
         id: userSnap.data()!.id,
       };
 
@@ -309,6 +335,7 @@ export const validateUserState = (
       await getBookings(userData.condominiumId, dispatch);
       await getVisits(userData.condominiumId, dispatch);
       await getNews(userData.condominiumId, dispatch);
+      await getUsers(userData.condominiumId, userData.id, dispatch);
 
       if (location === "/" || location === "/Registro") {
         navigate("/Inicio");

@@ -8,6 +8,7 @@ import { news } from "../Types/news";
 export interface AppState {
   user: User;
   userState: boolean;
+  users: User[];
   spaces: space[];
   bookings: booking[];
   visits: visitor[];
@@ -20,9 +21,11 @@ const initState = {
     lastname: "",
     condominiumId: "",
     apartment: "",
+    profileImg: "",
     id: "",
   },
   userState: false,
+  users: [],
   spaces: [],
   bookings: [],
   visits: [],
@@ -55,6 +58,9 @@ export const appReducer = (
     // User actions
     case Actions.SET_USER:
       return { ...state, user: action.payload };
+
+    case Actions.SET_USERS:
+      return { ...state, users: action.payload };
 
     case Actions.SET_USER_STATE:
       return { ...state, useState: action.payload };

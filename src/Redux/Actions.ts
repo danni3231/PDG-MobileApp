@@ -49,6 +49,11 @@ export const setUser = (user: User): Action => ({
   payload: user,
 });
 
+export const setUsers = (users: User[]): Action => ({
+  type: "@user/setUsers",
+  payload: users,
+});
+
 // Notices Actions
 
 export const setNews = (news: news[]): Action => ({
@@ -62,5 +67,6 @@ export const SET_BOOKINGS = "@bookings/setBookings";
 export const SET_VISITS = "@visits/setVisits";
 export const ADD_VISITOR = "@visits/addVisitor";
 export const SET_USER = "@user/setUser";
+export const SET_USERS = "@user/setUsers";
 export const SET_USER_STATE = "@user/setUserState";
 export const SET_NEWS = "@news/setNews";
