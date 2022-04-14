@@ -14,7 +14,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ title, img, content, id }) => {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
-    navigate(`/Reservas/form/${id}`);
+    navigate(`/Noticias/${id}`);
   };
 
   return (

@@ -197,8 +197,8 @@ const getUsers = async (
 
   snapshot.forEach((notice: any) => {
     if (notice.data().id !== currentUserId) {
+      newUsers.push({ ...notice.data() });
     }
-    newUsers.push({ ...notice.data() });
   });
 
   await dispatch(setUsers(newUsers));

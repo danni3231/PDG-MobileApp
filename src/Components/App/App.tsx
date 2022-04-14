@@ -13,9 +13,9 @@ import { validateUserState } from "../../Firebase/firebaseApi";
 import Login from "../User Manage Components/Login/Login";
 import Register from "../User Manage Components/Register/Register";
 import LoadingScreen from "../UI/loadingScreen/loadingScreen";
-import { useDispatch, useSelector } from "react-redux";
-import { AppState } from "../../Redux/Reducers";
+import { useDispatch } from "react-redux";
 import SocialScreen from "../Social components/Social Screen/SocialScreen";
+import NewsView from "../Social components/News/NewsView/NewsView";
 
 function App() {
   const location = useLocation();
@@ -58,6 +58,7 @@ function App() {
           <Route path="Reservas/form/:id" element={<SpaceView />} />
 
           <Route path="Social" element={<SocialScreen />} />
+          <Route path="Noticias/:id" element={<NewsView />} />
         </Routes>
       </div>
     );
