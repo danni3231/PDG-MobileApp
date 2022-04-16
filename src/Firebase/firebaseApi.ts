@@ -1,9 +1,7 @@
 import {
   createUserWithEmailAndPassword,
-  getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
-  updateProfile,
 } from "firebase/auth";
 import {
   collection,
@@ -40,9 +38,8 @@ import { auth, db } from "./firebaseConfig";
 
 const relationBranchRef = "relationBranch";
 
-const usersCollectionRef = (condominiumId: string) => {
-  return `condominiums/${condominiumId}/users`;
-};
+const usersCollectionRef = (condominiumId: string) =>
+  `condominiums/${condominiumId}/users`;
 
 const noticesCollectionRef = (condominiumId: string) =>
   `condominiums/${condominiumId}/notices`;
@@ -56,6 +53,10 @@ const bookingsCollectionRef = (condominiumId: string) =>
 const visitorsCollectionRef = (condominiumId: string) =>
   `condominiums/${condominiumId}/visitors`;
 
+const chatsCollectionRef = `chats`;
+
+const messagesCollectionRef = (chatId: string) => `chats/${chatId}/messages`;
+
 //export const getBookingsCollection = getDocs(query(collection(db, bookingsCollection),where('userId','==','alfa'), orderBy("dateStart"), limit(5)))
 
 export const getSpaces = async (condominiumId: string, dispatch: any) => {
@@ -63,15 +64,13 @@ export const getSpaces = async (condominiumId: string, dispatch: any) => {
     collection(db, spacesCollectionRef(condominiumId))
   );
 
-  console.log(snapshot);
-
   const newSpaces: space[] = [];
 
   snapshot.forEach((space: any) => {
     newSpaces.push({ ...space.data(), id: space.id });
   });
 
-  await dispatch(setSpaces(newSpaces));
+  dispatch(setSpaces(newSpaces));
 };
 
 // * Visits async functions
@@ -87,7 +86,7 @@ export const getVisits = async (condominiumId: string, dispatch: any) => {
     newVisits.push({ ...visitor.data() });
   });
 
-  await dispatch(setVisits(newVisits));
+  dispatch(setVisits(newVisits));
 };
 
 export const uploadVisitor = async (
@@ -126,7 +125,7 @@ export const getBookings = async (condominiumId: string, dispatch: any) => {
     newBookings.push({ ...booking.data() });
   });
 
-  await dispatch(setBookings(newBookings));
+  dispatch(setBookings(newBookings));
 };
 
 export const uploadBooking = async (
@@ -165,7 +164,7 @@ export const getNews = async (condominiumId: string, dispatch: any) => {
     newNews.push({ ...notice.data() });
   });
 
-  await dispatch(setNews(newNews));
+  dispatch(setNews(newNews));
 };
 
 // * User async functions
@@ -201,7 +200,7 @@ const getUsers = async (
     }
   });
 
-  await dispatch(setUsers(newUsers));
+  dispatch(setUsers(newUsers));
 };
 
 export const validateUserInDB = async (
@@ -241,12 +240,12 @@ export const registerUser = (
     async (userCredential) => {
       const user = userCredential.user;
 
-      await dispatch(setUserState(true));
-      await getSpaces(condominiumId, dispatch);
-      await getBookings(condominiumId, dispatch);
-      await getVisits(condominiumId, dispatch);
-      await getNews(condominiumId, dispatch);
-      await getUsers(condominiumId, id, dispatch);
+      dispatch(setUserState(true));
+      getSpaces(condominiumId, dispatch);
+      getBookings(condominiumId, dispatch);
+      getVisits(condominiumId, dispatch);
+      getNews(condominiumId, dispatch);
+      getUsers(condominiumId, id, dispatch);
 
       createRelationBranch(id, condominiumId, user.uid).then(() => {
         navigate("/Inicio");
@@ -287,13 +286,13 @@ export const loginUser = (
         id: userSnap.data()!.id,
       };
 
-      await dispatch(setUser(userData));
-      await dispatch(setUserState(true));
-      await getSpaces(userData.condominiumId, dispatch);
-      await getBookings(userData.condominiumId, dispatch);
-      await getVisits(userData.condominiumId, dispatch);
-      await getNews(userData.condominiumId, dispatch);
-      await getUsers(userData.condominiumId, userData.id, dispatch);
+      dispatch(setUser(userData));
+      dispatch(setUserState(true));
+      getSpaces(userData.condominiumId, dispatch);
+      getBookings(userData.condominiumId, dispatch);
+      getVisits(userData.condominiumId, dispatch);
+      getNews(userData.condominiumId, dispatch);
+      getUsers(userData.condominiumId, userData.id, dispatch);
 
       navigate("/Inicio");
     }
@@ -329,13 +328,16 @@ export const validateUserState = (
         id: userSnap.data()!.id,
       };
 
-      await dispatch(setUser(userData));
-      await dispatch(setUserState(true));
-      await getSpaces(userData.condominiumId, dispatch);
-      await getBookings(userData.condominiumId, dispatch);
-      await getVisits(userData.condominiumId, dispatch);
-      await getNews(userData.condominiumId, dispatch);
-      await getUsers(userData.condominiumId, userData.id, dispatch);
+      dispatch(setUser(userData));
+      dispatch(setUserState(true));
+
+      getSpaces(userData.condominiumId, dispatch);
+      getBookings(userData.condominiumId, dispatch);
+      getVisits(userData.condominiumId, dispatch);
+      getNews(userData.condominiumId, dispatch);
+      getUsers(userData.condominiumId, userData.id, dispatch);
+
+      listenChats(userData.id);
 
       if (location === "/" || location === "/Registro") {
         navigate("/Inicio");
@@ -346,3 +348,44 @@ export const validateUserState = (
     }
   });
 };
+
+// * Messages async functions
+
+const chatsQuery = (userId: string) =>
+  query(
+    collection(db, chatsCollectionRef),
+    where("users", "array-contains", userId)
+  );
+
+const messageQuery = (chatId: string) =>
+  query(collection(db, messagesCollectionRef(chatId)));
+
+const listenChats = (userId: string) =>
+  // escucha cada chat individual
+  onSnapshot(chatsQuery(userId), (chatQuerySnapshot) => {
+    // arreglos de los datos
+    const chats: any[] = [];
+
+    // por cada chat
+    chatQuerySnapshot.forEach((doc) => {
+      const messages: any[] = [];
+      // crea un chat en el arreglo con mensajes vacios
+      chats.push({ ...doc.data(), id: doc.id, messages: messages });
+
+      // escucha los mensajes de cada
+      onSnapshot(messageQuery(doc.id), (messageQuerySnapshot) => {
+        messageQuerySnapshot.docChanges().forEach((changeMessage) => {
+          console.log(changeMessage.type);
+          if (changeMessage.type === "added") {
+            const chatRef = chats.findIndex((chat) => chat.id === doc.id);
+
+            chats[chatRef].messages.push({ ...changeMessage.doc.data() });
+          }
+        });
+
+        const chatRef = chats.findIndex((chat) => chat.id === doc.id);
+
+        console.log(chats);
+      });
+    });
+  });

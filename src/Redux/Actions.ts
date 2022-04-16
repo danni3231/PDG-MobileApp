@@ -6,14 +6,14 @@ import { visitor } from "../Types/visitor";
 
 export type Action = { type: string; payload: any };
 
-// Space actions
+// * Space actions
 
 export const setSpaces = (spaces: space[]): Action => ({
   type: "@spaces/setSpaces",
   payload: spaces,
 });
 
-// Bookings actions
+// * Bookings actions
 
 export const addBooking = (newBooking: booking): Action => ({
   type: "@bookings/addBooking",
@@ -25,7 +25,7 @@ export const setBookings = (bookings: booking[]): Action => ({
   payload: bookings,
 });
 
-// Visits actions
+// * Visits actions
 
 export const addVisitor = (newVisitor: visitor): Action => ({
   type: "@visits/addVisitor",
@@ -37,7 +37,7 @@ export const setVisits = (visits: visitor[]): Action => ({
   payload: visits,
 });
 
-// Users Actions
+// * Users Actions
 
 export const setUserState = (state: boolean): Action => ({
   type: "@user/setUserState",
@@ -54,7 +54,7 @@ export const setUsers = (users: User[]): Action => ({
   payload: users,
 });
 
-// Notices Actions
+// * Notices Actions
 
 export const setNews = (news: news[]): Action => ({
   type: "@news/setNews",
