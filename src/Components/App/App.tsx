@@ -58,7 +58,7 @@ function App() {
           <Route path="Reservas/form/:id" element={<SpaceView />} />
 
           <Route path="Social" element={<SocialScreen />} />
-          <Route path="Noticias/:id" element={<NewsView />} />
+          <Route path="Social/Noticias/:id" element={<NewsView />} />
         </Routes>
       </div>
     );

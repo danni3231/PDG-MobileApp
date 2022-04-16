@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { AppState } from "../../../../Redux/Reducers";
 import { news } from "../../../../Types/news";
+import { lineBreak } from "../../../../Utils/GeneralFunctions";
 
 import "./NewsView.css";
 
@@ -19,6 +20,8 @@ const NewsView: React.FC<NewsViewProps> = () => {
   const dateString = `${dateParse.getDate()}/${
     dateParse.getMonth() + 1
   }/${dateParse.getFullYear()} - ${dateParse.getHours()}:${dateParse.getMinutes()} `;
+
+  const textParse = lineBreak(news?.content!);
 
   return (
     <article className="newsView">
@@ -46,7 +49,19 @@ const NewsView: React.FC<NewsViewProps> = () => {
               <p className="newsView__content__user__date">{dateString}</p>
             </div>
           </div>
-          <p className="newsView__content__text">{news?.content}</p>
+          <div className="newsView__content__text">
+            {textParse.map((paragraph, i) => {
+              if (paragraph.endsWith("* ")) {
+                return (
+                  <p className="bold" key={i}>
+                    {paragraph.slice(0, -2)}
+                  </p>
+                );
+              } else {
+                return <p key={i}>{paragraph}</p>;
+              }
+            })}
+          </div>
         </div>
       </div>
     </article>

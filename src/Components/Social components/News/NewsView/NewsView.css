@@ -96,6 +96,12 @@
 }
 
 .newsView__content__text {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.newsView__content__text p {
   font-size: 16px;
   text-align: left;
 }

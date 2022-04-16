@@ -20,7 +20,7 @@ const NewsPreview: React.FC<NewsPreviewProps> = ({ title, img, date, id }) => {
   }/${dateParse.getFullYear()}`;
 
   const handleCardClick = () => {
-    navigate(`/Reservas/form/${id}`);
+    navigate(`/Social/Noticias/${id}`);
   };
 
   return (

@@ -33,10 +33,10 @@ const Home: React.FC<HomeProps> = () => {
       <Gallery
         title="Reservar un espacio"
         listSpace={spaces}
-        url={"Reservas/list"}
+        url={"/Reservas/list"}
       />
 
-      <Gallery title="Noticias" listNews={news} url={"Social"} isNotice />
+      <Gallery title="Noticias" listNews={news} url={"/Social"} isNotice />
     </article>
   );
 };
