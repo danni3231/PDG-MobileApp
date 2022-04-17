@@ -4,6 +4,7 @@ import { space } from "../Types/space";
 import { User } from "../Types/user";
 import { visitor } from "../Types/visitor";
 import { news } from "../Types/news";
+import { chat } from "../Types/chat";
 
 export interface AppState {
   user: User;
@@ -13,6 +14,7 @@ export interface AppState {
   bookings: booking[];
   visits: visitor[];
   news: news[];
+  chats: chat[];
 }
 
 const initState = {
@@ -30,6 +32,7 @@ const initState = {
   bookings: [],
   visits: [],
   news: [],
+  chats: [],
 };
 
 export const appReducer = (
@@ -68,6 +71,24 @@ export const appReducer = (
     // news actions
     case Actions.SET_NEWS:
       return { ...state, news: action.payload };
+
+    case Actions.ADD_CHAT:
+      console.log(action.payload);
+      return { ...state, chats: [...state.chats, action.payload] };
+
+    case Actions.ADD_MESSAGE:
+      console.log(action.payload);
+      const copyChats = state.chats;
+      const chatRef = state.chats.findIndex(
+        (chat) => chat.id === action.payload.chatId
+      );
+
+      copyChats[chatRef].messages = [
+        ...copyChats[chatRef].messages,
+        action.payload.message,
+      ];
+
+      return { ...state, chats: copyChats };
 
     default:
       return state;

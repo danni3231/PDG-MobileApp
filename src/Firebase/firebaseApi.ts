@@ -20,6 +20,8 @@ import {
 } from "firebase/firestore";
 import {
   addBooking,
+  addChat,
+  addMessage,
   addVisitor,
   setBookings,
   setNews,
@@ -337,7 +339,7 @@ export const validateUserState = (
       getNews(userData.condominiumId, dispatch);
       getUsers(userData.condominiumId, userData.id, dispatch);
 
-      listenChats(userData.id);
+      listenChats(userData.id, dispatch);
 
       if (location === "/" || location === "/Registro") {
         navigate("/Inicio");
@@ -360,32 +362,31 @@ const chatsQuery = (userId: string) =>
 const messageQuery = (chatId: string) =>
   query(collection(db, messagesCollectionRef(chatId)));
 
-const listenChats = (userId: string) =>
-  // escucha cada chat individual
+const listenChats = (userId: string, dispatch: any) =>
   onSnapshot(chatsQuery(userId), (chatQuerySnapshot) => {
-    // arreglos de los datos
-    const chats: any[] = [];
+    chatQuerySnapshot.docChanges().forEach((changeChat) => {
+      if (changeChat.type === "added") {
+        dispatch(
+          addChat({
+            users: changeChat.doc.data().users,
+            id: changeChat.doc.id,
+            messages: [],
+          })
+        );
 
-    // por cada chat
-    chatQuerySnapshot.forEach((doc) => {
-      const messages: any[] = [];
-      // crea un chat en el arreglo con mensajes vacios
-      chats.push({ ...doc.data(), id: doc.id, messages: messages });
+        onSnapshot(messageQuery(changeChat.doc.id), (messageQuerySnapshot) => {
+          messageQuerySnapshot.docChanges().forEach((changeMessage) => {
+            if (changeMessage.type === "added") {
+              const message = {
+                text: changeMessage.doc.data().text,
+                sendAt: changeMessage.doc.data().sendAt,
+                sendBy: changeMessage.doc.data().sendBy,
+              };
 
-      // escucha los mensajes de cada
-      onSnapshot(messageQuery(doc.id), (messageQuerySnapshot) => {
-        messageQuerySnapshot.docChanges().forEach((changeMessage) => {
-          console.log(changeMessage.type);
-          if (changeMessage.type === "added") {
-            const chatRef = chats.findIndex((chat) => chat.id === doc.id);
-
-            chats[chatRef].messages.push({ ...changeMessage.doc.data() });
-          }
+              dispatch(addMessage(changeChat.doc.id, message));
+            }
+          });
         });
-
-        const chatRef = chats.findIndex((chat) => chat.id === doc.id);
-
-        console.log(chats);
-      });
+      }
     });
   });

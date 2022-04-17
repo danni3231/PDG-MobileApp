@@ -21,8 +21,12 @@ const Home: React.FC<HomeProps> = () => {
 
   const user = useSelector<AppState, AppState["user"]>((state) => state.user);
 
+  const chats = useSelector<AppState, AppState["chats"]>(
+    (state) => state.chats
+  );
+
   return (
-    <article className="home">
+    <article className="home" onClick={() => console.log(chats)}>
       <Header />
 
       <h1>
