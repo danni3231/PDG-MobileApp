@@ -11,45 +11,51 @@ import "./ChatList.css";
 interface ChatListProps {}
 
 const ChatList: React.FC<ChatListProps> = ({}) => {
-  const chatsPreviews: chatPreview[] = [
-    {
-      userImg:
-        "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png",
-      apartment: "208D",
-      firstname: "Carlos",
-      lastMessage: "esto es un mensaje",
-      lastMessageDate: 1649866505,
-      unReadMessages: 2,
-      lastMessageYou: true,
-    },
-
-    {
-      userImg:
-        "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png",
-      apartment: "308D",
-      firstname: "Marta",
-      lastMessage: "esto es un mensaje x2",
-      lastMessageDate: 1649866505,
-      unReadMessages: 2,
-      lastMessageYou: false,
-    },
-
-    {
-      userImg:
-        "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png",
-      apartment: "408D",
-      firstname: "test",
-      lastMessage:
-        "esto es un mensaje demasiado largo para comprobar  el ellipsis del mensaje por que el css es una mierda",
-      lastMessageDate: 1649866505,
-      unReadMessages: 2,
-      lastMessageYou: true,
-    },
-  ];
+  const currentUser = useSelector<AppState, AppState["currentUser"]>(
+    (state) => state.currentUser
+  );
 
   const users = useSelector<AppState, AppState["users"]>(
     (state) => state.users
   );
+
+  const chats = useSelector<AppState, AppState["chats"]>(
+    (state) => state.chats
+  );
+
+  const chatsPreviews: chatPreview[] = [];
+
+  chats.forEach((chat) => {
+    const userID = chat.users.find((userId) => userId !== currentUser.id);
+    const user = users.find((user) => user.id === userID);
+
+    let messageCount = 0;
+
+    if (chat.messages[0].sendBy !== currentUser.id) {
+      let msgWriter = chat.messages[0].sendBy;
+
+      while (msgWriter === chat.messages[0].sendBy) {
+        chat.messages.slice(0, 8).forEach((msg) => {
+          if (msg.sendBy !== currentUser.id) {
+            messageCount++;
+          }
+
+          msgWriter = msg.sendBy;
+        });
+      }
+    }
+
+    const chatParse = {
+      userImg: user!.profileImg,
+      apartment: user!.apartment,
+      firstname: user!.firstname,
+      lastMessage: chat.messages[0].text,
+      lastMessageDate: chat.messages[0].sendAt,
+      unReadMessages: messageCount,
+      lastMessageYou: chat.messages[0].sendBy === currentUser.id,
+    };
+    chatsPreviews.push(chatParse);
+  });
 
   const [activeView, setActiveView] = React.useState<"chats" | "users">(
     "chats"

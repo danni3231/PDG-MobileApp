@@ -7,7 +7,7 @@ import { news } from "../Types/news";
 import { chat } from "../Types/chat";
 
 export interface AppState {
-  user: User;
+  currentUser: User;
   userState: boolean;
   users: User[];
   spaces: space[];
@@ -18,7 +18,7 @@ export interface AppState {
 }
 
 const initState = {
-  user: {
+  currentUser: {
     firstname: "",
     lastname: "",
     condominiumId: "",
@@ -60,7 +60,7 @@ export const appReducer = (
 
     // User actions
     case Actions.SET_USER:
-      return { ...state, user: action.payload };
+      return { ...state, currentUser: action.payload };
 
     case Actions.SET_USERS:
       return { ...state, users: action.payload };
@@ -73,11 +73,9 @@ export const appReducer = (
       return { ...state, news: action.payload };
 
     case Actions.ADD_CHAT:
-      console.log(action.payload);
       return { ...state, chats: [...state.chats, action.payload] };
 
     case Actions.ADD_MESSAGE:
-      console.log(action.payload);
       const copyChats = state.chats;
       const chatRef = state.chats.findIndex(
         (chat) => chat.id === action.payload.chatId

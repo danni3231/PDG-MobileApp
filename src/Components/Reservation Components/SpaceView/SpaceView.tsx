@@ -25,8 +25,8 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const user: User = useSelector<AppState, AppState["user"]>(
-    (state) => state.user
+  const currentUser: User = useSelector<AppState, AppState["currentUser"]>(
+    (state) => state.currentUser
   );
 
   const space: space | undefined = useSelector<AppState, space | undefined>(
@@ -69,9 +69,11 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
         dateStart: dateStartParse,
       };
 
-      uploadBooking(newBooking, user.condominiumId, dispatch).then(() => {
-        navigate("/Reservas");
-      });
+      uploadBooking(newBooking, currentUser.condominiumId, dispatch).then(
+        () => {
+          navigate("/Reservas");
+        }
+      );
     }
   };
 

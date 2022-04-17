@@ -23,7 +23,9 @@ const VisitForm: React.FC<VisitFormProps> = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const user = useSelector<AppState, AppState["user"]>((state) => state.user);
+  const currentUser = useSelector<AppState, AppState["currentUser"]>(
+    (state) => state.currentUser
+  );
 
   //toast manage
   const [isUploading, setIsUploading] = React.useState(false);
@@ -56,7 +58,7 @@ const VisitForm: React.FC<VisitFormProps> = () => {
 
       console.log(visitor);
 
-      uploadVisitor(visitor, user.condominiumId, dispatch).then(() => {
+      uploadVisitor(visitor, currentUser.condominiumId, dispatch).then(() => {
         navigate("/Visitas", { state: { reload: true } });
       });
     }

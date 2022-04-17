@@ -19,18 +19,16 @@ const Home: React.FC<HomeProps> = () => {
 
   const news = useSelector<AppState, AppState["news"]>((state) => state.news);
 
-  const user = useSelector<AppState, AppState["user"]>((state) => state.user);
-
-  const chats = useSelector<AppState, AppState["chats"]>(
-    (state) => state.chats
+  const currentUser = useSelector<AppState, AppState["currentUser"]>(
+    (state) => state.currentUser
   );
 
   return (
-    <article className="home" onClick={() => console.log(chats)}>
+    <article className="home">
       <Header />
 
       <h1>
-        Hola Sr. {`${user.firstname} ${user.lastname}`}, <br />
+        Hola Sr. {`${currentUser.firstname} ${currentUser.lastname}`}, <br />
         ¿qué quiere hacer hoy?
       </h1>
 

@@ -360,7 +360,10 @@ const chatsQuery = (userId: string) =>
   );
 
 const messageQuery = (chatId: string) =>
-  query(collection(db, messagesCollectionRef(chatId)));
+  query(
+    collection(db, messagesCollectionRef(chatId)),
+    orderBy("sendAt", "desc")
+  );
 
 const listenChats = (userId: string, dispatch: any) =>
   onSnapshot(chatsQuery(userId), (chatQuerySnapshot) => {
