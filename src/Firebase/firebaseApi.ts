@@ -8,7 +8,6 @@ import {
   addDoc,
   updateDoc,
   onSnapshot,
-  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -414,4 +413,10 @@ const listenChats = (userId: string, dispatch: any) =>
 
 export const uploadMessage = async (chatId: string, message: message) => {
   await addDoc(collection(db, messagesCollectionRef(chatId)), message);
+};
+
+export const createChat = async (chat: any, message: message) => {
+  await addDoc(collection(db, chatsCollectionRef), chat).then((chatRef) => {
+    uploadMessage(chatRef.id, message);
+  });
 };

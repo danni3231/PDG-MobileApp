@@ -2,7 +2,7 @@ import { InputAdornment, TextField } from "@mui/material";
 import * as React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
-import { uploadMessage } from "../../../../Firebase/firebaseApi";
+import { createChat, uploadMessage } from "../../../../Firebase/firebaseApi";
 import { AppState } from "../../../../Redux/Reducers";
 import { chat } from "../../../../Types/chat";
 import { User } from "../../../../Types/user";
@@ -25,6 +25,10 @@ const ChatView: React.FC<ChatViewProps> = () => {
 
   const [newMessage, setNewMessage] = React.useState("");
 
+  const chats = useSelector<AppState, AppState["chats"]>(
+    (state) => state.chats
+  );
+
   const chat = useSelector<AppState, chat | undefined>((state) =>
     state.chats.find((chat) => chat.users.includes(id!))
   );
@@ -45,6 +49,13 @@ const ChatView: React.FC<ChatViewProps> = () => {
     };
 
     if (chat === undefined) {
+      const newChat = {
+        users: [currentUser.id, userChat?.id],
+      };
+      createChat(newChat, message).then(() => {
+        setNewMessage("");
+        console.log("Sent message");
+      });
     } else {
       uploadMessage(chat.id, message).then(() => {
         setNewMessage("");
