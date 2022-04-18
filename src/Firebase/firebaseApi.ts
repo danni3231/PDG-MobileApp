@@ -32,6 +32,7 @@ import {
   setVisits,
 } from "../Redux/Actions";
 import { booking } from "../Types/booking";
+import { message } from "../Types/message";
 import { news } from "../Types/news";
 import { space } from "../Types/space";
 import { User } from "../Types/user";
@@ -252,6 +253,8 @@ export const registerUser = (
       createRelationBranch(id, condominiumId, user.uid).then(() => {
         navigate("/Inicio");
       });
+
+      listenChats(id, dispatch);
     }
   );
 };
@@ -290,11 +293,14 @@ export const loginUser = (
 
       dispatch(setUser(userData));
       dispatch(setUserState(true));
+
       getSpaces(userData.condominiumId, dispatch);
       getBookings(userData.condominiumId, dispatch);
       getVisits(userData.condominiumId, dispatch);
       getNews(userData.condominiumId, dispatch);
       getUsers(userData.condominiumId, userData.id, dispatch);
+
+      listenChats(userData.id, dispatch);
 
       navigate("/Inicio");
     }
@@ -360,10 +366,7 @@ const chatsQuery = (userId: string) =>
   );
 
 const messageQuery = (chatId: string) =>
-  query(
-    collection(db, messagesCollectionRef(chatId)),
-    orderBy("sendAt", "desc")
-  );
+  query(collection(db, messagesCollectionRef(chatId)), orderBy("sendAt"));
 
 const listenChats = (userId: string, dispatch: any) =>
   onSnapshot(chatsQuery(userId), (chatQuerySnapshot) => {
@@ -385,7 +388,6 @@ const listenChats = (userId: string, dispatch: any) =>
                 sendAt: changeMessage.doc.data().sendAt,
                 sendBy: changeMessage.doc.data().sendBy,
               };
-
               dispatch(addMessage(changeChat.doc.id, message));
             }
           });
@@ -393,3 +395,7 @@ const listenChats = (userId: string, dispatch: any) =>
       }
     });
   });
+
+export const uploadMessage = async (chatId: string, message: message) => {
+  await addDoc(collection(db, messagesCollectionRef(chatId)), message);
+};

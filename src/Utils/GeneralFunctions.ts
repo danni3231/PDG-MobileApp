@@ -10,3 +10,7 @@ export const parseHour = (date: number) => {
 export const goBack = (navigate: any) => {
   navigate(-1);
 };
+
+export const getTimeStamp = (date: Date) => {
+  return parseInt((date.getTime() / 1000).toFixed(0));
+};

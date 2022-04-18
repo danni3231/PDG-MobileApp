@@ -86,7 +86,7 @@ export const appReducer = (
         action.payload.message,
       ];
 
-      return { ...state, chats: copyChats };
+      return { ...state, chats: [...copyChats] };
 
     default:
       return state;

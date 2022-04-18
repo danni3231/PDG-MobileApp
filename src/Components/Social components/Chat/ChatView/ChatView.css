@@ -24,7 +24,7 @@
 }
 
 .chatView__chat__container__column {
-  flex-direction: column-reverse;
+  flex-direction: column;
   align-items: flex-end;
   gap: 20px;
   padding-bottom: 0px;
