@@ -1,0 +1,71 @@
+.chatView {
+  padding-bottom: 48px;
+}
+
+.chatView__backBtn {
+  max-width: 24px;
+}
+
+.chatView__userInfo {
+  display: flex;
+  gap: 20px;
+}
+
+.chatView__userInfo__photo {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.chatView__chat__container {
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.chatView__chat__container__column {
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  gap: 20px;
+  padding-bottom: 0px;
+}
+
+.chatView__chat__message {
+  width: fit-content;
+  padding: 12px 24px;
+
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.chatView__chat__message__date {
+  font-size: 10px;
+  color: #7b61ff;
+}
+
+.chatView__chat__message__date--white {
+  color: #fff;
+}
+
+.chatView__chat__message--meMsg {
+  background-color: #7b61ff;
+  border-radius: 20px 0px 20px 20px;
+}
+
+.chatView__chat__message--meMsg p {
+  color: #fff;
+}
+
+.chatView__chat__message--otherMsg {
+  background-color: #ece8ff;
+  align-self: flex-start;
+  border-radius: 0px 20px 20px 20px;
+}
+
+.chatView__chat__inputs {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}

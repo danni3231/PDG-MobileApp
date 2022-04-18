@@ -16,6 +16,7 @@ import LoadingScreen from "../UI/loadingScreen/loadingScreen";
 import { useDispatch } from "react-redux";
 import SocialScreen from "../Social components/Social Screen/SocialScreen";
 import NewsView from "../Social components/News/NewsView/NewsView";
+import ChatView from "../Social components/Chat/ChatView/ChatView";
 
 function App() {
   const location = useLocation();
@@ -37,10 +38,12 @@ function App() {
   } else {
     return (
       <div className="App">
-        {location.pathname === "/" || location.pathname === "/Registro" ? (
+        {location.pathname === "/" ||
+        location.pathname === "/Registro" ||
+        location.pathname.startsWith("/Social/Chat/") ? (
           ""
         ) : (
-          <Nav></Nav>
+          <Nav />
         )}
 
         <Routes>
@@ -59,6 +62,7 @@ function App() {
 
           <Route path="Social" element={<SocialScreen />} />
           <Route path="Social/Noticias/:id" element={<NewsView />} />
+          <Route path="Social/Chat/:id" element={<ChatView />} />
         </Routes>
       </div>
     );

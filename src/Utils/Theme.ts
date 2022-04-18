@@ -11,9 +11,18 @@ export const theme = createTheme({
   },
 
   components: {
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          width: "100%",
+        },
+      },
+    },
+
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
+          width: "100%",
           borderRadius: "50px",
           fontSize: "14px",
           fontFamily: "Satoshi",

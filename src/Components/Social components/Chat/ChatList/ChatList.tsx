@@ -46,14 +46,14 @@ const ChatList: React.FC<ChatListProps> = ({}) => {
     }
 
     const chatParse = {
-      userImg: user!.profileImg,
-      apartment: user!.apartment,
-      firstname: user!.firstname,
+      chatId: chat.id,
+      userId: user!.id,
       lastMessage: chat.messages[0].text,
       lastMessageDate: chat.messages[0].sendAt,
       unReadMessages: messageCount,
       lastMessageYou: chat.messages[0].sendBy === currentUser.id,
     };
+
     chatsPreviews.push(chatParse);
   });
 
@@ -70,10 +70,7 @@ const ChatList: React.FC<ChatListProps> = ({}) => {
           <div className="scroll__column chatList__column">
             {chatsPreviews.map((chatPreview: chatPreview) => {
               return (
-                <ChatPreview
-                  key={chatPreview.apartment}
-                  chatInfo={chatPreview}
-                />
+                <ChatPreview key={chatPreview.chatId} chatInfo={chatPreview} />
               );
             })}
           </div>

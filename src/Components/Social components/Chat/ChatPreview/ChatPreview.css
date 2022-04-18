@@ -18,9 +18,15 @@
   justify-content: center;
 }
 
-.chatPreview__content {
+.chatPreview__content,
+.chatPreview__msg__container {
   width: 100%;
   overflow: hidden;
+}
+
+.chatPreview__msg__container {
+  display: flex;
+  gap: 8px;
 }
 
 .chatPreview__name {
@@ -32,6 +38,7 @@
 
 .chatPreview__msg {
   font-size: 14px;
+  min-width: 19px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

@@ -32,6 +32,10 @@ const Btn: React.FC<BtnProps> = ({ text, variant, action, margin }) => {
       classname = "btn btn--disabled";
       break;
 
+    case "circle":
+      classname = "btn btn--circle";
+      break;
+
     default:
       classname = "btn";
   }

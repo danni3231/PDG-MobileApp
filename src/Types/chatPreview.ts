@@ -1,7 +1,6 @@
 export type chatPreview = {
-  userImg: string;
-  apartment: string;
-  firstname: string;
+  chatId: string;
+  userId: string;
   lastMessage: string;
   lastMessageDate: number;
   unReadMessages: number;
