@@ -49,8 +49,9 @@ const VisitForm: React.FC<VisitFormProps> = () => {
       let dateParse = parseInt((date!.getTime() / 1000).toFixed(0));
 
       const visitor: visitor = {
-        name: `${name} ${surname}`,
         id: "",
+        userId: currentUser.id,
+        name: `${name} ${surname}`,
         date: dateParse,
         ccType: idType,
         cc: ~~id,

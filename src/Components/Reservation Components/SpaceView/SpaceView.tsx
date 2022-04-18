@@ -63,7 +63,7 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
 
       let newBooking: booking = {
         id: "",
-        userId: "Alfa",
+        userId: currentUser.id,
         spaceId: id!,
         dateEnd: dateEndParse,
         dateStart: dateStartParse,

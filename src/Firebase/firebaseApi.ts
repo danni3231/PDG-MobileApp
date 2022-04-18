@@ -78,10 +78,18 @@ export const getSpaces = async (condominiumId: string, dispatch: any) => {
 
 // * Visits async functions
 
-export const getVisits = async (condominiumId: string, dispatch: any) => {
-  const snapshot = await getDocs(
-    collection(db, visitorsCollectionRef(condominiumId))
+const visitsQuery = (condominiumId: string, userId: string) =>
+  query(
+    collection(db, visitorsCollectionRef(condominiumId)),
+    where("userId", "==", userId)
   );
+
+const getVisits = async (
+  condominiumId: string,
+  userId: string,
+  dispatch: any
+) => {
+  const snapshot = await getDocs(visitsQuery(condominiumId, userId));
 
   const newVisits: visitor[] = [];
 
@@ -117,10 +125,18 @@ export const uploadVisitor = async (
 
 // * Booking async functions
 
-export const getBookings = async (condominiumId: string, dispatch: any) => {
-  const snapshot = await getDocs(
-    collection(db, bookingsCollectionRef(condominiumId))
+const bookingQuery = (condominiumId: string, userId: string) =>
+  query(
+    collection(db, bookingsCollectionRef(condominiumId)),
+    where("userId", "==", userId)
   );
+
+const getBookings = async (
+  condominiumId: string,
+  userId: string,
+  dispatch: any
+) => {
+  const snapshot = await getDocs(bookingQuery(condominiumId, userId));
 
   const newBookings: booking[] = [];
 
@@ -245,8 +261,8 @@ export const registerUser = (
 
       dispatch(setUserState(true));
       getSpaces(condominiumId, dispatch);
-      getBookings(condominiumId, dispatch);
-      getVisits(condominiumId, dispatch);
+      getBookings(condominiumId, id, dispatch);
+      getVisits(condominiumId, id, dispatch);
       getNews(condominiumId, dispatch);
       getUsers(condominiumId, id, dispatch);
 
@@ -295,8 +311,8 @@ export const loginUser = (
       dispatch(setUserState(true));
 
       getSpaces(userData.condominiumId, dispatch);
-      getBookings(userData.condominiumId, dispatch);
-      getVisits(userData.condominiumId, dispatch);
+      getBookings(userData.condominiumId, userData.id, dispatch);
+      getVisits(userData.condominiumId, userData.id, dispatch);
       getNews(userData.condominiumId, dispatch);
       getUsers(userData.condominiumId, userData.id, dispatch);
 
@@ -340,8 +356,8 @@ export const validateUserState = (
       dispatch(setUserState(true));
 
       getSpaces(userData.condominiumId, dispatch);
-      getBookings(userData.condominiumId, dispatch);
-      getVisits(userData.condominiumId, dispatch);
+      getBookings(userData.condominiumId, userData.id, dispatch);
+      getVisits(userData.condominiumId, userData.id, dispatch);
       getNews(userData.condominiumId, dispatch);
       getUsers(userData.condominiumId, userData.id, dispatch);
 
