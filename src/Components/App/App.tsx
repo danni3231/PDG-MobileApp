@@ -17,6 +17,7 @@ import { useDispatch } from "react-redux";
 import SocialScreen from "../Social components/Social Screen/SocialScreen";
 import NewsView from "../Social components/News/NewsView/NewsView";
 import ChatView from "../Social components/Chat/ChatView/ChatView";
+import ChatUserList from "../Social components/Chat/ChatUserList/ChatUserList";
 
 function App() {
   const location = useLocation();
@@ -63,6 +64,7 @@ function App() {
           <Route path="Social" element={<SocialScreen />} />
           <Route path="Social/Noticias/:id" element={<NewsView />} />
           <Route path="Social/Chat/:id" element={<ChatView />} />
+          <Route path="Social/AllUsers" element={<ChatUserList />} />
         </Routes>
       </div>
     );

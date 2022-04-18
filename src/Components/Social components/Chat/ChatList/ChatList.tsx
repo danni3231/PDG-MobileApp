@@ -1,16 +1,18 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import { AppState } from "../../../../Redux/Reducers";
 import { chatPreview } from "../../../../Types/chatPreview";
-import { User } from "../../../../Types/user";
+
 import ChatPreview from "../ChatPreview/ChatPreview";
-import UserPreview from "../UserPreview/UserPreview";
 
 import "./ChatList.css";
 
 interface ChatListProps {}
 
 const ChatList: React.FC<ChatListProps> = ({}) => {
+  const navigate = useNavigate();
+
   const currentUser = useSelector<AppState, AppState["currentUser"]>(
     (state) => state.currentUser
   );
@@ -56,7 +58,10 @@ const ChatList: React.FC<ChatListProps> = ({}) => {
           })}
         </div>
 
-        <div className="chatList__btn">
+        <div
+          className="chatList__btn"
+          onClick={() => navigate("/Social/AllUsers")}
+        >
           <img src={`${process.env.PUBLIC_URL}/Icons/plus.svg`} alt="" />
         </div>
       </div>
