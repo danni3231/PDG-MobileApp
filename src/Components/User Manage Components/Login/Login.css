@@ -1,5 +1,7 @@
 .login,
 .register {
+  height: 100vh;
+  overflow: hidden;
   background-color: #7b61ff;
   padding: 0px;
   padding-top: 40px;

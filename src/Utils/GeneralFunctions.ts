@@ -59,3 +59,8 @@ export const castCondominiumId = (condominium: string) => {
       return "";
   }
 };
+
+export const updatedViewport = ()=>{
+  let viewport = document.querySelector('meta[name=viewport]') as HTMLMetaElement
+  viewport.setAttribute('content', `width=device-width, height=${window.innerHeight}, initial-scale=1`)
+}
