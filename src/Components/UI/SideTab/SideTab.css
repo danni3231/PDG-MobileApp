@@ -1,0 +1,61 @@
+.sideTab {
+  width: 80%;
+  height: 100%;
+  background-color: #7b61ff;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 68px 40px;
+
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+}
+
+.sideTab__header {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.sideTab__header__logo {
+  width: 80px;
+  align-self: center;
+}
+
+.sideTab__header__user__img {
+  max-width: 48px;
+  border-radius: 50%;
+}
+
+.sideTab__header__user__info {
+  text-align: left;
+}
+
+.sideTab__header__user__info__name {
+  font-weight: bold;
+}
+
+.sideTab__header__user__info__apartment {
+  font-size: 14px;
+  font-weight: lighter;
+}
+
+.sideTab__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sideTab__nav__element,
+.sideTab__header__user {
+  display: flex;
+  gap: 24px;
+}
+
+.sideTab__nav__element p,
+.sideTab__header__user p {
+  color: #fff;
+}

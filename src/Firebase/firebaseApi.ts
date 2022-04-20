@@ -1,7 +1,9 @@
 import {
   createUserWithEmailAndPassword,
+  getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 import {
   collection,
@@ -418,5 +420,12 @@ export const uploadMessage = async (chatId: string, message: message) => {
 export const createChat = async (chat: any, message: message) => {
   await addDoc(collection(db, chatsCollectionRef), chat).then((chatRef) => {
     uploadMessage(chatRef.id, message);
+  });
+};
+
+export const logout = async (navigate: any) => {
+  const auth = await getAuth();
+  signOut(auth).then(() => {
+    navigate("/");
   });
 };
