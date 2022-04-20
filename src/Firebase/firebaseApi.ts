@@ -374,6 +374,20 @@ export const validateUserState = (
   });
 };
 
+export const logout = async (navigate: any) => {
+  const auth = await getAuth();
+  signOut(auth).then(() => {
+    navigate("/");
+  });
+};
+
+export const createUser = async (newUser: User) => {
+  await setDoc(
+    doc(db, usersCollectionRef(newUser.condominiumId), newUser.id),
+    newUser
+  );
+};
+
 // * Messages async functions
 
 const chatsQuery = (userId: string) =>
@@ -420,12 +434,5 @@ export const uploadMessage = async (chatId: string, message: message) => {
 export const createChat = async (chat: any, message: message) => {
   await addDoc(collection(db, chatsCollectionRef), chat).then((chatRef) => {
     uploadMessage(chatRef.id, message);
-  });
-};
-
-export const logout = async (navigate: any) => {
-  const auth = await getAuth();
-  signOut(auth).then(() => {
-    navigate("/");
   });
 };
