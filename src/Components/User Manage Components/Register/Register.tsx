@@ -3,6 +3,7 @@ import * as React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { registerUser, validateUserInDB } from "../../../Firebase/firebaseApi";
+import { castCondominiumId } from "../../../Utils/GeneralFunctions";
 import Btn from "../../UI/Buttons/Btn";
 import Toast from "../../UI/Toast/Toast";
 
@@ -42,22 +43,6 @@ const Register: React.FC<RegisterProps> = ({}) => {
       return false;
     } else {
       return true;
-    }
-  };
-
-  const castCondominiumId = (condominium: string) => {
-    switch (condominium) {
-      case "Guadalupe alto":
-        return "q4CPmR9IIHrA6k1H2SdS";
-
-      case "El Coral":
-        return "q4CPmR9IIHrA6k1H2SdS";
-
-      case "Boho u living":
-        return "q4CPmR9IIHrA6k1H2SdS";
-
-      default:
-        return "";
     }
   };
 
@@ -160,7 +145,7 @@ const Register: React.FC<RegisterProps> = ({}) => {
             variant={""}
             margin="18px"
             action={handleSubmit()}
-          ></Btn>
+          />
         </section>
         <p className="purple" onClick={() => navigate("/")}>
           ¿Ya tienes una cuenta? <b>Inicia sesión</b>

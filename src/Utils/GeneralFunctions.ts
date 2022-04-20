@@ -43,3 +43,19 @@ export const useOnClickOutside = (ref: any, handler: Function) => {
     [ref, handler]
   );
 };
+
+export const castCondominiumId = (condominium: string) => {
+  switch (condominium) {
+    case "Guadalupe alto":
+      return "q4CPmR9IIHrA6k1H2SdS";
+
+    case "El Coral":
+      return "DUw9HqlhTXeYWW6BtAJN";
+
+    case "Boho u living":
+      return "kPDi38bfklEI4P9MWRMS";
+
+    default:
+      return "";
+  }
+};
