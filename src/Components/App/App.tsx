@@ -1,53 +1,58 @@
 import * as React from "react";
-import { Route, Routes } from "react-router";
+import { Route, Routes, useLocation, useNavigate } from "react-router";
 import "./App.css";
 
-import Nav from "../Nav/Nav";
+import Nav from "../UI/Nav/Nav";
 import Home from "../Home/Home";
 import Reservations from "../Reservation Components/Reservations/Reservations";
 import SpaceList from "../Reservation Components/SpaceList/SpaceList";
 import SpaceView from "../Reservation Components/SpaceView/SpaceView";
 import Visits from "../Visits Components/Visits/Visits";
 import VisitForm from "../Visits Components/VisitForm/VisitForm";
-
+import { validateUserState } from "../../Firebase/firebaseApi";
+import Login from "../User Manage Components/Login/Login";
+import Register from "../User Manage Components/Register/Register";
+import LoadingScreen from "../UI/loadingScreen/loadingScreen";
 import { useDispatch } from "react-redux";
-import { getBookings, getSpaces, getVisits } from "../../Firebase/firebaseApi";
+import SocialScreen from "../Social components/Social Screen/SocialScreen";
+import NewsView from "../Social components/News/NewsView/NewsView";
+import ChatView from "../Social components/Chat/ChatView/ChatView";
+import ChatUserList from "../Social components/Chat/ChatUserList/ChatUserList";
 
 function App() {
+  const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    getSpaces(dispatch);
-    getBookings(dispatch);
-    getVisits(dispatch).then(() => {
+    validateUserState(location.pathname, navigate, dispatch);
+
+    window.setInterval(() => {
       setLoading(false);
-    });
+    }, 5000);
   }, []);
 
   if (loading) {
-    return (
-      <section className="loading">
-        <section className="lds-roller">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </section>
-      </section>
-    );
+    return <LoadingScreen />;
   } else {
     return (
       <div className="App">
-        <Nav></Nav>
+        {location.pathname === "/" ||
+        location.pathname === "/Registro" ||
+        location.pathname.startsWith("/Social/Chat/") ? (
+          ""
+        ) : (
+          <Nav />
+        )}
 
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Login />} />
+
+          <Route path="Registro" element={<Register />} />
+
+          <Route path="Inicio" element={<Home />} />
 
           <Route path="Visitas" element={<Visits />} />
           <Route path="Visitas/form" element={<VisitForm />} />
@@ -56,14 +61,10 @@ function App() {
           <Route path="Reservas/list" element={<SpaceList />} />
           <Route path="Reservas/form/:id" element={<SpaceView />} />
 
-          <Route
-            path="Social"
-            element={
-              <div className="comingSoon">
-                <h1 className="textLoading">Coming Soon...</h1>
-              </div>
-            }
-          />
+          <Route path="Social" element={<SocialScreen />} />
+          <Route path="Social/Noticias/:id" element={<NewsView />} />
+          <Route path="Social/Chat/:id" element={<ChatView />} />
+          <Route path="Social/AllUsers" element={<ChatUserList />} />
         </Routes>
       </div>
     );

@@ -1,0 +1,21 @@
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.gallery__title {
+  padding-right: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gallery__btn {
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+.gallery__stripe__row {
+  padding-right: 26px;
+}

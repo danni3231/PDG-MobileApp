@@ -22,7 +22,9 @@ const ReservationCard: React.FC<ReservationCardProps> = ({
   let dateEndParse = new Date(dateEnd * 1000);
   let hourEndString: string = `${dateEndParse.getHours()}:0${dateEndParse.getMinutes()}`;
 
-  let dateString: string = `${dateStartParse.getDate()}/${dateStartParse.getMonth()}/${dateStartParse.getFullYear()}`;
+  let dateString: string = `${dateStartParse.getDate()}/${
+    dateStartParse.getMonth() + 1
+  }/${dateStartParse.getFullYear()}`;
 
   const space: space | undefined = useSelector<AppState, space | undefined>(
     (state) => state.spaces.find((spaces) => spaces.id === spaceId)

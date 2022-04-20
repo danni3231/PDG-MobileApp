@@ -11,9 +11,18 @@ export const theme = createTheme({
   },
 
   components: {
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          width: "100%",
+        },
+      },
+    },
+
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
+          width: "100%",
           borderRadius: "50px",
           fontSize: "14px",
           fontFamily: "Satoshi",
@@ -23,7 +32,19 @@ export const theme = createTheme({
 
     MuiAlert: {
       styleOverrides: {
-        root: { backgroundColor: "#7b61ff" },
+        icon: {
+          alignItems: "center",
+          marginRight: "16px",
+        },
+        action: {
+          alignItems: "center",
+          padding: "0 0 0 16px",
+        },
+        message: {
+          paddingRight: "30px",
+          textAlign: "left",
+        },
+        filledSuccess: { backgroundColor: "#7b61ff" },
       },
     },
   },

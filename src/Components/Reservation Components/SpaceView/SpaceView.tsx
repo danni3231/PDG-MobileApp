@@ -2,19 +2,21 @@ import * as React from "react";
 import { useNavigate, useParams } from "react-router";
 import { uploadBooking } from "../../../Firebase/firebaseApi";
 import { space } from "../../../Types/space";
-import Btn from "../../Buttons/Btn";
+import Btn from "../../UI/Buttons/Btn";
 import ScheduleOption from "../ScheduleOption/ScheduleOption";
 
 import TextField from "@mui/material/TextField";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import { es } from "date-fns/locale";
 import MobileDatePicker from "@mui/lab/MobileDatePicker";
 
 import "./SpaceView.css";
 import { booking } from "../../../Types/booking";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "../../../Redux/Reducers";
-import Toast from "../../Toast/Toast";
+import Toast from "../../UI/Toast/Toast";
+import { User } from "../../../Types/user";
 
 interface SpaceViewProps {}
 
@@ -23,11 +25,17 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const currentUser: User = useSelector<AppState, AppState["currentUser"]>(
+    (state) => state.currentUser
+  );
+
   const space: space | undefined = useSelector<AppState, space | undefined>(
     (state) => state.spaces.find((spaces) => spaces.id === id!)
   );
 
   const [isUploading, setIsUploading] = React.useState(false);
+  const [error, setError] = React.useState(false);
+  const [errorMsg, setErrorMsg] = React.useState("default msg");
 
   const [date, setDate] = React.useState<Date | null>(null);
   const [schedule, setSchedule] = React.useState<
@@ -55,15 +63,17 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
 
       let newBooking: booking = {
         id: "",
-        userId: "Alfa",
+        userId: currentUser.id,
         spaceId: id!,
         dateEnd: dateEndParse,
         dateStart: dateStartParse,
       };
 
-      uploadBooking(newBooking, dispatch).then(() => {
-        navigate("/Reservas");
-      });
+      uploadBooking(newBooking, currentUser.condominiumId, dispatch).then(
+        () => {
+          navigate("/Reservas");
+        }
+      );
     }
   };
 
@@ -111,13 +121,14 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
 
   const validateData = () => {
     if (date === null) {
-      console.log("no se puede enviar, se necesita una fecha");
+      setErrorMsg("Falta la fecha de reserva");
+      setError(true);
       return false;
     } else if (schedule === undefined) {
-      console.log("no se puede enviar, se necesita un horario");
+      setErrorMsg("Falta el horario de reserva");
+      setError(true);
       return false;
     } else {
-      console.log("se puede enviar");
       return true;
     }
   };
@@ -128,6 +139,28 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
 
   return (
     <article className="spaceView">
+      {isUploading ? (
+        <Toast
+          text="Subiendo la información de la reserva, por favor espera"
+          type="success"
+        />
+      ) : (
+        ""
+      )}
+
+      {error ? (
+        <Toast
+          text={errorMsg}
+          type="error"
+          btn
+          closeAction={() => {
+            setError(false);
+          }}
+        />
+      ) : (
+        ""
+      )}
+
       <section className="spaceView__header">
         <img
           className="spaceView__header__img"
@@ -147,12 +180,14 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
           </p>
           <h1>Fecha de reserva</h1>
           <LocalizationProvider
+            locale={es}
             dateAdapter={AdapterDateFns}
             style={{
               width: "100%",
             }}
           >
             <MobileDatePicker
+              minDate={new Date()}
               value={date}
               onChange={(newValue) => {
                 setDate(newValue);
@@ -208,7 +243,6 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
           />
         </div>
       </section>
-      {isUploading ? <Toast /> : ""}
     </article>
   );
 };

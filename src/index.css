@@ -72,6 +72,14 @@ p {
   color: #111827;
 }
 
+.bold {
+  font-weight: bold;
+}
+
+.purple {
+  color: #7b61ff;
+}
+
 /*animations*/
 
 .loading,

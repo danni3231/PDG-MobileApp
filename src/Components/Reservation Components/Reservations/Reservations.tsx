@@ -1,9 +1,10 @@
 import * as React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { validateUserState } from "../../../Firebase/firebaseApi";
 import { AppState } from "../../../Redux/Reducers";
-import Btn from "../../Buttons/Btn";
-import Header from "../../Header/Header";
+import Btn from "../../UI/Buttons/Btn";
+import Header from "../../UI/Header/Header";
 import ReservationCard from "../ReservationCard/ReservationCard";
 
 import "./Reservations.css";
@@ -12,6 +13,7 @@ interface ReservationsProps {}
 
 const Reservations: React.FC<ReservationsProps> = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const bookings = useSelector<AppState, AppState["bookings"]>(
     (state) => state.bookings

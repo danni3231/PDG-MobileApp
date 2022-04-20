@@ -1,0 +1,35 @@
+.newsPreview {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.newsPreview__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 20px;
+}
+
+.newsPreview__title {
+  max-width: 60%;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.newsPreview__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.newsPreview__icons {
+  display: flex;
+  gap: 12px;
+}
+
+.newsPreview__date {
+  font-size: 12px;
+}

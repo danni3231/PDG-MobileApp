@@ -1,0 +1,21 @@
+.userPreview {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: left;
+  gap: 20px;
+  overflow: hidden;
+}
+
+.userPreview__img {
+  width: 52px;
+  height: 52px;
+  border-radius: 52px;
+}
+
+.userPreview__name {
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

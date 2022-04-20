@@ -1,0 +1,31 @@
+.newsList {
+  height: 100%;
+  overflow: hidden;
+}
+
+.newsList__scroll {
+  height: 100%;
+}
+
+.newsList__column {
+  gap: 32px;
+}
+
+.newsList__nav {
+  display: flex;
+  gap: 20px;
+  padding-bottom: 16px;
+}
+
+.newsList__nav__indicator {
+  border: 1px solid #7b61ff;
+}
+
+.newsList__nav__text {
+  font-size: 14px;
+  padding-bottom: 4px;
+}
+
+.newsList__nav__text__active {
+  font-weight: bold;
+}
