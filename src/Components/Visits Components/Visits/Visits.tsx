@@ -26,8 +26,8 @@ const Visits: React.FC<VisitsProps> = ({}) => {
 
   return (
     <article>
-      <Header />
-      <h1>Agendar visitas</h1>
+      
+      <h1>Tus zonas reservadas</h1>
       <section className="scroll scroll--h">
         <div className="scroll__column visitList">
           {visits.length == 0 ? (
