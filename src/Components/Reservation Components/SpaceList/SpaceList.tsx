@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { validateUserState } from "../../../Firebase/firebaseApi";
 import { AppState } from "../../../Redux/Reducers";
+import Chip from "../../UI/Chip/Chip";
 import SpaceCard from "../SpaceCard/SpaceCard";
 
 import "./SpaceList.css";
@@ -23,13 +24,8 @@ const SpaceList: React.FC<SpaceListProps> = () => {
 
   return (
     <article className="spaceList">
-      <img
-        className="spaceList__backBtn"
-        src={`${process.env.PUBLIC_URL}/Icons/ArrowLeft.svg`}
-        onClick={goBack()}
-        alt="backBtn.png"
-      />
-      <h1>Elige la zona que deseas reservar</h1>
+      <Chip text="Reservas" />
+      <p className="spaceList__title">Elige la zona que deseas reservar</p>
 
       <div className="scroll scroll--h">
         <div className="scroll__column spaceList__column">

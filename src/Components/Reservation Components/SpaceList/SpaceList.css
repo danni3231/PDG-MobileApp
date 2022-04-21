@@ -1,3 +1,8 @@
+.spaceList__title {
+  text-align: left;
+  font-weight: bold;
+}
+
 .spaceList__backBtn {
   width: 24px;
 }

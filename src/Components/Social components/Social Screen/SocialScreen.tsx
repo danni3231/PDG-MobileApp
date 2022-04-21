@@ -3,6 +3,7 @@ import { InputAdornment, TextField } from "@mui/material";
 
 import * as React from "react";
 import { useNavigate } from "react-router";
+import Chip from "../../UI/Chip/Chip";
 import ChatList from "../Chat/ChatList/ChatList";
 import NewsList from "../News/NewsList/NewsList";
 import SocialNav from "./SocialNav/SocialNav";
@@ -19,19 +20,9 @@ const SocialScreen: React.FC<SocialScreenProps> = ({}) => {
     "chat"
   );
 
-  const goBack = () => () => {
-    navigate(-1);
-  };
-
   return (
     <article className="socialScreen">
-      <img
-        className="spaceList__backBtn"
-        src={`${process.env.PUBLIC_URL}/Icons/ArrowLeft.svg`}
-        onClick={goBack()}
-        alt="backBtn.png"
-      />
-      <h1>Social</h1>
+      <Chip text="Social" padding />
 
       <TextField
         placeholder={searchHint}

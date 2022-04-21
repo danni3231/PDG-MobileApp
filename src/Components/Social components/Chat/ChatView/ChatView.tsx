@@ -12,6 +12,7 @@ import {
   parseHour,
 } from "../../../../Utils/GeneralFunctions";
 import Btn from "../../../UI/Buttons/Btn";
+import Chip from "../../../UI/Chip/Chip";
 
 import "./ChatView.css";
 
@@ -70,14 +71,7 @@ const ChatView: React.FC<ChatViewProps> = () => {
 
   return (
     <article className="chatView">
-      <img
-        className="chatView__backBtn"
-        src={`${process.env.PUBLIC_URL}/Icons/ArrowLeft.svg`}
-        onClick={() => {
-          goBack(navigate);
-        }}
-        alt=""
-      />
+      <Chip text="Chats" />
       <div className="chatView__userInfo">
         <img
           className="chatView__userInfo__photo"
@@ -86,7 +80,6 @@ const ChatView: React.FC<ChatViewProps> = () => {
         />
         <h1>{userChat?.firstname + " " + userChat?.lastname}</h1>
       </div>
-
       <div
         className="scroll scroll--h chatView__chat__container"
         ref={scrollRef}
@@ -126,7 +119,6 @@ const ChatView: React.FC<ChatViewProps> = () => {
           })}
         </div>
       </div>
-
       <div className="chatView__chat__inputs">
         <TextField
           focused
@@ -143,8 +135,6 @@ const ChatView: React.FC<ChatViewProps> = () => {
             ),
           }}
         />
-
-        <Btn text="+" variant="circle" action={() => {}} />
       </div>
     </article>
   );
