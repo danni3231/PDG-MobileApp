@@ -19,6 +19,7 @@ import NewsView from "../Social components/News/NewsView/NewsView";
 import ChatView from "../Social components/Chat/ChatView/ChatView";
 import ChatUserList from "../Social components/Chat/ChatUserList/ChatUserList";
 import CreateUser from "../Admin Components/CreateUser/CreateUser";
+import { updatedViewport } from "../../Utils/GeneralFunctions";
 
 function App() {
   const location = useLocation();
@@ -28,6 +29,7 @@ function App() {
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
+    updatedViewport()
     validateUserState(location.pathname, navigate, dispatch);
 
     window.setInterval(() => {

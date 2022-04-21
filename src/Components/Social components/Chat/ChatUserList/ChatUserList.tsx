@@ -2,6 +2,7 @@ import * as React from "react";
 import { useSelector } from "react-redux";
 import { AppState } from "../../../../Redux/Reducers";
 import { User } from "../../../../Types/user";
+import Chip from "../../../UI/Chip/Chip";
 import UserPreview from "../UserPreview/UserPreview";
 
 import "./ChatUserList.css";
@@ -15,7 +16,7 @@ const ChatUserList: React.FC<ChatUserListProps> = ({}) => {
 
   return (
     <article>
-      <h1>Contactos</h1>
+      <Chip text="Nuevo chat" />
       <div className="scroll scroll--h chatList__scroll">
         <div className="scroll__column chatList__column">
           {users.map((user: User) => {

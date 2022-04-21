@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { validateUserState } from "../../../Firebase/firebaseApi";
 import { AppState } from "../../../Redux/Reducers";
 import Btn from "../../UI/Buttons/Btn";
+import Chip from "../../UI/Chip/Chip";
 import Header from "../../UI/Header/Header";
 import ReservationCard from "../ReservationCard/ReservationCard";
 
@@ -21,8 +22,8 @@ const Reservations: React.FC<ReservationsProps> = () => {
 
   return (
     <article>
-      <Header />
-      <h1>Reservar zonas comunes</h1>
+      <Chip text="Reservas" />
+      <h1>Tus zonas reservadas</h1>
       <section className="scroll scroll--h">
         <div className="scroll__column bookingList">
           {bookings.length === 0 ? (

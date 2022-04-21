@@ -1,9 +1,9 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { AppState } from "../../../../Redux/Reducers";
 import { news } from "../../../../Types/news";
-import { lineBreak } from "../../../../Utils/GeneralFunctions";
+import { goBack, lineBreak } from "../../../../Utils/GeneralFunctions";
 
 import "./NewsView.css";
 
@@ -11,6 +11,7 @@ interface NewsViewProps {}
 
 const NewsView: React.FC<NewsViewProps> = () => {
   const { id } = useParams();
+  const navigate = useNavigate()
 
   const news: news | undefined = useSelector<AppState, news | undefined>(
     (state) => state.news.find((news) => news.id === id!)
@@ -26,7 +27,7 @@ const NewsView: React.FC<NewsViewProps> = () => {
   return (
     <article className="newsView">
       <div className="newsView__header">
-        <div className="newsView__header__titleTag">
+        <div className="newsView__header__titleTag" onClick={()=>goBack(navigate)}>
           <img
             src={`${process.env.PUBLIC_URL}/Icons/ArrowLeft-white.svg`}
             alt=""

@@ -1,0 +1,14 @@
+.chip {
+  width: fit-content;
+  display: flex;
+  gap: 14px;
+}
+
+.chip--padding {
+  padding-bottom: 20px;
+}
+
+.chip p {
+  font-weight: bold;
+  font-size: 20px;
+}

@@ -27,6 +27,10 @@ export const theme = createTheme({
           fontSize: "14px",
           fontFamily: "Satoshi",
         },
+
+        input: {
+          paddingLeft: "26px",
+        },
       },
     },
 

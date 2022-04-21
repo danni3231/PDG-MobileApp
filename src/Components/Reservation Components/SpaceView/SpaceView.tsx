@@ -17,8 +17,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "../../../Redux/Reducers";
 import Toast from "../../UI/Toast/Toast";
 import { User } from "../../../Types/user";
+import { goBack } from "../../../Utils/GeneralFunctions";
 
-interface SpaceViewProps {}
+interface SpaceViewProps { }
 
 const SpaceView: React.FC<SpaceViewProps> = () => {
   const { id } = useParams();
@@ -162,6 +163,14 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
       )}
 
       <section className="spaceView__header">
+        <div className="spaceView__header__titleTag" onClick={() => goBack(navigate)}>
+          <img
+            src={`${process.env.PUBLIC_URL}/Icons/ArrowLeft-white.svg`}
+            alt=""
+          />
+          <p>Reservas</p>
+        </div>
+
         <img
           className="spaceView__header__img"
           src={`${process.env.PUBLIC_URL}${space!.img}`}

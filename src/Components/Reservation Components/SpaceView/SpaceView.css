@@ -7,6 +7,29 @@
   position: relative;
 }
 
+.spaceView__header__titleTag {
+  width: fit-content;
+  padding: 8px 12px;
+  border-radius: 20px;
+  background: rgba(17, 24, 39, 0.6);
+
+  display: flex;
+  gap: 14px;
+
+  position: absolute;
+  left: 12px;
+  top: 20px;
+}
+
+.spaceView__header__titleTag p {
+  font-weight: bold;
+  color: #fff;
+}
+
+.spaceView__header__titleTag img {
+  fill: #fff;
+}
+
 .spaceView__header__img {
   height: 100%;
   width: 100%;

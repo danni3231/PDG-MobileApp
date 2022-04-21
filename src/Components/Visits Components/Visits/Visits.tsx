@@ -5,6 +5,7 @@ import { validateUserState } from "../../../Firebase/firebaseApi";
 import { AppState } from "../../../Redux/Reducers";
 
 import Btn from "../../UI/Buttons/Btn";
+import Chip from "../../UI/Chip/Chip";
 import Header from "../../UI/Header/Header";
 import VisitCard from "../VisitCard/VisitCard";
 
@@ -26,8 +27,8 @@ const Visits: React.FC<VisitsProps> = ({}) => {
 
   return (
     <article>
-      <Header />
-      <h1>Agendar visitas</h1>
+      <Chip text="Visitas" />
+      <h1>Tus visitas agendadas</h1>
       <section className="scroll scroll--h">
         <div className="scroll__column visitList">
           {visits.length == 0 ? (
