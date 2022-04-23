@@ -70,16 +70,22 @@
 
 .spaceView__schedule {
   width: 100%;
-  border-radius: 12px;
-  overflow: hidden;
-
-  border: 1px solid #111827;
+  border-radius: 13px;
+  border: 1px solid rgba(0, 0, 0, 0.23);
 }
 
 .spaceView__schedule__option {
   text-align: left;
   padding: 14px 30px;
-  border: 1px solid #111827;
+  border: 1px solid rgba(0, 0, 0, 0.23);
+}
+
+.spaceView__schedule__option:first-child {
+  border-radius: 12px 12px 0 0;
+}
+
+.spaceView__schedule__option:last-child {
+  border-radius: 0 0 12px 12px;
 }
 
 .spaceView__schedule__option--selected {

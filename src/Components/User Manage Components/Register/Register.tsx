@@ -101,6 +101,7 @@ const Register: React.FC<RegisterProps> = ({}) => {
           alt="logo__large.svg"
         />
       </section>
+
       <section className="register__form__container">
         <h1 className="purple">Registrarse</h1>
         <section className="register__form">
@@ -135,14 +136,14 @@ const Register: React.FC<RegisterProps> = ({}) => {
               setCondominium(event.target.value);
             }}
           >
-            <MenuItem value={"Guadalupe alto"}>Guadalupe alto</MenuItem>
+            <MenuItem value={"Guadalupe Alto"}>Guadalupe Alto</MenuItem>
             <MenuItem value={"El Coral"}>El Coral</MenuItem>
-            <MenuItem value={"Boho u living"}>Boho u living</MenuItem>
+            <MenuItem value={"Boho U Living"}>Boho U Living</MenuItem>
           </Select>
 
           <Btn
-            text={"Iniciar sesión"}
-            variant={""}
+            text="Registrarse"
+            variant=""
             margin="18px"
             action={handleSubmit()}
           />

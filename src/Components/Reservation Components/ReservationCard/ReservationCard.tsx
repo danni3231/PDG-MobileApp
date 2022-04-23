@@ -34,7 +34,7 @@ const ReservationCard: React.FC<ReservationCardProps> = ({
     <section className="reservationCard">
       <div className="reservationCard__header">
         <h2>Zona Reservada</h2>
-        <img src={`${process.env.PUBLIC_URL}/Icons/edit.svg`} alt="" />
+        <img src={`${process.env.PUBLIC_URL}/Icons/Edit.svg`} alt="" />
       </div>
       <div className="reservationCard__body">
         <p className="reservationCard__body__title">{space!.name}</p>

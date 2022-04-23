@@ -107,14 +107,14 @@ const Login: React.FC<LoginProps> = () => {
               setCondominium(event.target.value);
             }}
           >
-            <MenuItem value={"Guadalupe alto"}>Guadalupe alto</MenuItem>
+            <MenuItem value={"Guadalupe Alto"}>Guadalupe Alto</MenuItem>
             <MenuItem value={"El Coral"}>El Coral</MenuItem>
-            <MenuItem value={"Boho u living"}>Boho u living</MenuItem>
+            <MenuItem value={"Boho U Living"}>Boho U Living</MenuItem>
           </Select>
 
           <Btn
-            text={"Iniciar sesión"}
-            variant={""}
+            text="Iniciar sesión"
+            variant=""
             margin="18px"
             action={handleSubmit()}
           />

@@ -19,7 +19,10 @@ import Toast from "../../UI/Toast/Toast";
 import { User } from "../../../Types/user";
 import { goBack } from "../../../Utils/GeneralFunctions";
 
-interface SpaceViewProps { }
+interface SpaceViewProps {}
+
+type schedule = { start: number; end: number } | undefined;
+type option = { start: number; end: number; selected: boolean };
 
 const SpaceView: React.FC<SpaceViewProps> = () => {
   const { id } = useParams();
@@ -39,12 +42,8 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
   const [errorMsg, setErrorMsg] = React.useState("default msg");
 
   const [date, setDate] = React.useState<Date | null>(null);
-  const [schedule, setSchedule] = React.useState<
-    { start: number; end: number } | undefined
-  >(undefined);
-  const [options, setOptions] = React.useState<
-    { start: number; end: number; selected: boolean }[]
-  >([]);
+  const [schedule, setSchedule] = React.useState<schedule>(undefined);
+  const [options, setOptions] = React.useState<option[]>([]);
 
   const handleSubmit = () => {
     if (validateData()) {
@@ -80,35 +79,66 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
 
   const handleOptionClick = (index: number) => {
     const optionsCopy = options.slice();
+    let newSchedule: schedule = undefined;
 
-    optionsCopy.forEach((option) => {
-      option.selected = false;
-    });
+    if (optionsCopy[index - 1]?.selected && !optionsCopy[index - 3]?.selected) {
+      newSchedule = {
+        start: schedule!.start,
+        end: optionsCopy[index].end,
+      };
+    } else {
+      optionsCopy.forEach((option) => {
+        option.selected = false;
+      });
+
+      newSchedule = {
+        start: optionsCopy[index].start,
+        end: optionsCopy[index].end,
+      };
+    }
 
     optionsCopy[index].selected = true;
 
-    setSchedule({
-      start: optionsCopy[index].start,
-      end: optionsCopy[index].end,
-    });
-
+    setSchedule(newSchedule);
     setOptions(optionsCopy);
+
+    console.log(newSchedule);
   };
 
   const addOptions = (hourStart: number, hourEnd: number) => {
+    const currentDate = new Date();
+    const currentHour = currentDate.getHours();
+
     const hourStartParse = new Date(hourStart * 1000).getHours();
     const hourEndtParse = new Date(hourEnd * 1000).getHours();
 
-    const diference = hourEndtParse - hourStartParse;
     const newOptions = [];
 
-    for (let i = 0; i < diference; i++) {
-      let option = {
-        start: hourStartParse + i,
-        end: hourStartParse + (i + 1),
-        selected: false,
-      };
-      newOptions.push(option);
+    if (
+      currentHour > hourStartParse &&
+      date?.getDay() === currentDate.getDay()
+    ) {
+      const diference = hourEndtParse - currentHour - 1;
+
+      for (let i = 0; i < diference; i++) {
+        let option = {
+          start: currentHour + 1 + i,
+          end: currentHour + 1 + (i + 1),
+          selected: false,
+        };
+        newOptions.push(option);
+      }
+    } else {
+      const diference = hourEndtParse - hourStartParse;
+
+      for (let i = 0; i < diference; i++) {
+        let option = {
+          start: hourStartParse + i,
+          end: hourStartParse + (i + 1),
+          selected: false,
+        };
+        newOptions.push(option);
+      }
     }
 
     setOptions(newOptions);
@@ -136,7 +166,7 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
 
   React.useEffect(() => {
     addOptions(space!.schedule.start, space!.schedule.end);
-  }, []);
+  }, [date]);
 
   return (
     <article className="spaceView">
@@ -163,7 +193,10 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
       )}
 
       <section className="spaceView__header">
-        <div className="spaceView__header__titleTag" onClick={() => goBack(navigate)}>
+        <div
+          className="spaceView__header__titleTag"
+          onClick={() => goBack(navigate)}
+        >
           <img
             src={`${process.env.PUBLIC_URL}/Icons/ArrowLeft-white.svg`}
             alt=""

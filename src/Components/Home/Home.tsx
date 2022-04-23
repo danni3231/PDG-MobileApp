@@ -23,8 +23,10 @@ const Home: React.FC<HomeProps> = () => {
     (state) => state.currentUser
   );
 
+  const state = useSelector<AppState>((state) => state);
+
   return (
-    <article className="home">
+    <article className="home" onClick={() => console.log(state)}>
       <Header />
 
       <h1>
@@ -32,13 +34,17 @@ const Home: React.FC<HomeProps> = () => {
         ¿qué quiere hacer hoy?
       </h1>
 
-      <Gallery
-        title="Reservar un espacio"
-        listSpace={spaces}
-        url={"/Reservas/list"}
-      />
+      <div className="scroll scroll--h">
+        <div className="scroll__column home__column">
+          <Gallery
+            title="Reservar un espacio"
+            listSpace={spaces}
+            url={"/Reservas/list"}
+          />
 
-      <Gallery title="Noticias" listNews={news} url={"/Social"} isNotice />
+          <Gallery title="Noticias" listNews={news} url={"/Social"} isNotice />
+        </div>
+      </div>
     </article>
   );
 };

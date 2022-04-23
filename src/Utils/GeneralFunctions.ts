@@ -46,13 +46,13 @@ export const useOnClickOutside = (ref: any, handler: Function) => {
 
 export const castCondominiumId = (condominium: string) => {
   switch (condominium) {
-    case "Guadalupe alto":
+    case "Guadalupe Alto":
       return "q4CPmR9IIHrA6k1H2SdS";
 
     case "El Coral":
       return "DUw9HqlhTXeYWW6BtAJN";
 
-    case "Boho u living":
+    case "Boho U Living":
       return "kPDi38bfklEI4P9MWRMS";
 
     default:
@@ -60,7 +60,12 @@ export const castCondominiumId = (condominium: string) => {
   }
 };
 
-export const updatedViewport = ()=>{
-  let viewport = document.querySelector('meta[name=viewport]') as HTMLMetaElement
-  viewport.setAttribute('content', `width=device-width, height=${window.innerHeight}, initial-scale=1`)
-}
+export const updatedViewport = () => {
+  let viewport = document.querySelector(
+    "meta[name=viewport]"
+  ) as HTMLMetaElement;
+  viewport.setAttribute(
+    "content",
+    `width=device-width, height=${window.innerHeight}, initial-scale=1`
+  );
+};

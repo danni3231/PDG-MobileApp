@@ -256,24 +256,7 @@ export const registerUser = (
   navigate: any,
   dispatch: any
 ) => {
-  return createUserWithEmailAndPassword(auth, email, password).then(
-    async (userCredential) => {
-      const user = userCredential.user;
-
-      dispatch(setUserState(true));
-      getSpaces(condominiumId, dispatch);
-      getBookings(condominiumId, id, dispatch);
-      getVisits(condominiumId, id, dispatch);
-      getNews(condominiumId, dispatch);
-      getUsers(condominiumId, id, dispatch);
-
-      createRelationBranch(id, condominiumId, user.uid).then(() => {
-        navigate("/Inicio");
-      });
-
-      listenChats(id, dispatch);
-    }
-  );
+  return createUserWithEmailAndPassword(auth, email, password);
 };
 
 export const loginUser = (
@@ -282,46 +265,7 @@ export const loginUser = (
   navigate: any,
   dispatch: any
 ) => {
-  return signInWithEmailAndPassword(auth, email, password).then(
-    async (userCredential) => {
-      const user = userCredential.user;
-      console.log(user);
-
-      const userRelationSnap = await getDoc(
-        doc(db, relationBranchRef, user.uid)
-      );
-
-      const userSnap = await getDoc(
-        doc(
-          db,
-          usersCollectionRef(userRelationSnap.data()!.condominiumId),
-          userRelationSnap.data()!.id
-        )
-      );
-
-      const userData: User = {
-        firstname: userSnap.data()!.firstname,
-        lastname: userSnap.data()!.lastname,
-        condominiumId: userSnap.data()!.condominiumId,
-        apartment: userSnap.data()!.apartment,
-        profileImg: userSnap.data()!.profileImg,
-        id: userSnap.data()!.id,
-      };
-
-      dispatch(setUser(userData));
-      dispatch(setUserState(true));
-
-      getSpaces(userData.condominiumId, dispatch);
-      getBookings(userData.condominiumId, userData.id, dispatch);
-      getVisits(userData.condominiumId, userData.id, dispatch);
-      getNews(userData.condominiumId, dispatch);
-      getUsers(userData.condominiumId, userData.id, dispatch);
-
-      listenChats(userData.id, dispatch);
-
-      navigate("/Inicio");
-    }
-  );
+  return signInWithEmailAndPassword(auth, email, password);
 };
 
 export const validateUserState = (

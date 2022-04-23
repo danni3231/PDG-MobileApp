@@ -23,7 +23,7 @@ const VisitCard: React.FC<VisitCardProps> = ({
     <section className="visitCard">
       <div className="visitCard__header">
         <h2>Visita autorizada</h2>
-        <img src={`${process.env.PUBLIC_URL}/Icons/edit.svg`} alt="" />
+        <img src={`${process.env.PUBLIC_URL}/Icons/Edit.svg`} alt="" />
       </div>
       <div className="visitCard__body">
         <p className="visitCard__body__title">{name}</p>
