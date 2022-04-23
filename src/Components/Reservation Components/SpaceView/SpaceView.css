@@ -93,6 +93,11 @@
   color: #fff;
 }
 
+.spaceView__schedule__option--disabled {
+  background-color: rgba(0, 0, 0, 0.23);
+  color: #fff;
+}
+
 .spaceView__scroll {
   gap: 12px;
   align-items: flex-start;

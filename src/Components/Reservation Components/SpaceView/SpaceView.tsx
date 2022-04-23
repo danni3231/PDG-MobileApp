@@ -22,7 +22,12 @@ import { goBack } from "../../../Utils/GeneralFunctions";
 interface SpaceViewProps {}
 
 type schedule = { start: number; end: number } | undefined;
-type option = { start: number; end: number; selected: boolean };
+type option = {
+  start: number;
+  end: number;
+  selected: boolean;
+  disabled?: boolean;
+};
 
 const SpaceView: React.FC<SpaceViewProps> = () => {
   const { id } = useParams();
@@ -31,6 +36,10 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
 
   const currentUser: User = useSelector<AppState, AppState["currentUser"]>(
     (state) => state.currentUser
+  );
+
+  const bookings = useSelector<AppState, AppState["bookings"]>(
+    (state) => state.bookings
   );
 
   const space: space | undefined = useSelector<AppState, space | undefined>(
@@ -114,6 +123,24 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
 
     const newOptions = [];
 
+    const exeption: number[] = [];
+
+    bookings.forEach((booking) => {
+      const dateStartParse = new Date(booking.dateStart * 1000);
+
+      if (dateStartParse.getDate() === date?.getDate()) {
+        const dateEndParse = new Date(booking.dateEnd * 1000);
+        const diferenceHour =
+          dateEndParse.getHours() - dateStartParse.getHours();
+
+        for (let i = 0; i < diferenceHour; i++) {
+          let hour = dateStartParse.getHours() + i;
+
+          exeption.push(hour);
+        }
+      }
+    });
+
     if (
       currentHour > hourStartParse &&
       date?.getDate() === currentDate.getDate()
@@ -121,25 +148,63 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
       const diference = hourEndtParse - currentHour - 1;
 
       for (let i = 0; i < diference; i++) {
-        let option = {
-          start: currentHour + 1 + i,
-          end: currentHour + 1 + (i + 1),
+        const start = currentHour + 1 + i;
+
+        let option: option = {
+          start: 0,
+          end: 0,
           selected: false,
         };
+
+        if (exeption.includes(start)) {
+          option = {
+            start: currentHour + 1 + i,
+            end: currentHour + 1 + (i + 1),
+            selected: false,
+            disabled: true,
+          };
+        } else {
+          option = {
+            start: currentHour + 1 + i,
+            end: currentHour + 1 + (i + 1),
+            selected: false,
+          };
+        }
+
         newOptions.push(option);
       }
     } else {
       const diference = hourEndtParse - hourStartParse;
 
       for (let i = 0; i < diference; i++) {
-        let option = {
-          start: hourStartParse + i,
-          end: hourStartParse + (i + 1),
+        const start = hourStartParse + i;
+
+        let option: option = {
+          start: 0,
+          end: 0,
           selected: false,
         };
+
+        if (exeption.includes(start)) {
+          option = {
+            start: hourStartParse + i,
+            end: hourStartParse + (i + 1),
+            selected: false,
+            disabled: true,
+          };
+        } else {
+          option = {
+            start: hourStartParse + i,
+            end: hourStartParse + (i + 1),
+            selected: false,
+          };
+        }
+
         newOptions.push(option);
       }
     }
+
+    console.log(newOptions);
 
     setOptions(newOptions);
   };
@@ -259,6 +324,17 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
                     end={option.end}
                     index={i}
                     selected
+                  />
+                );
+              } else if (option.disabled) {
+                return (
+                  <ScheduleOption
+                    key={i}
+                    update={handleOptionClick}
+                    start={option.start}
+                    end={option.end}
+                    index={i}
+                    disabled
                   />
                 );
               } else {
