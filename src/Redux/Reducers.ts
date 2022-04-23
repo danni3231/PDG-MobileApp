@@ -50,21 +50,19 @@ export const appReducer = (
 
     case Actions.SET_BOOKINGS:
       const bookings = action.payload;
-      const currentDate = new Date();
-
-      const currentDateParse = parseInt(
-        (currentDate.getTime() / 1000).toFixed(0)
+      const currentDateB = new Date();
+      const currentDateParseB = parseInt(
+        (currentDateB.getTime() / 1000).toFixed(0)
       );
 
       const bookingsFilter: booking[] = [];
 
       bookings.forEach((booking: booking) => {
-        if (booking.dateStart >= currentDateParse) {
+        if (booking.dateStart >= currentDateParseB) {
           bookingsFilter.push(booking);
         }
       });
 
-      console.log(bookingsFilter);
       return { ...state, bookings: bookingsFilter };
 
     // Visitors actions
@@ -72,7 +70,21 @@ export const appReducer = (
       return { ...state, visits: [...state.visits, action.payload] };
 
     case Actions.SET_VISITS:
-      return { ...state, visits: action.payload };
+      const visits = action.payload;
+      const currentDateV = new Date();
+      const currentDateParseV = parseInt(
+        (currentDateV.getTime() / 1000).toFixed(0)
+      );
+
+      const visitsFilter: visitor[] = [];
+
+      visits.forEach((visit: visitor) => {
+        if (visit.date >= currentDateParseV) {
+          visitsFilter.push(visit);
+        }
+      });
+
+      return { ...state, visits: visitsFilter };
 
     // User actions
     case Actions.SET_USER:
