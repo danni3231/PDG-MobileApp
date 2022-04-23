@@ -116,7 +116,7 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
 
     if (
       currentHour > hourStartParse &&
-      date?.getDay() === currentDate.getDay()
+      date?.getDate() === currentDate.getDate()
     ) {
       const diference = hourEndtParse - currentHour - 1;
 

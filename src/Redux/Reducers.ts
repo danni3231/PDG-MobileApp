@@ -49,7 +49,23 @@ export const appReducer = (
       return { ...state, bookings: [...state.bookings, action.payload] };
 
     case Actions.SET_BOOKINGS:
-      return { ...state, bookings: action.payload };
+      const bookings = action.payload;
+      const currentDate = new Date();
+
+      const currentDateParse = parseInt(
+        (currentDate.getTime() / 1000).toFixed(0)
+      );
+
+      const bookingsFilter: booking[] = [];
+
+      bookings.forEach((booking: booking) => {
+        if (booking.dateStart >= currentDateParse) {
+          bookingsFilter.push(booking);
+        }
+      });
+
+      console.log(bookingsFilter);
+      return { ...state, bookings: bookingsFilter };
 
     // Visitors actions
     case Actions.ADD_VISITOR:
