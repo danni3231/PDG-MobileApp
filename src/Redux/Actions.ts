@@ -39,6 +39,11 @@ export const setVisits = (visits: visitor[]): Action => ({
   payload: visits,
 });
 
+export const editVisit = (visit: visitor): Action => ({
+  type: "@visits/editVisits",
+  payload: visit,
+});
+
 // * Users Actions
 
 export const setUserState = (state: boolean): Action => ({
@@ -76,13 +81,19 @@ export const addMessage = (chatId: string, message: message): Action => ({
 });
 
 export const SET_SPACES = "@spaces/setSpaces";
+
 export const ADD_BOOKINGS = "@bookings/addBooking";
 export const SET_BOOKINGS = "@bookings/setBookings";
+
 export const SET_VISITS = "@visits/setVisits";
 export const ADD_VISITOR = "@visits/addVisitor";
+export const EDIT_VISITOR = "@visits/editVisits";
+
 export const SET_USER = "@user/setUser";
 export const SET_USERS = "@user/setUsers";
 export const SET_USER_STATE = "@user/setUserState";
+
 export const SET_NEWS = "@news/setNews";
+
 export const ADD_CHAT = "@chats/addChat";
 export const ADD_MESSAGE = "@chats/addMessage";

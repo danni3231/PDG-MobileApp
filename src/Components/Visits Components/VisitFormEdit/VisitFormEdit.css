@@ -1,0 +1,15 @@
+.visitFormEdit {
+  text-align: left;
+}
+
+.visitFormEdit__back {
+  width: 24px;
+}
+
+.visitFormEdit__column {
+  gap: 20px;
+}
+
+.visitFormEdit__column h2 {
+  margin: 8px 0px;
+}

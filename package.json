@@ -2,7 +2,7 @@
   "name": "mobile-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://danni3231.github.io/PDG-MobileApp",
+  "homepage": "http://danni3231.github.io/PDG-MobileApp/",
   "dependencies": {
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",

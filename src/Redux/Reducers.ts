@@ -86,6 +86,16 @@ export const appReducer = (
 
       return { ...state, visits: visitsFilter };
 
+    case Actions.EDIT_VISITOR:
+      const visitsCopy = state.visits;
+      const index = visitsCopy.findIndex(
+        (visit) => visit.id === action.payload.id
+      );
+
+      visitsCopy[index] = { ...action.payload };
+
+      return { ...state, visits: visitsCopy };
+
     // User actions
     case Actions.SET_USER:
       return { ...state, currentUser: action.payload };

@@ -46,6 +46,7 @@ const Visits: React.FC<VisitsProps> = ({}) => {
               return (
                 <VisitCard
                   key={i}
+                  id={visitor.id}
                   name={visitor.name}
                   typeId={visitor.ccType}
                   visitorId={visitor.cc}

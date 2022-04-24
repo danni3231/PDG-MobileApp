@@ -2,22 +2,33 @@ import { LocalizationProvider, MobileDatePicker } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { MenuItem, Select, TextField } from "@mui/material";
 import * as React from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 import Btn from "../../UI/Buttons/Btn";
 import { visitor } from "../../../Types/visitor";
 
-import "./VisitForm.css";
-import { uploadVisitor } from "../../../Firebase/firebaseApi";
+import "./VisitFormEdit.css";
+import {
+  updateVisit,
+  uploadVisitor,
+  validateUserState,
+} from "../../../Firebase/firebaseApi";
 import { useDispatch, useSelector } from "react-redux";
 import Toast from "../../UI/Toast/Toast";
 import { es } from "date-fns/locale";
 import { AppState } from "../../../Redux/Reducers";
+import { booking } from "../../../Types/booking";
 import Chip from "../../UI/Chip/Chip";
 
-interface VisitFormProps {}
+interface VisitFormEditProps {}
 
-const VisitForm: React.FC<VisitFormProps> = () => {
+const VisitFormEdit: React.FC<VisitFormEditProps> = () => {
+  const { id } = useParams();
+
+  const visit = useSelector<AppState, visitor | undefined>((state) =>
+    state.visits.find((visit) => visit.id === id!)
+  );
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -30,34 +41,31 @@ const VisitForm: React.FC<VisitFormProps> = () => {
   const [error, setError] = React.useState(false);
   const [errorMsg, setErrorMsg] = React.useState("default msg");
 
-  const [date, setDate] = React.useState<Date | null>(null);
-  const [name, setName] = React.useState("");
-  const [surname, setSurname] = React.useState("");
-  const [idType, setIdType] = React.useState("");
-  const [id, setId] = React.useState("");
+  const dateParse = new Date(visit!.date * 1000);
+  const ccParse = visit!.cc.toString();
 
-  const goBack = () => () => {
-    navigate(-1);
-  };
+  const [date, setDate] = React.useState<Date | null>(dateParse);
+  const [name, setName] = React.useState(visit!.name);
+  const [surname, setSurname] = React.useState(visit!.name);
+  const [idType, setIdType] = React.useState(visit!.ccType);
+  const [idVisitor, setIdVisitor] = React.useState(ccParse);
 
-  const handleSubmit = () => {
+  const handleEdit = () => {
     if (validateData()) {
       setIsUploading(true);
 
       let dateParse = parseInt((date!.getTime() / 1000).toFixed(0));
 
       const visitor: visitor = {
-        id: "",
+        id: visit!.id,
         userId: currentUser.id,
         name: `${name} ${surname}`,
         date: dateParse,
         ccType: idType,
-        cc: ~~id,
+        cc: ~~idVisitor,
       };
 
-      console.log(visitor);
-
-      uploadVisitor(visitor, currentUser.condominiumId, dispatch).then(() => {
+      updateVisit(visitor, currentUser.condominiumId, dispatch).then(() => {
         navigate("/Visitas", { state: { reload: true } });
       });
     }
@@ -76,7 +84,7 @@ const VisitForm: React.FC<VisitFormProps> = () => {
       setErrorMsg("Falta el tipo de identificación del visitante");
       setError(true);
       return false;
-    } else if (id === "") {
+    } else if (idVisitor === "") {
       setErrorMsg("Falta el numero de identificación del visitante");
       setError(true);
       return false;
@@ -90,10 +98,10 @@ const VisitForm: React.FC<VisitFormProps> = () => {
   };
 
   return (
-    <article className="visitForm">
+    <article className="visitFormEdit">
       {isUploading ? (
         <Toast
-          text="Subiendo la información del visitante, por favor espera"
+          text="editando la información del visitante, por favor espera"
           type="success"
         />
       ) : (
@@ -115,16 +123,18 @@ const VisitForm: React.FC<VisitFormProps> = () => {
 
       <Chip text="Visitas" />
       <h1>Información del visitante</h1>
-      <p>Por favor, llena los siguientes campos</p>
+      <p>Por favor, edita los siguientes campos</p>
       <div className="scroll scroll--h">
-        <div className="scroll__column visitForm__column">
+        <div className="scroll__column visitFormEdit__column">
           <TextField
+            value={name}
             placeholder="Nombre"
             onChange={(event) => {
               setName(event.target.value);
             }}
           />
           <TextField
+            value={surname}
             placeholder="Apellido"
             onChange={(event) => {
               setSurname(event.target.value);
@@ -146,11 +156,13 @@ const VisitForm: React.FC<VisitFormProps> = () => {
               Cédula de Ciudadanía
             </MenuItem>
           </Select>
+
           <TextField
+            value={idVisitor}
             placeholder="N° de Documento"
             type="number"
             onChange={(event) => {
-              setId(event.target.value);
+              setIdVisitor(event.target.value);
             }}
           />
 
@@ -185,12 +197,13 @@ const VisitForm: React.FC<VisitFormProps> = () => {
             text={"Confirmar"}
             variant=""
             margin="16px"
-            action={handleSubmit}
+            action={handleEdit}
           />
+          <Btn text={"Eliminar"} variant={"disabled"} action={() => {}} />
         </div>
       </div>
     </article>
   );
 };
 
-export default VisitForm;
+export default VisitFormEdit;

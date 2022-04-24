@@ -20,6 +20,7 @@ import ChatView from "../Social components/Chat/ChatView/ChatView";
 import ChatUserList from "../Social components/Chat/ChatUserList/ChatUserList";
 import CreateUser from "../Admin Components/CreateUser/CreateUser";
 import { updatedViewport } from "../../Utils/GeneralFunctions";
+import VisitFormEdit from "../Visits Components/VisitFormEdit/VisitFormEdit";
 
 function App() {
   const location = useLocation();
@@ -29,7 +30,7 @@ function App() {
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    updatedViewport()
+    updatedViewport();
     validateUserState(location.pathname, navigate, dispatch);
 
     window.setInterval(() => {
@@ -59,6 +60,7 @@ function App() {
 
           <Route path="Visitas" element={<Visits />} />
           <Route path="Visitas/form" element={<VisitForm />} />
+          <Route path="Visitas/form/edit/:id" element={<VisitFormEdit />} />
 
           <Route path="Reservas" element={<Reservations />} />
           <Route path="Reservas/list" element={<SpaceList />} />

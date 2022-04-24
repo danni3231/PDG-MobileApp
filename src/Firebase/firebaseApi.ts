@@ -24,6 +24,7 @@ import {
   addChat,
   addMessage,
   addVisitor,
+  editVisit,
   setBookings,
   setNews,
   setSpaces,
@@ -99,6 +100,18 @@ const getVisits = async (
   });
 
   dispatch(setVisits(newVisits));
+};
+
+export const updateVisit = async (
+  visitor: visitor,
+  condominiumId: string,
+  dispatch: any
+) => {
+  const visitDocRef = doc(db, visitorsCollectionRef(condominiumId), visitor.id);
+
+  await updateDoc(visitDocRef, visitor);
+
+  dispatch(editVisit(visitor));
 };
 
 export const uploadVisitor = async (
