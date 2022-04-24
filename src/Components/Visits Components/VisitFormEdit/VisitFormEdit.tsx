@@ -8,11 +8,7 @@ import Btn from "../../UI/Buttons/Btn";
 import { visitor } from "../../../Types/visitor";
 
 import "./VisitFormEdit.css";
-import {
-  updateVisit,
-  uploadVisitor,
-  validateUserState,
-} from "../../../Firebase/firebaseApi";
+import { removeVisit, updateVisit } from "../../../Firebase/firebaseApi";
 import { useDispatch, useSelector } from "react-redux";
 import Toast from "../../UI/Toast/Toast";
 import { es } from "date-fns/locale";
@@ -25,9 +21,11 @@ interface VisitFormEditProps {}
 const VisitFormEdit: React.FC<VisitFormEditProps> = () => {
   const { id } = useParams();
 
-  const visit = useSelector<AppState, visitor | undefined>((state) =>
+  const visitState = useSelector<AppState, visitor | undefined>((state) =>
     state.visits.find((visit) => visit.id === id!)
   );
+
+  const [visit, setVisit] = React.useState(visitState!);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -38,16 +36,17 @@ const VisitFormEdit: React.FC<VisitFormEditProps> = () => {
 
   //toast manage
   const [isUploading, setIsUploading] = React.useState(false);
+  const [isDeleting, setIsDeleting] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [errorMsg, setErrorMsg] = React.useState("default msg");
 
-  const dateParse = new Date(visit!.date * 1000);
-  const ccParse = visit!.cc.toString();
+  const dateParse = new Date(visit.date * 1000);
+  const ccParse = visit.cc.toString();
 
   const [date, setDate] = React.useState<Date | null>(dateParse);
-  const [name, setName] = React.useState(visit!.name);
-  const [surname, setSurname] = React.useState(visit!.name);
-  const [idType, setIdType] = React.useState(visit!.ccType);
+  const [name, setName] = React.useState(visit.name);
+  const [surname, setSurname] = React.useState(visit.name);
+  const [idType, setIdType] = React.useState(visit.ccType);
   const [idVisitor, setIdVisitor] = React.useState(ccParse);
 
   const handleEdit = () => {
@@ -57,7 +56,7 @@ const VisitFormEdit: React.FC<VisitFormEditProps> = () => {
       let dateParse = parseInt((date!.getTime() / 1000).toFixed(0));
 
       const visitor: visitor = {
-        id: visit!.id,
+        id: visit.id,
         userId: currentUser.id,
         name: `${name} ${surname}`,
         date: dateParse,
@@ -69,6 +68,24 @@ const VisitFormEdit: React.FC<VisitFormEditProps> = () => {
         navigate("/Visitas", { state: { reload: true } });
       });
     }
+  };
+
+  const handleDelete = () => {
+    setIsDeleting(true);
+    const idCache = visit.id;
+    setVisit({
+      id: "",
+      userId: "",
+      name: "",
+      date: 0,
+      ccType: "",
+      cc: 0,
+    });
+    removeVisit(idCache, currentUser.condominiumId, dispatch, navigate).then(
+      () => {
+        navigate("/Visitas");
+      }
+    );
   };
 
   const validateData = () => {
@@ -101,8 +118,17 @@ const VisitFormEdit: React.FC<VisitFormEditProps> = () => {
     <article className="visitFormEdit">
       {isUploading ? (
         <Toast
-          text="editando la información del visitante, por favor espera"
+          text="Editando la información del visitante, por favor espera"
           type="success"
+        />
+      ) : (
+        ""
+      )}
+
+      {isDeleting ? (
+        <Toast
+          text="Eliminando la información del visitante, por favor espera"
+          type="error"
         />
       ) : (
         ""
@@ -199,7 +225,7 @@ const VisitFormEdit: React.FC<VisitFormEditProps> = () => {
             margin="16px"
             action={handleEdit}
           />
-          <Btn text={"Eliminar"} variant={"disabled"} action={() => {}} />
+          <Btn text={"Eliminar"} variant={"disabled"} action={handleDelete} />
         </div>
       </div>
     </article>

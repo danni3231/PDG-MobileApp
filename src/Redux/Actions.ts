@@ -44,6 +44,11 @@ export const editVisit = (visit: visitor): Action => ({
   payload: visit,
 });
 
+export const deleteVisit = (visitId: string): Action => ({
+  type: "@visits/deleteVisits",
+  payload: visitId,
+});
+
 // * Users Actions
 
 export const setUserState = (state: boolean): Action => ({
@@ -88,6 +93,7 @@ export const SET_BOOKINGS = "@bookings/setBookings";
 export const SET_VISITS = "@visits/setVisits";
 export const ADD_VISITOR = "@visits/addVisitor";
 export const EDIT_VISITOR = "@visits/editVisits";
+export const DELETE_VISITOR = "@visits/deleteVisits";
 
 export const SET_USER = "@user/setUser";
 export const SET_USERS = "@user/setUsers";

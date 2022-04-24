@@ -18,12 +18,14 @@ import {
   limit,
   orderBy,
   setDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import {
   addBooking,
   addChat,
   addMessage,
   addVisitor,
+  deleteVisit,
   editVisit,
   setBookings,
   setNews,
@@ -112,6 +114,17 @@ export const updateVisit = async (
   await updateDoc(visitDocRef, visitor);
 
   dispatch(editVisit(visitor));
+};
+
+export const removeVisit = async (
+  visitorId: string,
+  condominiumId: string,
+  dispatch: any,
+  navigate: any
+) => {
+  await deleteDoc(doc(db, visitorsCollectionRef(condominiumId), visitorId));
+
+  dispatch(deleteVisit(visitorId));
 };
 
 export const uploadVisitor = async (
