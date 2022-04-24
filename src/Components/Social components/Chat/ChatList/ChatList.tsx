@@ -51,11 +51,18 @@ const ChatList: React.FC<ChatListProps> = ({}) => {
     <section className="chatList">
       <div className="scroll scroll--h chatList__scroll">
         <div className="scroll__column chatList__column">
-          {chatsPreviews.map((chatPreview: chatPreview) => {
-            return (
-              <ChatPreview key={chatPreview.chatId} chatInfo={chatPreview} />
-            );
-          })}
+          {chats.length === 0 ? (
+            <p className="chatList__column__onboarding">
+              Aún no tienes ninguna conversación. Presiona el botón flotante
+              para crear una nueva conversación.
+            </p>
+          ) : (
+            chatsPreviews.map((chatPreview: chatPreview) => {
+              return (
+                <ChatPreview key={chatPreview.chatId} chatInfo={chatPreview} />
+              );
+            })
+          )}
         </div>
 
         <div

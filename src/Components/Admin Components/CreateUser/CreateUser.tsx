@@ -54,9 +54,9 @@ const CreateUser: React.FC<CreateUserProps> = () => {
         defaultValue="none"
         onChange={(e) => setCondominium(e.target.value)}
       >
-        <MenuItem value={"Guadalupe alto"}>Guadalupe alto</MenuItem>
+        <MenuItem value={"Guadalupe Alto"}>Guadalupe Alto</MenuItem>
         <MenuItem value={"El Coral"}>El Coral</MenuItem>
-        <MenuItem value={"Boho u living"}>Boho u living</MenuItem>
+        <MenuItem value={"Boho U Living"}>Boho U Living</MenuItem>
       </Select>
 
       <TextField

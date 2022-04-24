@@ -23,10 +23,8 @@ const Home: React.FC<HomeProps> = () => {
     (state) => state.currentUser
   );
 
-  const state = useSelector<AppState>((state) => state);
-
   return (
-    <article className="home" onClick={() => console.log(state)}>
+    <article className="home">
       <Header />
 
       <h1>

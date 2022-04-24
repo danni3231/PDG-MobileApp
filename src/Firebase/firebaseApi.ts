@@ -253,18 +253,20 @@ export const registerUser = (
   password: string,
   id: string,
   condominiumId: string,
-  navigate: any,
-  dispatch: any
+  navigate: any
 ) => {
-  return createUserWithEmailAndPassword(auth, email, password);
+  return createUserWithEmailAndPassword(auth, email, password).then(
+    async (userCredential) => {
+      const user = userCredential.user;
+
+      createRelationBranch(id, condominiumId, user.uid).then(() => {
+        navigate("/Inicio");
+      });
+    }
+  );
 };
 
-export const loginUser = (
-  email: string,
-  password: string,
-  navigate: any,
-  dispatch: any
-) => {
+export const loginUser = (email: string, password: string) => {
   return signInWithEmailAndPassword(auth, email, password);
 };
 
@@ -275,7 +277,6 @@ export const validateUserState = (
 ) => {
   onAuthStateChanged(auth, async (user) => {
     if (user) {
-      console.log(user);
       const userRelationSnap = await getDoc(
         doc(db, relationBranchRef, user.uid)
       );

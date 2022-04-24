@@ -53,20 +53,15 @@ const Register: React.FC<RegisterProps> = ({}) => {
 
       if (exist) {
         setIsRegister(true);
-        registerUser(
-          email,
-          password,
-          id,
-          condominiumId,
-          navigate,
-          dispatch
-        ).catch((error) => {
-          const errorMessage = error.message;
-          console.log(errorMessage);
-          setIsRegister(false);
-          setErrorMsg(error.message);
-          setError(true);
-        });
+        registerUser(email, password, id, condominiumId, navigate).catch(
+          (error) => {
+            const errorMessage = error.message;
+            console.log(errorMessage);
+            setIsRegister(false);
+            setErrorMsg(error.message);
+            setError(true);
+          }
+        );
       } else {
         setErrorMsg("Tu identificación no aparece en la base de datos");
         setError(true);

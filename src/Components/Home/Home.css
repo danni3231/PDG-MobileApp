@@ -1,3 +1,7 @@
 .home {
   padding-right: 0px;
 }
+
+.home__column {
+  gap: 32px;
+}

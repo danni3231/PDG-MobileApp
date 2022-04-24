@@ -43,7 +43,7 @@ const Login: React.FC<LoginProps> = () => {
   const handleSubmit = () => () => {
     if (validateData()) {
       setIsLogin(true);
-      loginUser(email, password, navigate, dispatch).catch((error) => {
+      loginUser(email, password).catch((error) => {
         const errorMessage = error.message;
         console.log(errorMessage);
         setIsLogin(false);
