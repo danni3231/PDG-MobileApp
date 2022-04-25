@@ -23,9 +23,13 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           width: "100%",
-          borderRadius: "50px",
+          borderRadius: "27px",
           fontSize: "14px",
           fontFamily: "Satoshi",
+        },
+
+        multiline: {
+          paddingLeft: "0px",
         },
 
         input: {

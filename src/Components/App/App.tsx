@@ -22,6 +22,8 @@ import CreateUser from "../Admin Components/CreateUser/CreateUser";
 import { updatedViewport } from "../../Utils/GeneralFunctions";
 import VisitFormEdit from "../Visits Components/VisitFormEdit/VisitFormEdit";
 import SpaceViewEdit from "../Reservation Components/SpaceViewEdit/SpaceViewEdit";
+import PQRView from "../Social components/PQR/PQRView/PQRView";
+import PQRForm from "../Social components/PQR/PQRForm/PQRForm";
 
 function App() {
   const location = useLocation();
@@ -74,7 +76,9 @@ function App() {
           <Route path="Social" element={<SocialScreen />} />
           <Route path="Social/Noticias/:id" element={<NewsView />} />
           <Route path="Social/Chat/:id" element={<ChatView />} />
+          <Route path="Social/Pqr/:id" element={<PQRView />} />
           <Route path="Social/AllUsers" element={<ChatUserList />} />
+          <Route path="Social/createPQR" element={<PQRForm />} />
 
           <Route path="Admin/createUser" element={<CreateUser />} />
         </Routes>

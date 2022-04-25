@@ -6,12 +6,7 @@ import { createChat, uploadMessage } from "../../../../Firebase/firebaseApi";
 import { AppState } from "../../../../Redux/Reducers";
 import { chat } from "../../../../Types/chat";
 import { User } from "../../../../Types/user";
-import {
-  getTimeStamp,
-  goBack,
-  parseHour,
-} from "../../../../Utils/GeneralFunctions";
-import Btn from "../../../UI/Buttons/Btn";
+import { getTimeStamp, parseHour } from "../../../../Utils/GeneralFunctions";
 import Chip from "../../../UI/Chip/Chip";
 
 import "./ChatView.css";
@@ -20,15 +15,10 @@ interface ChatViewProps {}
 
 const ChatView: React.FC<ChatViewProps> = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const scrollRef = React.useRef<HTMLDivElement>(null);
   const scrollContentRef = React.useRef<HTMLDivElement>(null);
 
   const [newMessage, setNewMessage] = React.useState("");
-
-  const chats = useSelector<AppState, AppState["chats"]>(
-    (state) => state.chats
-  );
 
   const chat = useSelector<AppState, chat | undefined>((state) =>
     state.chats.find((chat) => chat.users.includes(id!))

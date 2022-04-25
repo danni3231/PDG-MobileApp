@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import Chip from "../../UI/Chip/Chip";
 import ChatList from "../Chat/ChatList/ChatList";
 import NewsList from "../News/NewsList/NewsList";
+import PQRList from "../PQR/PQRList/PQRList";
 import SocialNav from "./SocialNav/SocialNav";
 
 import "./SocialScreen.css";
@@ -47,7 +48,7 @@ const SocialScreen: React.FC<SocialScreenProps> = ({}) => {
 
       {activeView === "chat" ? <ChatList /> : ""}
       {activeView === "news" ? <NewsList /> : ""}
-      {activeView === "pqr" ? <p>pqr</p> : ""}
+      {activeView === "pqr" ? <PQRList /> : ""}
     </article>
   );
 };
