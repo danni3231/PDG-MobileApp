@@ -11,16 +11,9 @@ import "./SpaceList.css";
 interface SpaceListProps {}
 
 const SpaceList: React.FC<SpaceListProps> = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
   const spaces = useSelector<AppState, AppState["spaces"]>(
     (state) => state.spaces
   );
-
-  const goBack = () => () => {
-    navigate(-1);
-  };
 
   return (
     <article className="spaceList">

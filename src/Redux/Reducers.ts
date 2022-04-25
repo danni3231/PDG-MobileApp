@@ -65,6 +65,16 @@ export const appReducer = (
 
       return { ...state, bookings: bookingsFilter };
 
+    case Actions.EDIT_BOOKINGS:
+      const bookingsCopyE = state.bookings;
+      const indexBE = bookingsCopyE.findIndex(
+        (booking) => booking.id === action.payload.id
+      );
+
+      bookingsCopyE[indexBE] = { ...action.payload };
+
+      return { ...state, bookings: bookingsCopyE };
+
     // Visitors actions
     case Actions.ADD_VISITOR:
       return { ...state, visits: [...state.visits, action.payload] };

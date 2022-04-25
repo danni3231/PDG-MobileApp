@@ -26,6 +26,7 @@ import {
   addMessage,
   addVisitor,
   deleteVisit,
+  editBooking,
   editVisit,
   setBookings,
   setNews,
@@ -172,6 +173,22 @@ const getBookings = async (
   });
 
   dispatch(setBookings(newBookings));
+};
+
+export const updateBooking = async (
+  booking: booking,
+  condominiumId: string,
+  dispatch: any
+) => {
+  const bookingDocRef = doc(
+    db,
+    bookingsCollectionRef(condominiumId),
+    booking.id
+  );
+
+  await updateDoc(bookingDocRef, booking);
+
+  dispatch(editBooking(booking));
 };
 
 export const uploadBooking = async (

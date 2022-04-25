@@ -14,7 +14,6 @@ interface ReservationsProps {}
 
 const Reservations: React.FC<ReservationsProps> = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const bookings = useSelector<AppState, AppState["bookings"]>(
     (state) => state.bookings
@@ -41,6 +40,7 @@ const Reservations: React.FC<ReservationsProps> = () => {
               return (
                 <ReservationCard
                   key={i}
+                  id={booking.id}
                   spaceId={booking.spaceId}
                   dateStart={booking.dateStart}
                   dateEnd={booking.dateEnd}

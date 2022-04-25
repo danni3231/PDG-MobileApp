@@ -21,6 +21,7 @@ import ChatUserList from "../Social components/Chat/ChatUserList/ChatUserList";
 import CreateUser from "../Admin Components/CreateUser/CreateUser";
 import { updatedViewport } from "../../Utils/GeneralFunctions";
 import VisitFormEdit from "../Visits Components/VisitFormEdit/VisitFormEdit";
+import SpaceViewEdit from "../Reservation Components/SpaceViewEdit/SpaceViewEdit";
 
 function App() {
   const location = useLocation();
@@ -65,6 +66,10 @@ function App() {
           <Route path="Reservas" element={<Reservations />} />
           <Route path="Reservas/list" element={<SpaceList />} />
           <Route path="Reservas/form/:id" element={<SpaceView />} />
+          <Route
+            path="Reservas/form/:id/:bookingId"
+            element={<SpaceViewEdit />}
+          />
 
           <Route path="Social" element={<SocialScreen />} />
           <Route path="Social/Noticias/:id" element={<NewsView />} />
