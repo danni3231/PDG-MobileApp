@@ -1,6 +1,10 @@
 import * as React from "react";
 import { useNavigate, useParams } from "react-router";
-import { updateBooking, uploadBooking } from "../../../Firebase/firebaseApi";
+import {
+  removeBooking,
+  updateBooking,
+  uploadBooking,
+} from "../../../Firebase/firebaseApi";
 import { space } from "../../../Types/space";
 import Btn from "../../UI/Buttons/Btn";
 import ScheduleOption from "../ScheduleOption/ScheduleOption";
@@ -53,6 +57,7 @@ const SpaceViewEdit: React.FC<SpaceViewEditProps> = () => {
   const [booking, setBooking] = React.useState(bookingState!);
 
   const [isUploading, setIsUploading] = React.useState(false);
+  const [isDeleting, setIsDeleting] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [errorMsg, setErrorMsg] = React.useState("default msg");
 
@@ -98,6 +103,22 @@ const SpaceViewEdit: React.FC<SpaceViewEditProps> = () => {
         }
       );
     }
+  };
+
+  const handleDelete = () => {
+    setIsDeleting(true);
+    const idCache = booking.id;
+    setBooking({
+      id: "",
+      userId: "",
+      spaceId: "",
+      dateEnd: 0,
+      dateStart: 0,
+    });
+
+    removeBooking(idCache, currentUser.condominiumId, dispatch).then(() => {
+      navigate("/Reservas");
+    });
   };
 
   const handleOptionClick = (index: number) => {
@@ -251,8 +272,17 @@ const SpaceViewEdit: React.FC<SpaceViewEditProps> = () => {
     <article className="spaceViewEdit">
       {isUploading ? (
         <Toast
-          text="Subiendo la información de la reserva, por favor espera"
+          text="Editando la información de la reserva, por favor espera"
           type="success"
+        />
+      ) : (
+        ""
+      )}
+
+      {isDeleting ? (
+        <Toast
+          text="Eliminando la información del reserva, por favor espera"
+          type="error"
         />
       ) : (
         ""
@@ -373,6 +403,7 @@ const SpaceViewEdit: React.FC<SpaceViewEditProps> = () => {
             }}
             margin="36px"
           />
+          <Btn text={"Eliminar"} variant={"disabled"} action={handleDelete} />
         </div>
       </section>
     </article>

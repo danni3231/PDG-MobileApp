@@ -75,6 +75,18 @@ export const appReducer = (
 
       return { ...state, bookings: bookingsCopyE };
 
+    case Actions.DELETE_BOOKINGS:
+      const bookingsCopyD = state.bookings;
+      const indexDB = bookingsCopyD.findIndex(
+        (booking) => booking.id === action.payload
+      );
+
+      bookingsCopyD.splice(indexDB);
+
+      console.log("se ejecuta");
+
+      return { ...state, bookings: bookingsCopyD };
+
     // Visitors actions
     case Actions.ADD_VISITOR:
       return { ...state, visits: [...state.visits, action.payload] };

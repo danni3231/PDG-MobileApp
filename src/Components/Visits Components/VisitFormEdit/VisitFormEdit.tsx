@@ -81,11 +81,9 @@ const VisitFormEdit: React.FC<VisitFormEditProps> = () => {
       ccType: "",
       cc: 0,
     });
-    removeVisit(idCache, currentUser.condominiumId, dispatch, navigate).then(
-      () => {
-        navigate("/Visitas");
-      }
-    );
+    removeVisit(idCache, currentUser.condominiumId, dispatch).then(() => {
+      navigate("/Visitas");
+    });
   };
 
   const validateData = () => {

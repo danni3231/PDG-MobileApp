@@ -25,6 +25,7 @@ import {
   addChat,
   addMessage,
   addVisitor,
+  deleteBooking,
   deleteVisit,
   editBooking,
   editVisit,
@@ -120,8 +121,7 @@ export const updateVisit = async (
 export const removeVisit = async (
   visitorId: string,
   condominiumId: string,
-  dispatch: any,
-  navigate: any
+  dispatch: any
 ) => {
   await deleteDoc(doc(db, visitorsCollectionRef(condominiumId), visitorId));
 
@@ -189,6 +189,16 @@ export const updateBooking = async (
   await updateDoc(bookingDocRef, booking);
 
   dispatch(editBooking(booking));
+};
+
+export const removeBooking = async (
+  bookingId: string,
+  condominiumId: string,
+  dispatch: any
+) => {
+  await deleteDoc(doc(db, bookingsCollectionRef(condominiumId), bookingId));
+
+  dispatch(deleteBooking(bookingId));
 };
 
 export const uploadBooking = async (

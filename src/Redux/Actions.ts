@@ -32,6 +32,11 @@ export const editBooking = (booking: booking): Action => ({
   payload: booking,
 });
 
+export const deleteBooking = (bookingId: string): Action => ({
+  type: "@bookings/deleteBooking",
+  payload: bookingId,
+});
+
 // * Visits actions
 
 export const addVisitor = (newVisitor: visitor): Action => ({
@@ -95,6 +100,7 @@ export const SET_SPACES = "@spaces/setSpaces";
 export const ADD_BOOKINGS = "@bookings/addBooking";
 export const SET_BOOKINGS = "@bookings/setBookings";
 export const EDIT_BOOKINGS = "@bookings/editBooking";
+export const DELETE_BOOKINGS = "@bookings/deleteBooking";
 
 export const SET_VISITS = "@visits/setVisits";
 export const ADD_VISITOR = "@visits/addVisitor";
