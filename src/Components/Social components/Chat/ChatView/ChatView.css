@@ -33,6 +33,7 @@
 .chatView__chat__message {
   width: fit-content;
   padding: 12px 24px;
+  text-align: left;
 
   display: flex;
   align-items: flex-end;

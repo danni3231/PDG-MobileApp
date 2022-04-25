@@ -97,6 +97,10 @@ export const appReducer = (
     case Actions.SET_VISITS:
       const visits = action.payload;
       const currentDateV = new Date();
+      currentDateV.setHours(0);
+      currentDateV.setMinutes(0);
+      currentDateV.setSeconds(1);
+
       const currentDateParseV = parseInt(
         (currentDateV.getTime() / 1000).toFixed(0)
       );
