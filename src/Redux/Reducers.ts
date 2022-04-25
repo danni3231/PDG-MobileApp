@@ -5,6 +5,7 @@ import { User } from "../Types/user";
 import { visitor } from "../Types/visitor";
 import { news } from "../Types/news";
 import { chat } from "../Types/chat";
+import { pqr } from "../Types/pqr";
 
 export interface AppState {
   currentUser: User;
@@ -15,6 +16,7 @@ export interface AppState {
   visits: visitor[];
   news: news[];
   chats: chat[];
+  pqr: pqr[];
 }
 
 const initState = {
@@ -33,6 +35,7 @@ const initState = {
   visits: [],
   news: [],
   chats: [],
+  pqr: [],
 };
 
 export const appReducer = (
@@ -127,6 +130,7 @@ export const appReducer = (
       visitsCopyD.splice(indexD);
 
       return { ...state, visits: visitsCopyD };
+
     // User actions
     case Actions.SET_USER:
       return { ...state, currentUser: action.payload };

@@ -1,5 +1,8 @@
 import * as React from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { AppState } from "../../../../Redux/Reducers";
+import PQRCard from "../PQRCard/PQRCard";
 
 import "./PQRList.css";
 
@@ -11,6 +14,8 @@ const PQRList: React.FC<PQRListProps> = ({}) => {
   const [filter, setFilter] = React.useState<
     "today" | "week" | "month" | "all"
   >("today");
+
+  const pqr = useSelector<AppState, AppState["pqr"]>((state) => state.pqr);
 
   const handlerFilter = (btnClicked: "today" | "week" | "month" | "all") => {
     setFilter(btnClicked);
@@ -79,7 +84,25 @@ const PQRList: React.FC<PQRListProps> = ({}) => {
       </div>
 
       <div className="scroll scroll--h PQRList__scroll">
-        <div className="scroll__column PQRList__column">{"ssasasasas"}</div>
+        <div className="scroll__column PQRList__column">
+          {pqr.length === 0 ? (
+            <p className="PQRList__column__onboarding">
+              Aún no tienes una PQR. Si tienes alguna pregunta, queja o reclamo,
+              presiona el botón flotante para crear una nueva PQR.
+            </p>
+          ) : (
+            pqr.map((pqr) => {
+              return (
+                <PQRCard
+                  title={pqr.title}
+                  img={pqr.img}
+                  date={pqr.date}
+                  id={pqr.id}
+                />
+              );
+            })
+          )}
+        </div>
       </div>
 
       <div
