@@ -20,6 +20,7 @@ import {
   setDoc,
   deleteDoc,
 } from "firebase/firestore";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import {
   addBooking,
   addChat,
@@ -44,7 +45,9 @@ import { news } from "../Types/news";
 import { space } from "../Types/space";
 import { User } from "../Types/user";
 import { visitor } from "../Types/visitor";
-import { auth, db } from "./firebaseConfig";
+import { auth, db, storage } from "./firebaseConfig";
+
+//firestore refs
 
 const relationBranchRef = "relationBranch";
 
@@ -67,7 +70,10 @@ const chatsCollectionRef = `chats`;
 
 const messagesCollectionRef = (chatId: string) => `chats/${chatId}/messages`;
 
-//export const getBookingsCollection = getDocs(query(collection(db, bookingsCollection),where('userId','==','alfa'), orderBy("dateStart"), limit(5)))
+// storage refs
+
+const pqrRef = (condominiumId: string, name: string) =>
+  ref(storage, `${condominiumId}/pqr/${name}`);
 
 export const getSpaces = async (condominiumId: string, dispatch: any) => {
   const snapshot = await getDocs(
@@ -435,4 +441,21 @@ export const createChat = async (chat: any, message: message) => {
   await addDoc(collection(db, chatsCollectionRef), chat).then((chatRef) => {
     uploadMessage(chatRef.id, message);
   });
+};
+
+// * PQR async functions
+
+export const uploadFile = async (
+  file: File,
+  condominiumId: string,
+  title: string
+) => {
+  console.log(file);
+  await uploadBytes(pqrRef(condominiumId, title), file).then(
+    async (snapshot) => {
+      await getDownloadURL(pqrRef(condominiumId, title)).then((url) => {
+        return url;
+      });
+    }
+  );
 };

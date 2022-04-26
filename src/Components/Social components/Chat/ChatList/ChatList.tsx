@@ -31,8 +31,6 @@ const ChatList: React.FC<ChatListProps> = ({}) => {
     const userID = chat.users.find((userId) => userId !== currentUser.id);
     const user = users.find((user) => user.id === userID);
 
-    console.log(chat.messages.length - 1);
-
     const lastMessageId = chat.messages.length - 1;
 
     let messageCount = 0;

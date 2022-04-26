@@ -53,7 +53,6 @@ const ChatView: React.FC<ChatViewProps> = () => {
       createChat(newChat, message).then(() => {
         setNewMessage("");
         chat = chats.find((chat) => chat.users.includes(id!));
-        console.log(chat);
       });
     } else {
       setNewMessage(" ");

@@ -1,5 +1,8 @@
 import { TextField } from "@mui/material";
 import * as React from "react";
+import { useSelector } from "react-redux";
+import { uploadFile } from "../../../../Firebase/firebaseApi";
+import { AppState } from "../../../../Redux/Reducers";
 import Btn from "../../../UI/Buttons/Btn";
 import Chip from "../../../UI/Chip/Chip";
 
@@ -11,7 +14,18 @@ const PQRForm: React.FC<PQRFormProps> = ({}) => {
   const inputFile = React.useRef<HTMLInputElement>(null);
   const imgPreview = React.useRef<HTMLImageElement>(null);
 
-  const [file, setFile] = React.useState<FileList | null | undefined>();
+  const currentUser = useSelector<AppState, AppState["currentUser"]>(
+    (state) => state.currentUser
+  );
+
+  const [title, setTitle] = React.useState("");
+  const [content, setContent] = React.useState("");
+  const [file, setFile] = React.useState<File | null | undefined>();
+
+  //toast manage
+  const [isUploading, setIsUploading] = React.useState(false);
+  const [error, setError] = React.useState(false);
+  const [errorMsg, setErrorMsg] = React.useState("default msg");
 
   const openGallery = () => {
     inputFile.current!.click();
@@ -19,13 +33,35 @@ const PQRForm: React.FC<PQRFormProps> = ({}) => {
 
   const handleFile = () => {
     const file = inputFile.current?.files;
-    setFile(file);
+    setFile(file?.item(0)!);
 
     console.log(file);
 
     if (file) {
       console.log("yep");
-      imgPreview.current!.src = URL.createObjectURL(file.item(0)!);
+      // imgPreview.current!.src = URL.createObjectURL(file.item(0)!);
+    }
+  };
+
+  const validateData = () => {
+    if (title === "") {
+      setErrorMsg("Falta el titulo de la pqr");
+      setError(true);
+      return false;
+    } else if (content === "") {
+      setErrorMsg("Falta el texto de la pqr");
+      setError(true);
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  const handleUpload = () => {
+    if (validateData()) {
+      uploadFile(file!, currentUser.condominiumId, title);
+    } else {
+      console.log("bad");
     }
   };
 
@@ -37,7 +73,7 @@ const PQRForm: React.FC<PQRFormProps> = ({}) => {
           <TextField
             placeholder="Título"
             onChange={(event) => {
-              //setName(event.target.value);
+              setTitle(event.target.value);
             }}
           />
           <TextField
@@ -45,7 +81,7 @@ const PQRForm: React.FC<PQRFormProps> = ({}) => {
             multiline
             rows={10}
             onChange={(event) => {
-              //setName(event.target.value);
+              setContent(event.target.value);
             }}
           />
           <input
@@ -58,7 +94,12 @@ const PQRForm: React.FC<PQRFormProps> = ({}) => {
           <Btn text="+ Agregar foto" variant="add" action={openGallery} />
           <img ref={imgPreview} src="" alt="" />
 
-          <Btn text={"Publicar"} variant="" margin="16px" action={() => {}} />
+          <Btn
+            text={"Publicar"}
+            variant=""
+            margin="16px"
+            action={handleUpload}
+          />
         </div>
       </div>
     </article>
