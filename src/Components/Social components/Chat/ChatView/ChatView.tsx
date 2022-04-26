@@ -15,6 +15,8 @@ interface ChatViewProps {}
 
 const ChatView: React.FC<ChatViewProps> = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const scrollRef = React.useRef<HTMLDivElement>(null);
   const scrollContentRef = React.useRef<HTMLDivElement>(null);
 
@@ -45,12 +47,10 @@ const ChatView: React.FC<ChatViewProps> = () => {
       };
       createChat(newChat, message).then(() => {
         setNewMessage("");
-        console.log("Sent message");
       });
     } else {
       uploadMessage(chat.id, message).then(() => {
         setNewMessage("");
-        console.log("Sent message");
       });
     }
   };
@@ -119,7 +119,14 @@ const ChatView: React.FC<ChatViewProps> = () => {
           }}
           InputProps={{
             endAdornment: (
-              <InputAdornment position="end" onClick={handleSend}>
+              <InputAdornment
+                position="end"
+                onClick={() => {
+                  if (newMessage !== "") {
+                    handleSend();
+                  }
+                }}
+              >
                 <img src={`${process.env.PUBLIC_URL}/Icons/send.svg`} alt="" />
               </InputAdornment>
             ),

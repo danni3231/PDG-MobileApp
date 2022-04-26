@@ -90,7 +90,10 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
     const optionsCopy = options.slice();
     let newSchedule: schedule = undefined;
 
-    if (optionsCopy[index - 1]?.selected && !optionsCopy[index - 3]?.selected) {
+    if (
+      (optionsCopy[index - 1]?.selected && !optionsCopy[index - 3]?.selected) ||
+      (optionsCopy[index + 1]?.selected && !optionsCopy[index + 3]?.selected)
+    ) {
       newSchedule = {
         start: schedule!.start,
         end: optionsCopy[index].end,
@@ -110,8 +113,6 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
 
     setSchedule(newSchedule);
     setOptions(optionsCopy);
-
-    console.log(newSchedule);
   };
 
   const addOptions = (hourStart: number, hourEnd: number) => {
@@ -128,7 +129,10 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
     bookings.forEach((booking) => {
       const dateStartParse = new Date(booking.dateStart * 1000);
 
-      if (dateStartParse.getDate() === date?.getDate()) {
+      if (
+        dateStartParse.getDate() === date?.getDate() &&
+        booking.spaceId == space?.id
+      ) {
         const dateEndParse = new Date(booking.dateEnd * 1000);
         const diferenceHour =
           dateEndParse.getHours() - dateStartParse.getHours();
@@ -203,8 +207,6 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
         newOptions.push(option);
       }
     }
-
-    console.log(newOptions);
 
     setOptions(newOptions);
   };

@@ -163,7 +163,10 @@ const SpaceViewEdit: React.FC<SpaceViewEditProps> = () => {
     bookings.forEach((booking) => {
       const dateStartParse = new Date(booking.dateStart * 1000);
 
-      if (dateStartParse.getDate() === date?.getDate()) {
+      if (
+        dateStartParse.getDate() === date?.getDate() &&
+        booking.spaceId == space?.id
+      ) {
         const dateEndParse = new Date(booking.dateEnd * 1000);
         const diferenceHour =
           dateEndParse.getHours() - dateStartParse.getHours();

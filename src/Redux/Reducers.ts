@@ -86,8 +86,6 @@ export const appReducer = (
 
       bookingsCopyD.splice(indexDB);
 
-      console.log("se ejecuta");
-
       return { ...state, bookings: bookingsCopyD };
 
     // Visitors actions
@@ -149,6 +147,7 @@ export const appReducer = (
     case Actions.SET_NEWS:
       return { ...state, news: action.payload };
 
+    // chat actions
     case Actions.ADD_CHAT:
       return { ...state, chats: [...state.chats, action.payload] };
 
@@ -164,6 +163,9 @@ export const appReducer = (
       ];
 
       return { ...state, chats: [...copyChats] };
+
+    case Actions.REMOVE_CHATS:
+      return { ...state, chats: [] };
 
     default:
       return state;

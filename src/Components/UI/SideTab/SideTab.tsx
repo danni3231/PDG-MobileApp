@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { logout } from "../../../Firebase/firebaseApi";
 import { AppState } from "../../../Redux/Reducers";
@@ -13,6 +13,7 @@ interface SideTabProps {
 
 const SideTab: React.FC<SideTabProps> = ({ action }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const currentUser = useSelector<AppState, AppState["currentUser"]>(
     (state) => state.currentUser
@@ -90,7 +91,7 @@ const SideTab: React.FC<SideTabProps> = ({ action }) => {
       </div>
       <div
         className="sideTab__logoutBtn sideTab__nav__element"
-        onClick={() => logout(navigate)}
+        onClick={() => logout(dispatch, navigate)}
       >
         <img
           src={`${process.env.PUBLIC_URL}/Icons/logout.svg`}

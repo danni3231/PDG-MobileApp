@@ -29,6 +29,7 @@ import {
   deleteVisit,
   editBooking,
   editVisit,
+  removeChats,
   setBookings,
   setNews,
   setSpaces,
@@ -372,9 +373,10 @@ export const validateUserState = (
   });
 };
 
-export const logout = async (navigate: any) => {
+export const logout = async (dispatch: any, navigate: any) => {
   const auth = await getAuth();
   signOut(auth).then(() => {
+    dispatch(removeChats());
     navigate("/");
   });
 };

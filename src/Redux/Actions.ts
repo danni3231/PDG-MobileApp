@@ -95,6 +95,11 @@ export const addMessage = (chatId: string, message: message): Action => ({
   payload: { chatId: chatId, message: message },
 });
 
+export const removeChats = (): Action => ({
+  type: "@chats/removeChats",
+  payload: undefined,
+});
+
 export const SET_SPACES = "@spaces/setSpaces";
 
 export const ADD_BOOKINGS = "@bookings/addBooking";
@@ -115,3 +120,4 @@ export const SET_NEWS = "@news/setNews";
 
 export const ADD_CHAT = "@chats/addChat";
 export const ADD_MESSAGE = "@chats/addMessage";
+export const REMOVE_CHATS = "@chats/removeChats";
