@@ -22,8 +22,12 @@ const ChatView: React.FC<ChatViewProps> = () => {
 
   const [newMessage, setNewMessage] = React.useState("");
 
-  const chat = useSelector<AppState, chat | undefined>((state) =>
+  let chat = useSelector<AppState, chat | undefined>((state) =>
     state.chats.find((chat) => chat.users.includes(id!))
+  );
+
+  const chats = useSelector<AppState, AppState["chats"]>(
+    (state) => state.chats
   );
 
   const userChat = useSelector<AppState, User | undefined>((state) =>
@@ -45,10 +49,14 @@ const ChatView: React.FC<ChatViewProps> = () => {
       const newChat = {
         users: [currentUser.id, userChat?.id],
       };
+      setNewMessage(" ");
       createChat(newChat, message).then(() => {
         setNewMessage("");
+        chat = chats.find((chat) => chat.users.includes(id!));
+        console.log(chat);
       });
     } else {
+      setNewMessage(" ");
       uploadMessage(chat.id, message).then(() => {
         setNewMessage("");
       });
