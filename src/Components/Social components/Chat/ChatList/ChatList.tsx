@@ -31,19 +31,26 @@ const ChatList: React.FC<ChatListProps> = ({}) => {
     const userID = chat.users.find((userId) => userId !== currentUser.id);
     const user = users.find((user) => user.id === userID);
 
+    console.log(chat.messages.length - 1);
+
     const lastMessageId = chat.messages.length - 1;
 
     let messageCount = 0;
 
-    console.log(chat.messages[chat.messages.length - 1]);
-    let lastMsgIndex = chat.messages.length - 1;
+    let currentChatOwner = chat.messages[lastMessageId].sendBy;
 
-    let currentOwner = chat.messages[lastMsgIndex].sendBy;
+    let lastMessageIndex = lastMessageId;
 
-    while (currentOwner == chat.messages[chat.messages.length - 1].sendBy) {
-      lastMsgIndex -= 1;
-      currentOwner = chat.messages[lastMsgIndex].sendBy;
-      messageCount += 1;
+    if (currentChatOwner !== currentUser.id) {
+      while (currentChatOwner === chat.messages[lastMessageId].sendBy) {
+        if (lastMessageIndex > 0) {
+          lastMessageIndex -= 1;
+          currentChatOwner = chat.messages[lastMessageIndex].sendBy;
+        } else {
+          currentChatOwner = "";
+        }
+        messageCount += 1;
+      }
     }
 
     const chatParse = {
