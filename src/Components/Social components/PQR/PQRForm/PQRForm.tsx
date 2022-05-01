@@ -1,16 +1,25 @@
 import { TextField } from "@mui/material";
+import id from "date-fns/esm/locale/id/index.js";
 import * as React from "react";
-import { useSelector } from "react-redux";
-import { uploadFile } from "../../../../Firebase/firebaseApi";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  uploadPqr,
+  uploadPqrWithImage,
+} from "../../../../Firebase/firebaseApi";
 import { AppState } from "../../../../Redux/Reducers";
+import { pqr } from "../../../../Types/pqr";
+import { getTimeStamp } from "../../../../Utils/GeneralFunctions";
 import Btn from "../../../UI/Buttons/Btn";
 import Chip from "../../../UI/Chip/Chip";
+import Toast from "../../../UI/Toast/Toast";
 
 import "./PQRForm.css";
 
 interface PQRFormProps {}
 
 const PQRForm: React.FC<PQRFormProps> = ({}) => {
+  const dispatch = useDispatch();
+
   const inputFile = React.useRef<HTMLInputElement>(null);
   const imgPreview = React.useRef<HTMLImageElement>(null);
 
@@ -38,8 +47,8 @@ const PQRForm: React.FC<PQRFormProps> = ({}) => {
     console.log(file);
 
     if (file) {
-      console.log("yep");
-      // imgPreview.current!.src = URL.createObjectURL(file.item(0)!);
+      setFile(file?.item(0)!);
+      imgPreview.current!.src = URL.createObjectURL(file.item(0)!);
     }
   };
 
@@ -59,14 +68,57 @@ const PQRForm: React.FC<PQRFormProps> = ({}) => {
 
   const handleUpload = () => {
     if (validateData()) {
-      uploadFile(file!, currentUser.condominiumId, title);
-    } else {
-      console.log("bad");
+      setIsUploading(true);
+
+      const pqr: pqr = {
+        id: "",
+        userId: currentUser.id,
+        title: title,
+        content: content,
+        date: getTimeStamp(new Date()),
+      };
+
+      if (file === undefined || file === null) {
+        uploadPqr(pqr, currentUser.condominiumId, dispatch).then(() => {
+          setIsUploading(false);
+        });
+      } else {
+        uploadPqrWithImage(
+          pqr,
+          file!,
+          currentUser.condominiumId,
+          dispatch
+        ).then(() => {
+          setIsUploading(false);
+        });
+      }
     }
   };
 
   return (
     <article className="PQRForm">
+      {isUploading ? (
+        <Toast
+          text="Subiendo la información del pqr, por favor espera"
+          type="success"
+        />
+      ) : (
+        ""
+      )}
+
+      {error ? (
+        <Toast
+          text={errorMsg}
+          type="error"
+          btn
+          closeAction={() => {
+            setError(false);
+          }}
+        />
+      ) : (
+        ""
+      )}
+
       <Chip text="Crear PQRS" />
       <div className="scroll scroll--h PQRList__scroll">
         <div className="scroll__column PQRList__column">
@@ -92,6 +144,7 @@ const PQRForm: React.FC<PQRFormProps> = ({}) => {
             style={{ display: "none" }}
           />
           <Btn text="+ Agregar foto" variant="add" action={openGallery} />
+
           <img ref={imgPreview} src="" alt="" />
 
           <Btn

@@ -5,6 +5,7 @@ import { User } from "../Types/user";
 import { visitor } from "../Types/visitor";
 import { chat } from "../Types/chat";
 import { message } from "../Types/message";
+import { pqr } from "../Types/pqr";
 
 export type Action = { type: string; payload: any };
 
@@ -100,6 +101,18 @@ export const removeChats = (): Action => ({
   payload: undefined,
 });
 
+// * pqr actions
+
+export const addPqr = (newPqr: pqr): Action => ({
+  type: "@pqr/addPqr",
+  payload: newPqr,
+});
+
+export const setPqrs = (Pqrs: pqr[]): Action => ({
+  type: "@pqr/setPqrs",
+  payload: Pqrs,
+});
+
 export const SET_SPACES = "@spaces/setSpaces";
 
 export const ADD_BOOKINGS = "@bookings/addBooking";
@@ -121,3 +134,6 @@ export const SET_NEWS = "@news/setNews";
 export const ADD_CHAT = "@chats/addChat";
 export const ADD_MESSAGE = "@chats/addMessage";
 export const REMOVE_CHATS = "@chats/removeChats";
+
+export const ADD_PQR = "@pqr/addPqr";
+export const SET_PQRS = "@pqr/setPqrs";

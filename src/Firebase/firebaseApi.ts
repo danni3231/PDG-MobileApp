@@ -25,6 +25,7 @@ import {
   addBooking,
   addChat,
   addMessage,
+  addPqr,
   addVisitor,
   deleteBooking,
   deleteVisit,
@@ -33,6 +34,7 @@ import {
   removeChats,
   setBookings,
   setNews,
+  setPqrs,
   setSpaces,
   setUser,
   setUsers,
@@ -42,6 +44,7 @@ import {
 import { booking } from "../Types/booking";
 import { message } from "../Types/message";
 import { news } from "../Types/news";
+import { pqr } from "../Types/pqr";
 import { space } from "../Types/space";
 import { User } from "../Types/user";
 import { visitor } from "../Types/visitor";
@@ -65,6 +68,9 @@ const bookingsCollectionRef = (condominiumId: string) =>
 
 const visitorsCollectionRef = (condominiumId: string) =>
   `condominiums/${condominiumId}/visitors`;
+
+const pqrsCollectionRef = (condominiumId: string) =>
+  `condominiums/${condominiumId}/pqrs`;
 
 const chatsCollectionRef = `chats`;
 
@@ -366,6 +372,7 @@ export const validateUserState = (
       getVisits(userData.condominiumId, userData.id, dispatch);
       getNews(userData.condominiumId, dispatch);
       getUsers(userData.condominiumId, userData.id, dispatch);
+      getPqrs(userData.condominiumId, userData.id, dispatch);
 
       listenChats(userData.id, dispatch);
 
@@ -444,18 +451,92 @@ export const createChat = async (chat: any, message: message) => {
 };
 
 // * PQR async functions
+/*
 
 export const uploadFile = async (
   file: File,
   condominiumId: string,
   title: string
 ) => {
-  console.log(file);
-  await uploadBytes(pqrRef(condominiumId, title), file).then(
-    async (snapshot) => {
-      await getDownloadURL(pqrRef(condominiumId, title)).then((url) => {
-        return url;
-      });
-    }
+  return uploadBytes(pqrRef(condominiumId, title), file).then(async () => {
+    await getDownloadURL(pqrRef(condominiumId, title)).then((url) => {
+      url;
+    });
+  });
+};
+*/
+
+const pqrQuery = (condominiumId: string, userId: string) =>
+  query(
+    collection(db, pqrsCollectionRef(condominiumId)),
+    where("userId", "==", userId)
   );
+
+const getPqrs = async (
+  condominiumId: string,
+  userId: string,
+  dispatch: any
+) => {
+  const snapshot = await getDocs(pqrQuery(condominiumId, userId));
+
+  const newPqrs: pqr[] = [];
+
+  snapshot.forEach((pqr: any) => {
+    newPqrs.push({ ...pqr.data() });
+  });
+
+  dispatch(setPqrs(newPqrs));
+};
+
+export const uploadPqr = async (
+  pqr: pqr,
+  condominiumId: string,
+  dispatch: any
+) => {
+  try {
+    const docRef = await addDoc(
+      collection(db, pqrsCollectionRef(condominiumId)),
+      pqr
+    );
+
+    await updateDoc(docRef, {
+      id: docRef.id,
+    });
+
+    const updatePqr: pqr = { ...pqr, id: docRef.id };
+
+    await dispatch(addPqr(updatePqr));
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+};
+
+export const uploadPqrWithImage = async (
+  pqr: pqr,
+  file: File,
+  condominiumId: string,
+  dispatch: any
+) => {
+  await uploadBytes(pqrRef(condominiumId, pqr.title), file).then(() => {
+    getDownloadURL(pqrRef(condominiumId, pqr.title)).then(async (url) => {
+      const newPqr: pqr = { ...pqr, img: url };
+
+      try {
+        const docRef = await addDoc(
+          collection(db, pqrsCollectionRef(condominiumId)),
+          newPqr
+        );
+
+        await updateDoc(docRef, {
+          id: docRef.id,
+        });
+
+        const updatePqr: pqr = { ...newPqr, id: docRef.id };
+
+        await dispatch(addPqr(updatePqr));
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
+    });
+  });
 };

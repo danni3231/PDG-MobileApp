@@ -16,7 +16,7 @@ export interface AppState {
   visits: visitor[];
   news: news[];
   chats: chat[];
-  pqr: pqr[];
+  pqrs: pqr[];
 }
 
 const initState = {
@@ -35,7 +35,7 @@ const initState = {
   visits: [],
   news: [],
   chats: [],
-  pqr: [],
+  pqrs: [],
 };
 
 export const appReducer = (
@@ -84,7 +84,7 @@ export const appReducer = (
         (booking) => booking.id === action.payload
       );
 
-      bookingsCopyD.splice(indexDB);
+      bookingsCopyD.splice(indexDB, 1);
 
       return { ...state, bookings: bookingsCopyD };
 
@@ -129,7 +129,7 @@ export const appReducer = (
         (visit) => visit.id === action.payload
       );
 
-      visitsCopyD.splice(indexD);
+      visitsCopyD.splice(indexD, 1);
 
       return { ...state, visits: visitsCopyD };
 
@@ -166,6 +166,12 @@ export const appReducer = (
 
     case Actions.REMOVE_CHATS:
       return { ...state, chats: [] };
+
+    case Actions.SET_PQRS:
+      return { ...state, pqrs: action.payload };
+
+    case Actions.ADD_PQR:
+      return { ...state, pqrs: [...state.pqrs, action.payload] };
 
     default:
       return state;

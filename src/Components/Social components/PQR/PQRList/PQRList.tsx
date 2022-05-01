@@ -15,7 +15,7 @@ const PQRList: React.FC<PQRListProps> = ({}) => {
     "today" | "week" | "month" | "all"
   >("today");
 
-  const pqr = useSelector<AppState, AppState["pqr"]>((state) => state.pqr);
+  const pqrs = useSelector<AppState, AppState["pqrs"]>((state) => state.pqrs);
 
   const handlerFilter = (btnClicked: "today" | "week" | "month" | "all") => {
     setFilter(btnClicked);
@@ -85,21 +85,34 @@ const PQRList: React.FC<PQRListProps> = ({}) => {
 
       <div className="scroll scroll--h PQRList__scroll">
         <div className="scroll__column PQRList__column">
-          {pqr.length === 0 ? (
+          {pqrs.length === 0 ? (
             <p className="PQRList__column__onboarding">
               Aún no tienes una PQR. Si tienes alguna pregunta, queja o reclamo,
               presiona el botón flotante para crear una nueva PQR.
             </p>
           ) : (
-            pqr.map((pqr) => {
-              return (
-                <PQRCard
-                  title={pqr.title}
-                  img={pqr.img}
-                  date={pqr.date}
-                  id={pqr.id}
-                />
-              );
+            pqrs.map((pqr) => {
+              if (pqr.img !== undefined) {
+                return (
+                  <PQRCard
+                    key={pqr.id}
+                    title={pqr.title}
+                    img={pqr.img}
+                    date={pqr.date}
+                    id={pqr.id}
+                  />
+                );
+              } else {
+                return (
+                  <PQRCard
+                    key={pqr.id}
+                    title={pqr.title}
+                    content={pqr.content}
+                    date={pqr.date}
+                    id={pqr.id}
+                  />
+                );
+              }
             })
           )}
         </div>

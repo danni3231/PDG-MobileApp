@@ -3,6 +3,6 @@ export type pqr = {
   userId: string;
   title: string;
   content: string;
-  img: string;
+  img?: string;
   date: number;
 };
