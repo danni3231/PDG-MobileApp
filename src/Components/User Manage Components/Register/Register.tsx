@@ -1,4 +1,10 @@
-import { MenuItem, Select, TextField } from "@mui/material";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import * as React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
@@ -101,14 +107,14 @@ const Register: React.FC<RegisterProps> = ({}) => {
         <h1 className="purple">Registrarse</h1>
         <section className="register__form">
           <TextField
-            placeholder="Correo electrónico"
+            label="Correo electrónico"
             onChange={(event) => {
               setEmail(event.target.value);
             }}
           />
 
           <TextField
-            placeholder="Número de documento"
+            label="Número de documento"
             type="number"
             onChange={(event) => {
               setId(event.target.value);
@@ -116,25 +122,30 @@ const Register: React.FC<RegisterProps> = ({}) => {
           />
 
           <TextField
-            placeholder="Contraseña"
+            label="Contraseña"
             type="password"
             onChange={(event) => {
               setPassword(event.target.value);
             }}
           />
 
-          <Select
-            value={condominium}
-            displayEmpty
-            renderValue={(v) => (v !== "" ? v : "Selecciona tu conjunto")}
-            onChange={(event) => {
-              setCondominium(event.target.value);
-            }}
-          >
-            <MenuItem value={"Guadalupe Alto"}>Guadalupe Alto</MenuItem>
-            <MenuItem value={"El Coral"}>El Coral</MenuItem>
-            <MenuItem value={"Boho U Living"}>Boho U Living</MenuItem>
-          </Select>
+          <FormControl>
+            <InputLabel id="selectC-label">Selecciona tu conjunto</InputLabel>
+            <Select
+              value={condominium}
+              labelId="selectC-label"
+              id="selectC"
+              //displayEmpty
+              //renderValue={(v) => (v !== "" ? v : "Selecciona tu conjunto")}
+              onChange={(event) => {
+                setCondominium(event.target.value);
+              }}
+            >
+              <MenuItem value={"Guadalupe Alto"}>Guadalupe Alto</MenuItem>
+              <MenuItem value={"El Coral"}>El Coral</MenuItem>
+              <MenuItem value={"Boho U Living"}>Boho U Living</MenuItem>
+            </Select>
+          </FormControl>
 
           <Btn
             text="Registrarse"

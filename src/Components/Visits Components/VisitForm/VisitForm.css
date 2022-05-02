@@ -7,7 +7,8 @@
 }
 
 .visitForm__column {
-  gap: 20px;
+  padding-top: 8px;
+  gap: 28px;
 }
 
 .visitForm__column h2 {

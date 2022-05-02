@@ -19,6 +19,16 @@ export const theme = createTheme({
       },
     },
 
+    MuiFormLabel: {
+      styleOverrides: {
+        root: {
+          paddingLeft: "8px",
+          backgroundColor: "#fff",
+          paddingRight: "8px",
+        },
+      },
+    },
+
     MuiOutlinedInput: {
       styleOverrides: {
         root: {

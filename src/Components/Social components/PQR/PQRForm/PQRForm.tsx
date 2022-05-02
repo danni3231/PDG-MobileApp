@@ -120,15 +120,16 @@ const PQRForm: React.FC<PQRFormProps> = ({}) => {
       )}
 
       <Chip text="Crear PQRS" />
-      <div className="scroll scroll--h PQRList__scroll">
-        <div className="scroll__column PQRList__column">
+      <div className="scroll scroll--h PQRForm__scroll">
+        <div className="scroll__column PQRForm__column">
           <TextField
-            placeholder="Título"
+            label="Título"
             onChange={(event) => {
               setTitle(event.target.value);
             }}
           />
           <TextField
+            label="Descripción"
             placeholder="Añade una descripción del asunto"
             multiline
             rows={10}

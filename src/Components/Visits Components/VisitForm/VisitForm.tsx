@@ -1,6 +1,12 @@
 import { LocalizationProvider, MobileDatePicker } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import { MenuItem, Select, TextField } from "@mui/material";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import * as React from "react";
 import { useNavigate } from "react-router";
 
@@ -119,35 +125,43 @@ const VisitForm: React.FC<VisitFormProps> = () => {
       <div className="scroll scroll--h">
         <div className="scroll__column visitForm__column">
           <TextField
-            placeholder="Nombre"
+            label="Nombre"
             onChange={(event) => {
               setName(event.target.value);
             }}
           />
+
           <TextField
-            placeholder="Apellido"
+            label="Apellido"
             onChange={(event) => {
               setSurname(event.target.value);
             }}
           />
-          <Select
-            value={idType}
-            displayEmpty
-            renderValue={(v) => (v !== "" ? v : "Tipo de Documento")}
-            defaultValue="none"
-            onChange={(event) => {
-              setIdType(event.target.value);
-            }}
-          >
-            <MenuItem value={"Tarjeta de Identidad"}>
-              Tarjeta de Identidad
-            </MenuItem>
-            <MenuItem value={"Cédula de Ciudadanía"}>
-              Cédula de Ciudadanía
-            </MenuItem>
-          </Select>
+
+          <FormControl>
+            <InputLabel id="selectId-label">Tipo de Documento</InputLabel>
+            <Select
+              value={idType}
+              labelId="selectId-label"
+              id="selectId"
+              //displayEmpty
+              //renderValue={(v) => (v !== "" ? v : "Tipo de Documento")}
+              defaultValue="none"
+              onChange={(event) => {
+                setIdType(event.target.value);
+              }}
+            >
+              <MenuItem value={"Tarjeta de Identidad"}>
+                Tarjeta de Identidad
+              </MenuItem>
+              <MenuItem value={"Cédula de Ciudadanía"}>
+                Cédula de Ciudadanía
+              </MenuItem>
+            </Select>
+          </FormControl>
+
           <TextField
-            placeholder="N° de Documento"
+            label="N° de Documento"
             type="number"
             onChange={(event) => {
               setId(event.target.value);
@@ -163,6 +177,7 @@ const VisitForm: React.FC<VisitFormProps> = () => {
             }}
           >
             <MobileDatePicker
+              label="Fecha de la visita"
               minDate={new Date()}
               value={date}
               onChange={(newValue) => {
