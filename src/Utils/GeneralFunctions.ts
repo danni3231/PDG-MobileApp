@@ -9,6 +9,13 @@ export const parseHour = (date: number) => {
   return `${dateParser.getHours()}:${dateParser.getMinutes()}`;
 };
 
+export const parseDate = (date: number) => {
+  const dateParse = new Date(date * 1000);
+  return `${dateParse.getDate()}/${
+    dateParse.getMonth() + 1
+  }/${dateParse.getFullYear()} `;
+};
+
 export const goBack = (navigate: any) => {
   navigate(-1);
 };
