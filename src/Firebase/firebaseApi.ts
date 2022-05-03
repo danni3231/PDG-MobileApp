@@ -40,6 +40,7 @@ import {
   setUsers,
   setUserState,
   setVisits,
+  updateCurrentUser,
 } from "../Redux/Actions";
 import { booking } from "../Types/booking";
 import { message } from "../Types/message";
@@ -80,6 +81,9 @@ const messagesCollectionRef = (chatId: string) => `chats/${chatId}/messages`;
 
 const pqrRef = (condominiumId: string, name: string) =>
   ref(storage, `${condominiumId}/pqr/${name}`);
+
+const userPhotoRef = (condominiumId: string, userId: string) =>
+  ref(storage, `${condominiumId}/users/${userId}/profile`);
 
 export const getSpaces = async (condominiumId: string, dispatch: any) => {
   const snapshot = await getDocs(
@@ -399,6 +403,40 @@ export const createUser = async (newUser: User) => {
     doc(db, usersCollectionRef(newUser.condominiumId), newUser.id),
     newUser
   );
+};
+
+export const updateProfilePhoto = async (
+  currentUser: User,
+  file: File,
+  dispatch: any
+) => {
+  await uploadBytes(
+    userPhotoRef(currentUser.condominiumId, currentUser.id),
+    file
+  ).then(() => {
+    getDownloadURL(
+      userPhotoRef(currentUser.condominiumId, currentUser.id)
+    ).then(async (url) => {
+      try {
+        await updateDoc(
+          doc(
+            db,
+            usersCollectionRef(currentUser.condominiumId),
+            currentUser.id
+          ),
+          {
+            profileImg: url,
+          }
+        );
+
+        const newCurrentUser = { ...currentUser, profileImg: url };
+
+        await dispatch(updateCurrentUser(newCurrentUser));
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
+    });
+  });
 };
 
 // * Messages async functions

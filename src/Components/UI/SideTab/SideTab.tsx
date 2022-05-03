@@ -22,6 +22,10 @@ const SideTab: React.FC<SideTabProps> = ({ action }) => {
   const ref = React.useRef<HTMLDivElement>(null);
   useOnClickOutside(ref, () => action());
 
+  const goToProfile = () => {
+    navigate("/perfil");
+  };
+
   return (
     <div className="sideTab" ref={ref}>
       <div className="sideTab__header">
@@ -31,7 +35,7 @@ const SideTab: React.FC<SideTabProps> = ({ action }) => {
           alt=""
         />
 
-        <div className="sideTab__header__user">
+        <div className="sideTab__header__user" onClick={goToProfile}>
           <img
             src={currentUser.profileImg}
             alt=""

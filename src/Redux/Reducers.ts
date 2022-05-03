@@ -143,6 +143,9 @@ export const appReducer = (
     case Actions.SET_USER_STATE:
       return { ...state, useState: action.payload };
 
+    case Actions.UPDATE_CURRENT_USER:
+      return { ...state, currentUser: action.payload };
+
     // news actions
     case Actions.SET_NEWS:
       return { ...state, news: action.payload };

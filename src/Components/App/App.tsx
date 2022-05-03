@@ -24,6 +24,7 @@ import VisitFormEdit from "../Visits Components/VisitFormEdit/VisitFormEdit";
 import SpaceViewEdit from "../Reservation Components/SpaceViewEdit/SpaceViewEdit";
 import PQRView from "../Social components/PQR/PQRView/PQRView";
 import PQRForm from "../Social components/PQR/PQRForm/PQRForm";
+import ProfileView from "../User Manage Components/ProfileView/ProfileView";
 
 function App() {
   const location = useLocation();
@@ -58,6 +59,8 @@ function App() {
           <Route path="/" element={<Login />} />
 
           <Route path="Registro" element={<Register />} />
+
+          <Route path="perfil" element={<ProfileView />}></Route>
 
           <Route path="Inicio" element={<Home />} />
 

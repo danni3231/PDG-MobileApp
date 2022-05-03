@@ -77,6 +77,11 @@ export const setUsers = (users: User[]): Action => ({
   payload: users,
 });
 
+export const updateCurrentUser = (newCurrentUser: User): Action => ({
+  type: "@user/updateCurrentUser",
+  payload: newCurrentUser,
+});
+
 // * Notices Actions
 
 export const setNews = (news: news[]): Action => ({
@@ -128,6 +133,7 @@ export const DELETE_VISITOR = "@visits/deleteVisits";
 export const SET_USER = "@user/setUser";
 export const SET_USERS = "@user/setUsers";
 export const SET_USER_STATE = "@user/setUserState";
+export const UPDATE_CURRENT_USER = "@user/updateCurrentUser";
 
 export const SET_NEWS = "@news/setNews";
 
