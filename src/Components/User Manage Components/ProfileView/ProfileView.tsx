@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateProfilePhoto } from "../../../Firebase/firebaseApi";
 import { AppState } from "../../../Redux/Reducers";
 import Btn from "../../UI/Buttons/Btn";
+import Chip from "../../UI/Chip/Chip";
 import Toast from "../../UI/Toast/Toast";
 
 import "./ProfileView.css";
@@ -85,7 +86,14 @@ const ProfileView: React.FC<ProfileViewProps> = ({}) => {
         ""
       )}
 
-      <img ref={imgPreview} src={currentUser.profileImg} alt="" />
+      <Chip text={"Perfil"} />
+
+      <img
+        className="profileView__img"
+        ref={imgPreview}
+        src={currentUser.profileImg}
+        alt=""
+      />
 
       <input
         onChange={handleFile}
@@ -94,7 +102,7 @@ const ProfileView: React.FC<ProfileViewProps> = ({}) => {
         ref={inputFile}
         style={{ display: "none" }}
       />
-      <Btn text="+ Agregar foto" variant="add" action={openGallery} />
+      <Btn text="Cambiar foto" variant="add" action={openGallery} />
 
       <Btn
         text={"Actualizar perfil"}
