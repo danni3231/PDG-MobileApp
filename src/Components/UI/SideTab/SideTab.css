@@ -26,7 +26,10 @@
 }
 
 .sideTab__header__user__img {
-  max-width: 48px;
+  width: 48px;
+  height: fit-content;
+  aspect-ratio: auto 1 / 1;
+  object-fit: cover;
   border-radius: 50%;
 }
 
@@ -52,6 +55,7 @@
 .sideTab__nav__element,
 .sideTab__header__user {
   display: flex;
+  align-items: center;
   gap: 24px;
 }
 
