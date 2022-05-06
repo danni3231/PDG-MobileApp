@@ -37,9 +37,9 @@ const ChatPreview: React.FC<ChatPreviewProps> = ({ chatInfo }) => {
       />
 
       <div className="chatPreview__content">
-        <p className="chatPreview__name">{`${userChat!.firstname} - ${
-          userChat!.apartment
-        }`}</p>
+        <p className="chatPreview__name">{`${userChat!.firstname} ${
+          userChat!.lastname
+        } - ${userChat!.apartment}`}</p>
         {chatInfo.lastMessageYou ? (
           <div className="chatPreview__msg__container">
             <p className="chatPreview__msg purple">Tu:</p>

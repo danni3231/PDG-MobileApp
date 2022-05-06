@@ -47,6 +47,9 @@ export const appReducer = (
     case Actions.SET_SPACES:
       return { ...state, spaces: action.payload };
 
+    case Actions.ADD_SPACE:
+      return { ...state, spaces: [...state.spaces, action.payload] };
+
     // Spaces actions
     case Actions.ADD_BOOKINGS:
       return { ...state, bookings: [...state.bookings, action.payload] };

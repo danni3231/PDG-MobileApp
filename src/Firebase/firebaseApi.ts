@@ -26,6 +26,7 @@ import {
   addChat,
   addMessage,
   addPqr,
+  addSpace,
   addVisitor,
   deleteBooking,
   deleteVisit,
@@ -77,13 +78,16 @@ const chatsCollectionRef = `chats`;
 
 const messagesCollectionRef = (chatId: string) => `chats/${chatId}/messages`;
 
-// storage refs
+// * Storage refs
 
 const pqrRef = (condominiumId: string, name: string) =>
   ref(storage, `${condominiumId}/pqr/${name}`);
 
 const userPhotoRef = (condominiumId: string, userId: string) =>
   ref(storage, `${condominiumId}/users/${userId}/profile`);
+
+const spaceRef = (condominiumId: string, name: string) =>
+  ref(storage, `${condominiumId}/space/${name}`);
 
 export const getSpaces = async (condominiumId: string, dispatch: any) => {
   const snapshot = await getDocs(
@@ -572,6 +576,38 @@ export const uploadPqrWithImage = async (
         const updatePqr: pqr = { ...newPqr, id: docRef.id };
 
         await dispatch(addPqr(updatePqr));
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
+    });
+  });
+};
+
+// * AdminUser
+
+export const createSpace = async (
+  space: space,
+  file: File,
+  condominiumId: string,
+  dispatch: any
+) => {
+  await uploadBytes(spaceRef(condominiumId, space.name), file).then(() => {
+    getDownloadURL(spaceRef(condominiumId, space.name)).then(async (url) => {
+      const newSpace: space = { ...space, img: url };
+
+      try {
+        const docRef = await addDoc(
+          collection(db, spacesCollectionRef(condominiumId)),
+          newSpace
+        );
+
+        await updateDoc(docRef, {
+          id: docRef.id,
+        });
+
+        const updateSpace: space = { ...newSpace, id: docRef.id };
+
+        await dispatch(addSpace(updateSpace));
       } catch (e) {
         console.error("Error adding document: ", e);
       }

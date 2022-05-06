@@ -13,7 +13,9 @@ import {
 } from "@mui/material";
 import { es } from "date-fns/locale";
 import * as React from "react";
+import { space } from "../../../Types/space";
 import Btn from "../../UI/Buttons/Btn";
+import Toast from "../../UI/Toast/Toast";
 
 import "./CreateSpace.css";
 
@@ -23,8 +25,13 @@ const CreateSpace: React.FC<CreateSpaceProps> = ({}) => {
   const inputFile = React.useRef<HTMLInputElement>(null);
   const imgPreview = React.useRef<HTMLImageElement>(null);
 
+  const [isUploading, setIsUploading] = React.useState(false);
+  const [error, setError] = React.useState(false);
+  const [errorMsg, setErrorMsg] = React.useState("default msg");
+
   const [name, setName] = React.useState("");
   const [occupation, setOccupation] = React.useState("");
+  const [condominium, setCondominium] = React.useState("");
 
   const [dayStart, setDayStart] = React.useState("");
   const [dayEnd, setDayEnd] = React.useState("");
@@ -49,102 +56,201 @@ const CreateSpace: React.FC<CreateSpaceProps> = ({}) => {
     }
   };
 
+  const validateData = () => {
+    if (name === "") {
+      setErrorMsg("Falta el nombre del espacio");
+      setError(true);
+      return false;
+    } else if (occupation === "") {
+      setErrorMsg("Falta el maximo de ocupación");
+      setError(true);
+      return false;
+    } else if (condominium === "") {
+      setErrorMsg("Falta seleccionar el conjunto");
+      setError(true);
+      return false;
+    } else if (dayStart === "") {
+      setErrorMsg("Falta seleccionar el dia que abre el espacio");
+      setError(true);
+      return false;
+    } else if (dayEnd === "") {
+      setErrorMsg("Falta seleccionar el dia que cierra el espacio");
+      setError(true);
+      return false;
+    } else if (hourEnd === null) {
+      setErrorMsg("Falta seleccionar la hora de apertura");
+      setError(true);
+      return false;
+    } else if (hourStart === null) {
+      setErrorMsg("Falta seleccionar la hora de cierre");
+      setError(true);
+      return false;
+    } else if (file === null || file === undefined) {
+      setErrorMsg("Falta Cargar la imagen del espacio");
+      setError(true);
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  const handleSubmit = () => {
+    if (validateData()) {
+      setIsUploading(true);
+
+      const newSpaces: space = {
+        name: name,
+        img: "",
+        id: "",
+        occupation: 0, //occupation,
+        days: {
+          end: "",
+          start: "",
+        },
+        schedule: {
+          end: 0,
+          start: 0,
+        },
+      };
+
+      //createSpace()
+    }
+  };
+
   return (
     <article>
+      {isUploading ? (
+        <Toast
+          text="Subiendo la información del visitante, por favor espera"
+          type="success"
+        />
+      ) : (
+        ""
+      )}
+
+      {error ? (
+        <Toast
+          text={errorMsg}
+          type="error"
+          btn
+          closeAction={() => {
+            setError(false);
+          }}
+        />
+      ) : (
+        ""
+      )}
+
       <h1>Crear Spacio</h1>
 
-      <TextField
-        value={name}
-        label="Nombre"
-        onChange={(event) => setName(event.target.value)}
-      />
+      <div className="scroll scroll--h">
+        <div className="scroll__column home__column">
+          <TextField
+            value={name}
+            label="Nombre"
+            onChange={(event) => setName(event.target.value)}
+          />
 
-      <TextField
-        value={occupation}
-        label="Ocupación maxima"
-        onChange={(event) => setOccupation(event.target.value)}
-      />
+          <FormControl>
+            <InputLabel id="selectC-label">Conjunto</InputLabel>
+            <Select
+              value={condominium}
+              labelId="selectC-label"
+              id="selectC"
+              onChange={(event) => {
+                setCondominium(event.target.value);
+              }}
+            >
+              <MenuItem value={"Guadalupe Alto"}>Guadalupe Alto</MenuItem>
+              <MenuItem value={"El Coral"}>El Coral</MenuItem>
+              <MenuItem value={"Boho U Living"}>Boho U Living</MenuItem>
+            </Select>
+          </FormControl>
 
-      <FormControl>
-        <InputLabel id="selectDS-label">Dia de apertura</InputLabel>
-        <Select
-          value={dayStart}
-          labelId="selectDS-label"
-          id="selectDS"
-          //displayEmpty
-          //renderValue={(v) => (v !== "" ? v : "Selecciona tu conjunto")}
-          onChange={(event) => {
-            setDayStart(event.target.value);
-          }}
-        >
-          <MenuItem value={"Lunes"}>Lunes</MenuItem>
-          <MenuItem value={"Martes"}>Martes</MenuItem>
-          <MenuItem value={"Miércoles"}>Miércoles</MenuItem>
-          <MenuItem value={"Jueves"}>Jueves</MenuItem>
-          <MenuItem value={"Viernes"}>Viernes</MenuItem>
-        </Select>
-      </FormControl>
+          <TextField
+            value={occupation}
+            label="Ocupación maxima"
+            onChange={(event) => setOccupation(event.target.value)}
+          />
 
-      <FormControl>
-        <InputLabel id="selectDE-label">Dia de cierre</InputLabel>
-        <Select
-          value={dayEnd}
-          labelId="selectDE-label"
-          id="selectDE"
-          //displayEmpty
-          //renderValue={(v) => (v !== "" ? v : "Selecciona tu conjunto")}
-          onChange={(event) => {
-            setDayEnd(event.target.value);
-          }}
-        >
-          <MenuItem value={"Lunes"}>Lunes</MenuItem>
-          <MenuItem value={"Martes"}>Martes</MenuItem>
-          <MenuItem value={"Miércoles"}>Miércoles</MenuItem>
-          <MenuItem value={"Jueves"}>Jueves</MenuItem>
-          <MenuItem value={"Viernes"}>Viernes</MenuItem>
-        </Select>
-      </FormControl>
+          <FormControl>
+            <InputLabel id="selectDS-label">Dia de apertura</InputLabel>
+            <Select
+              value={dayStart}
+              labelId="selectDS-label"
+              id="selectDS"
+              onChange={(event) => {
+                setDayStart(event.target.value);
+              }}
+            >
+              <MenuItem value={"Lunes"}>Lunes</MenuItem>
+              <MenuItem value={"Martes"}>Martes</MenuItem>
+              <MenuItem value={"Miércoles"}>Miércoles</MenuItem>
+              <MenuItem value={"Jueves"}>Jueves</MenuItem>
+              <MenuItem value={"Viernes"}>Viernes</MenuItem>
+            </Select>
+          </FormControl>
 
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <MobileTimePicker
-          label="Hora de apertura"
-          value={hourStart}
-          onChange={(newValue) => {
-            setHourStart(newValue);
-          }}
-          renderInput={(params) => <TextField {...params} />}
-        />
-      </LocalizationProvider>
+          <FormControl>
+            <InputLabel id="selectDE-label">Dia de cierre</InputLabel>
+            <Select
+              value={dayEnd}
+              labelId="selectDE-label"
+              id="selectDE"
+              onChange={(event) => {
+                setDayEnd(event.target.value);
+              }}
+            >
+              <MenuItem value={"Lunes"}>Lunes</MenuItem>
+              <MenuItem value={"Martes"}>Martes</MenuItem>
+              <MenuItem value={"Miércoles"}>Miércoles</MenuItem>
+              <MenuItem value={"Jueves"}>Jueves</MenuItem>
+              <MenuItem value={"Viernes"}>Viernes</MenuItem>
+            </Select>
+          </FormControl>
 
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <MobileTimePicker
-          label="Hora de cierre"
-          value={hourEnd}
-          onChange={(newValue) => {
-            setHourEnd(newValue);
-          }}
-          renderInput={(params) => <TextField {...params} />}
-        />
-      </LocalizationProvider>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <MobileTimePicker
+              label="Hora de apertura"
+              value={hourStart}
+              onChange={(newValue) => {
+                setHourStart(newValue);
+              }}
+              renderInput={(params) => <TextField {...params} />}
+            />
+          </LocalizationProvider>
 
-      <input
-        onChange={handleFile}
-        type="file"
-        id="file"
-        ref={inputFile}
-        style={{ display: "none" }}
-      />
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <MobileTimePicker
+              label="Hora de cierre"
+              value={hourEnd}
+              onChange={(newValue) => {
+                setHourEnd(newValue);
+              }}
+              renderInput={(params) => <TextField {...params} />}
+            />
+          </LocalizationProvider>
 
-      <Btn text="+ Agregar foto" variant="add" action={openGallery} />
+          <input
+            onChange={handleFile}
+            type="file"
+            id="file"
+            ref={inputFile}
+            style={{ display: "none" }}
+          />
 
-      <img ref={imgPreview} src="" alt="" />
+          <Btn text="+ Agregar foto" variant="add" action={openGallery} />
 
-      <Btn
-        text={"Agregar Espacio"}
-        variant=""
-        margin="16px"
-        action={() => {}}
-      />
+          <img ref={imgPreview} src="" alt="" />
+
+          <Btn
+            text={"Agregar Espacio"}
+            variant=""
+            margin="16px"
+            action={handleSubmit}
+          />
+        </div>
+      </div>
     </article>
   );
 };

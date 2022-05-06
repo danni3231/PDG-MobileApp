@@ -16,6 +16,11 @@ export const setSpaces = (spaces: space[]): Action => ({
   payload: spaces,
 });
 
+export const addSpace = (spaces: space): Action => ({
+  type: "@spaces/addSpace",
+  payload: spaces,
+});
+
 // * Bookings actions
 
 export const addBooking = (newBooking: booking): Action => ({
@@ -119,6 +124,7 @@ export const setPqrs = (Pqrs: pqr[]): Action => ({
 });
 
 export const SET_SPACES = "@spaces/setSpaces";
+export const ADD_SPACE = "@spaces/addSpace";
 
 export const ADD_BOOKINGS = "@bookings/addBooking";
 export const SET_BOOKINGS = "@bookings/setBookings";
