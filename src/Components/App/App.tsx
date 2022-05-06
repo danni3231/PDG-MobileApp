@@ -25,6 +25,7 @@ import SpaceViewEdit from "../Reservation Components/SpaceViewEdit/SpaceViewEdit
 import PQRView from "../Social components/PQR/PQRView/PQRView";
 import PQRForm from "../Social components/PQR/PQRForm/PQRForm";
 import ProfileView from "../User Manage Components/ProfileView/ProfileView";
+import CreateSpace from "../Admin Components/CreateSpace/CreateSpace";
 
 function App() {
   const location = useLocation();
@@ -84,6 +85,7 @@ function App() {
           <Route path="Social/createPQR" element={<PQRForm />} />
 
           <Route path="Admin/createUser" element={<CreateUser />} />
+          <Route path="Admin/createSpace" element={<CreateSpace />} />
         </Routes>
       </div>
     );

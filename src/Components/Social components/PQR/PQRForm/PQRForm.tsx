@@ -42,7 +42,6 @@ const PQRForm: React.FC<PQRFormProps> = ({}) => {
 
   const handleFile = () => {
     const file = inputFile.current?.files;
-    setFile(file?.item(0)!);
 
     console.log(file);
 

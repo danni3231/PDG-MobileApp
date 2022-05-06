@@ -61,7 +61,7 @@ const CreateUser: React.FC<CreateUserProps> = () => {
 
       <TextField
         value={apartment}
-        placeholder="Apartamento"
+        label="Apartamento"
         onChange={(event) => setApartment(event.target.value)}
       />
 
@@ -69,19 +69,19 @@ const CreateUser: React.FC<CreateUserProps> = () => {
 
       <TextField
         value={id}
-        placeholder="Numero de identificación"
+        label="Numero de identificación"
         onChange={(event) => setId(event.target.value)}
       />
 
       <TextField
         value={firstname}
-        placeholder="Nombre"
+        label="Nombre"
         onChange={(event) => setFirstname(event.target.value)}
       />
 
       <TextField
         value={lastname}
-        placeholder="Apellido"
+        label="Apellido"
         onChange={(event) => setLastname(event.target.value)}
       />
 
