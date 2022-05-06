@@ -1,5 +1,5 @@
-import { Share, ShareOutlined } from "@mui/icons-material";
 import * as React from "react";
+import { Breathing, Image } from "react-shimmer";
 import { useNavigate } from "react-router";
 
 import "./NewsPreview.css";
@@ -25,7 +25,14 @@ const NewsPreview: React.FC<NewsPreviewProps> = ({ title, img, date, id }) => {
 
   return (
     <section className="newsPreview" onClick={handleCardClick}>
-      <img className="newsPreview__img" src={img} alt="" />
+      <Image
+        src={img}
+        fallback={<Breathing className="newsPreview__img" />}
+        NativeImgProps={{
+          className: "newsPreview__img",
+        }}
+        fadeIn
+      />
 
       <p className="newsPreview__title">{title}</p>
 

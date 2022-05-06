@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { Breathing, Image } from "react-shimmer";
 import { AppState } from "../../../../Redux/Reducers";
 import { chatPreview } from "../../../../Types/chatPreview";
 import { User } from "../../../../Types/user";
@@ -26,7 +27,15 @@ const ChatPreview: React.FC<ChatPreviewProps> = ({ chatInfo }) => {
       className="chatPreview"
       onClick={() => navigate(`/Social/Chat/${userChat!.id}`)}
     >
-      <img className="chatPreview__img" src={userChat!.profileImg} alt="" />
+      <Image
+        src={userChat!.profileImg}
+        fallback={<Breathing className="chatPreview__img" />}
+        NativeImgProps={{
+          className: "chatPreview__img",
+        }}
+        fadeIn
+      />
+
       <div className="chatPreview__content">
         <p className="chatPreview__name">{`${userChat!.firstname} - ${
           userChat!.apartment

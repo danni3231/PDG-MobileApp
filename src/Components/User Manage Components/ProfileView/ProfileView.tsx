@@ -1,5 +1,7 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Breathing, Image } from "react-shimmer";
+import { SuspenseImage } from "react-shimmer/dist/Image";
 import { updateProfilePhoto } from "../../../Firebase/firebaseApi";
 import { AppState } from "../../../Redux/Reducers";
 import Btn from "../../UI/Buttons/Btn";
@@ -14,7 +16,8 @@ const ProfileView: React.FC<ProfileViewProps> = ({}) => {
   const dispatch = useDispatch();
 
   const inputFile = React.useRef<HTMLInputElement>(null);
-  const imgPreview = React.useRef<HTMLImageElement>(null);
+  const imgPreview: React.LegacyRef<SuspenseImage> =
+    React.useRef<SuspenseImage>(null);
 
   const currentUser = useSelector<AppState, AppState["currentUser"]>(
     (state) => state.currentUser
@@ -34,7 +37,9 @@ const ProfileView: React.FC<ProfileViewProps> = ({}) => {
 
     if (file) {
       setFile(file?.item(0)!);
-      imgPreview.current!.src = URL.createObjectURL(file.item(0)!);
+      imgPreview.current!.imgRef.current!.src = URL.createObjectURL(
+        file.item(0)!
+      );
     }
   };
 
@@ -88,11 +93,14 @@ const ProfileView: React.FC<ProfileViewProps> = ({}) => {
 
       <Chip text={"Perfil"} />
 
-      <img
-        className="profileView__img"
+      <Image
         ref={imgPreview}
         src={currentUser.profileImg}
-        alt=""
+        fallback={<Breathing className="profileView__img" />}
+        NativeImgProps={{
+          className: "profileView__img",
+        }}
+        fadeIn
       />
 
       <input

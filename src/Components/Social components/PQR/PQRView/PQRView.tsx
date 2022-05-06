@@ -1,9 +1,9 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
+import { Breathing, Image } from "react-shimmer";
 import { AppState } from "../../../../Redux/Reducers";
 import { pqr } from "../../../../Types/pqr";
-import { User } from "../../../../Types/user";
 import { goBack, parseDate } from "../../../../Utils/GeneralFunctions";
 
 import "./PQRView.css";
@@ -36,7 +36,14 @@ const PQRView: React.FC<PQRViewProps> = ({}) => {
           <p>PQRS</p>
         </div>
 
-        <img className="pqrView__header__img " src={pqr.img} alt="" />
+        <Image
+          src={pqr.img!}
+          fallback={<Breathing className="pqrView__header__img" />}
+          NativeImgProps={{
+            className: "pqrView__header__img",
+          }}
+          fadeIn
+        />
         <div className="pqrView__header__content">
           <p>{pqr.title}</p>
         </div>
@@ -45,10 +52,13 @@ const PQRView: React.FC<PQRViewProps> = ({}) => {
       <div className="scroll scroll--h">
         <div className="scroll__column pqrView__content">
           <div className="pqrView__content__user">
-            <img
-              className="pqrView__content__user__img"
+            <Image
               src={pqrWriter.profileImg}
-              alt=""
+              fallback={<Breathing className="pqrView__content__user__img" />}
+              NativeImgProps={{
+                className: "pqrView__content__user__img",
+              }}
+              fadeIn
             />
             <div className="pqrView__content__user__info">
               <p className="pqrView__content__user__name">

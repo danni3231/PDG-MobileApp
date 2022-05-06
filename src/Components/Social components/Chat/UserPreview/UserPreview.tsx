@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useNavigate } from "react-router";
+import { Breathing, Image } from "react-shimmer";
 import { User } from "../../../../Types/user";
 
 import "./UserPreview.css";
@@ -15,7 +16,14 @@ const UserPreview: React.FC<UserPreviewProps> = ({ userInfo }) => {
       className="userPreview"
       onClick={() => navigate(`/Social/Chat/${userInfo.id}`)}
     >
-      <img className="userPreview__img" src={userInfo.profileImg} alt="" />
+      <Image
+        src={userInfo.profileImg}
+        fallback={<Breathing className="userPreview__img" />}
+        NativeImgProps={{
+          className: "userPreview__img",
+        }}
+        fadeIn
+      />
 
       <p className="userPreview__name">{`${userInfo.firstname} ${userInfo.lastname} - ${userInfo.apartment}`}</p>
     </section>

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
+import { Breathing, Image } from "react-shimmer";
 
 import "./SpaceCard.css";
 
@@ -29,10 +30,11 @@ const SpaceCard: React.FC<SpaceCardProps> = ({
       className={big ? "spaceCard spaceCard--big" : "spaceCard"}
       onClick={handleCardClick}
     >
-      <img
-        className="spaceCard__img"
+      <Image
         src={`${process.env.PUBLIC_URL}${img}`}
-        alt=""
+        fallback={<Breathing className="spaceCard__img" />}
+        NativeImgProps={{ className: "spaceCard__img" }}
+        fadeIn
       />
 
       {big ? (

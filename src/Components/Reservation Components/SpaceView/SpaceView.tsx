@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useNavigate, useParams } from "react-router";
+import { Breathing, Image } from "react-shimmer";
 import { uploadBooking } from "../../../Firebase/firebaseApi";
 import { space } from "../../../Types/space";
 import Btn from "../../UI/Buttons/Btn";
@@ -271,10 +272,13 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
           <p>Reservas</p>
         </div>
 
-        <img
-          className="spaceView__header__img"
+        <Image
           src={`${process.env.PUBLIC_URL}${space!.img}`}
-          alt=""
+          fallback={<Breathing className="spaceView__header__img" />}
+          NativeImgProps={{
+            className: "spaceView__header__img",
+          }}
+          fadeIn
         />
         <div className="spaceView__header__content">
           <p>{space!.name}</p>

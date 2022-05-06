@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useNavigate } from "react-router";
+import { Breathing, Image } from "react-shimmer";
 
 import "./NewsCard.css";
 
@@ -19,7 +20,12 @@ const NewsCard: React.FC<NewsCardProps> = ({ title, img, content, id }) => {
 
   return (
     <section className="newsCard" onClick={handleCardClick}>
-      <img className="newsCard__img" src={img} alt="" />
+      <Image
+        src={img}
+        fallback={<Breathing className="newsCard__img" />}
+        NativeImgProps={{ className: "newsCard__img" }}
+        fadeIn
+      />
 
       <div className="newsCard__content">
         <p className="newsCard__content__title">{title}</p>

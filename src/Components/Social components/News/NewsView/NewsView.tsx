@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
+import { Breathing, Image } from "react-shimmer";
 import { AppState } from "../../../../Redux/Reducers";
 import { news } from "../../../../Types/news";
 import { goBack, lineBreak } from "../../../../Utils/GeneralFunctions";
@@ -11,7 +12,7 @@ interface NewsViewProps {}
 
 const NewsView: React.FC<NewsViewProps> = () => {
   const { id } = useParams();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const news: news | undefined = useSelector<AppState, news | undefined>(
     (state) => state.news.find((news) => news.id === id!)
@@ -27,7 +28,10 @@ const NewsView: React.FC<NewsViewProps> = () => {
   return (
     <article className="newsView">
       <div className="newsView__header">
-        <div className="newsView__header__titleTag" onClick={()=>goBack(navigate)}>
+        <div
+          className="newsView__header__titleTag"
+          onClick={() => goBack(navigate)}
+        >
           <img
             src={`${process.env.PUBLIC_URL}/Icons/ArrowLeft-white.svg`}
             alt=""
@@ -35,7 +39,14 @@ const NewsView: React.FC<NewsViewProps> = () => {
           <p>Noticias</p>
         </div>
 
-        <img className="newsView__header__img " src={news?.img} alt="" />
+        <Image
+          src={news!.img}
+          fallback={<Breathing className="newsView__header__img" />}
+          NativeImgProps={{
+            className: "newsView__header__img",
+          }}
+          fadeIn
+        />
         <div className="newsView__header__content">
           <p>{news?.title}</p>
         </div>

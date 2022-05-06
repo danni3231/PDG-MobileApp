@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { Breathing, Image } from "react-shimmer";
 import { logout } from "../../../Firebase/firebaseApi";
 import { AppState } from "../../../Redux/Reducers";
 import { useOnClickOutside } from "../../../Utils/GeneralFunctions";
@@ -36,10 +37,11 @@ const SideTab: React.FC<SideTabProps> = ({ action }) => {
         />
 
         <div className="sideTab__header__user" onClick={goToProfile}>
-          <img
+          <Image
             src={currentUser.profileImg}
-            alt=""
-            className="sideTab__header__user__img"
+            fallback={<Breathing className="sideTab__header__user__img" />}
+            NativeImgProps={{ className: "sideTab__header__user__img" }}
+            fadeIn
           />
           <div className="sideTab__header__user__info">
             <p className="sideTab__header__user__info__name">

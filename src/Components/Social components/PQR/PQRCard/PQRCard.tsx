@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useNavigate } from "react-router";
+import { Breathing, Image } from "react-shimmer";
 
 import "./PQRCard.css";
 
@@ -27,7 +28,14 @@ const PQRCard: React.FC<PQRCardProps> = ({ title, content, img, date, id }) => {
   if (img !== undefined) {
     return (
       <section className="pqrCard" onClick={() => viewPqr()}>
-        <img className="pqrCard__img" src={img} alt="" />
+        <Image
+          src={img}
+          fallback={<Breathing className="pqrCard__img" />}
+          NativeImgProps={{
+            className: "pqrCard__img",
+          }}
+          fadeIn
+        />
 
         <p className="pqrCard__title">{title}</p>
 

@@ -2,6 +2,7 @@ import { InputAdornment, TextField } from "@mui/material";
 import * as React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
+import { Breathing, Image } from "react-shimmer";
 import { createChat, uploadMessage } from "../../../../Firebase/firebaseApi";
 import { AppState } from "../../../../Redux/Reducers";
 import { chat } from "../../../../Types/chat";
@@ -70,10 +71,13 @@ const ChatView: React.FC<ChatViewProps> = () => {
     <article className="chatView">
       <Chip text="Chats" />
       <div className="chatView__userInfo">
-        <img
-          className="chatView__userInfo__photo"
-          src={userChat?.profileImg}
-          alt=""
+        <Image
+          src={userChat!.profileImg}
+          fallback={<Breathing className="chatView__userInfo__photo" />}
+          NativeImgProps={{
+            className: "chatView__userInfo__photo",
+          }}
+          fadeIn
         />
         <h1>{userChat?.firstname + " " + userChat?.lastname}</h1>
       </div>
