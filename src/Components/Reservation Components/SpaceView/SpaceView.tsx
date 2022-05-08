@@ -273,7 +273,7 @@ const SpaceView: React.FC<SpaceViewProps> = () => {
         </div>
 
         <Image
-          src={`${process.env.PUBLIC_URL}${space!.img}`}
+          src={space!.img}
           fallback={<Breathing className="spaceView__header__img" />}
           NativeImgProps={{
             className: "spaceView__header__img",

@@ -31,7 +31,7 @@ const SpaceCard: React.FC<SpaceCardProps> = ({
       onClick={handleCardClick}
     >
       <Image
-        src={`${process.env.PUBLIC_URL}${img}`}
+        src={img}
         fallback={<Breathing className="spaceCard__img" />}
         NativeImgProps={{ className: "spaceCard__img" }}
         fadeIn

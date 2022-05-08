@@ -1,8 +1,4 @@
-import {
-  LocalizationProvider,
-  MobileDatePicker,
-  MobileTimePicker,
-} from "@mui/lab";
+import { LocalizationProvider, MobileTimePicker } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import {
   FormControl,
@@ -11,9 +7,14 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { es } from "date-fns/locale";
 import * as React from "react";
+import { useDispatch } from "react-redux";
+import { createSpace } from "../../../Firebase/firebaseApi";
 import { space } from "../../../Types/space";
+import {
+  castCondominiumId,
+  getTimeStamp,
+} from "../../../Utils/GeneralFunctions";
 import Btn from "../../UI/Buttons/Btn";
 import Toast from "../../UI/Toast/Toast";
 
@@ -22,6 +23,8 @@ import "./CreateSpace.css";
 interface CreateSpaceProps {}
 
 const CreateSpace: React.FC<CreateSpaceProps> = ({}) => {
+  const dispatch = useDispatch();
+
   const inputFile = React.useRef<HTMLInputElement>(null);
   const imgPreview = React.useRef<HTMLImageElement>(null);
 
@@ -102,18 +105,25 @@ const CreateSpace: React.FC<CreateSpaceProps> = ({}) => {
         name: name,
         img: "",
         id: "",
-        occupation: 0, //occupation,
+        occupation: ~~occupation, //occupation,
         days: {
-          end: "",
-          start: "",
+          end: dayEnd,
+          start: dayStart,
         },
         schedule: {
-          end: 0,
-          start: 0,
+          end: getTimeStamp(hourEnd!!),
+          start: getTimeStamp(hourStart!!),
         },
       };
 
-      //createSpace()
+      createSpace(
+        newSpaces,
+        file!!,
+        castCondominiumId(condominium),
+        dispatch
+      ).then(() => {
+        setIsUploading(false);
+      });
     }
   };
 

@@ -22,6 +22,7 @@ import { AppState } from "../../../Redux/Reducers";
 import Toast from "../../UI/Toast/Toast";
 import { User } from "../../../Types/user";
 import { goBack } from "../../../Utils/GeneralFunctions";
+import { Breathing, Image } from "react-shimmer";
 
 interface SpaceViewEditProps {}
 
@@ -316,11 +317,15 @@ const SpaceViewEdit: React.FC<SpaceViewEditProps> = () => {
           <p>Reservas</p>
         </div>
 
-        <img
-          className="spaceViewEdit__header__img"
-          src={`${process.env.PUBLIC_URL}${space!.img}`}
-          alt=""
+        <Image
+          src={space!.img}
+          fallback={<Breathing className="spaceViewEdit__header__img" />}
+          NativeImgProps={{
+            className: "spaceViewEdit__header__img",
+          }}
+          fadeIn
         />
+
         <div className="spaceViewEdit__header__content">
           <p>{space!.name}</p>
         </div>
