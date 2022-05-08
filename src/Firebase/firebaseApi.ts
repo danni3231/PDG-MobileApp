@@ -108,7 +108,8 @@ export const getSpaces = async (condominiumId: string, dispatch: any) => {
 const visitsQuery = (condominiumId: string, userId: string) =>
   query(
     collection(db, visitorsCollectionRef(condominiumId)),
-    where("userId", "==", userId)
+    where("userId", "==", userId),
+    orderBy("date", "desc")
   );
 
 const getVisits = async (
@@ -177,7 +178,8 @@ export const uploadVisitor = async (
 const bookingQuery = (condominiumId: string, userId: string) =>
   query(
     collection(db, bookingsCollectionRef(condominiumId)),
-    where("userId", "==", userId)
+    where("userId", "==", userId),
+    orderBy("dateStart", "desc")
   );
 
 const getBookings = async (
@@ -511,7 +513,8 @@ export const uploadFile = async (
 const pqrQuery = (condominiumId: string, userId: string) =>
   query(
     collection(db, pqrsCollectionRef(condominiumId)),
-    where("userId", "==", userId)
+    where("userId", "==", userId),
+    orderBy("date", "desc")
   );
 
 const getPqrs = async (
