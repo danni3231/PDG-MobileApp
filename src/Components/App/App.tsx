@@ -26,6 +26,7 @@ import PQRView from "../Social components/PQR/PQRView/PQRView";
 import PQRForm from "../Social components/PQR/PQRForm/PQRForm";
 import ProfileView from "../User Manage Components/ProfileView/ProfileView";
 import CreateSpace from "../Admin Components/CreateSpace/CreateSpace";
+import CreateNews from "../Admin Components/CreateNews/CreateNews";
 
 function App() {
   const location = useLocation();
@@ -86,6 +87,7 @@ function App() {
 
           <Route path="Admin/createUser" element={<CreateUser />} />
           <Route path="Admin/createSpace" element={<CreateSpace />} />
+          <Route path="Admin/createNotice" element={<CreateNews />} />
         </Routes>
       </div>
     );

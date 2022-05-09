@@ -131,7 +131,7 @@ const CreateSpace: React.FC<CreateSpaceProps> = ({}) => {
     <article>
       {isUploading ? (
         <Toast
-          text="Subiendo la información del visitante, por favor espera"
+          text="Subiendo la información del espacio, por favor espera"
           type="success"
         />
       ) : (

@@ -50,7 +50,7 @@ export const appReducer = (
     case Actions.ADD_SPACE:
       return { ...state, spaces: [...state.spaces, action.payload] };
 
-    // Spaces actions
+    // bookings actions
     case Actions.ADD_BOOKINGS:
       return { ...state, bookings: [...state.bookings, action.payload] };
 
@@ -152,6 +152,9 @@ export const appReducer = (
     // news actions
     case Actions.SET_NEWS:
       return { ...state, news: action.payload };
+
+    case Actions.ADD_NEWS:
+      return { ...state, news: [...state.news, action.payload] };
 
     // chat actions
     case Actions.ADD_CHAT:

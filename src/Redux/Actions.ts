@@ -94,6 +94,11 @@ export const setNews = (news: news[]): Action => ({
   payload: news,
 });
 
+export const addNews = (news: news): Action => ({
+  type: "@news/addNews",
+  payload: news,
+});
+
 // * Chat actions
 
 export const addChat = (chat: chat): Action => ({
@@ -142,6 +147,7 @@ export const SET_USER_STATE = "@user/setUserState";
 export const UPDATE_CURRENT_USER = "@user/updateCurrentUser";
 
 export const SET_NEWS = "@news/setNews";
+export const ADD_NEWS = "@news/addNews";
 
 export const ADD_CHAT = "@chats/addChat";
 export const ADD_MESSAGE = "@chats/addMessage";

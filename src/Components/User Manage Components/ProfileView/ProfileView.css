@@ -1,7 +1,7 @@
 .profileView__img {
   align-self: center;
   width: 60%;
-  height: auto;
+  height: min-content;
   border-radius: 50%;
   border: 2px solid #7b61ff;
   aspect-ratio: 1/1;

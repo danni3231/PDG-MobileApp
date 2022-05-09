@@ -25,6 +25,7 @@ import {
   addBooking,
   addChat,
   addMessage,
+  addNews,
   addPqr,
   addSpace,
   addVisitor,
@@ -88,6 +89,9 @@ const userPhotoRef = (condominiumId: string, userId: string) =>
 
 const spaceRef = (condominiumId: string, name: string) =>
   ref(storage, `${condominiumId}/space/${name}`);
+
+const noticeRef = (condominiumId: string, name: string) =>
+  ref(storage, `${condominiumId}/notices/${name}`);
 
 export const getSpaces = async (condominiumId: string, dispatch: any) => {
   const snapshot = await getDocs(
@@ -611,6 +615,36 @@ export const createSpace = async (
         const updateSpace: space = { ...newSpace, id: docRef.id };
 
         await dispatch(addSpace(updateSpace));
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
+    });
+  });
+};
+
+export const createNews = async (
+  news: news,
+  file: File,
+  condominiumId: string,
+  dispatch: any
+) => {
+  await uploadBytes(noticeRef(condominiumId, news.title), file).then(() => {
+    getDownloadURL(noticeRef(condominiumId, news.title)).then(async (url) => {
+      const newNotice: news = { ...news, img: url };
+
+      try {
+        const docRef = await addDoc(
+          collection(db, noticesCollectionRef(condominiumId)),
+          newNotice
+        );
+
+        await updateDoc(docRef, {
+          id: docRef.id,
+        });
+
+        const updateNotice: news = { ...newNotice, id: docRef.id };
+
+        await dispatch(addNews(updateNotice));
       } catch (e) {
         console.error("Error adding document: ", e);
       }
