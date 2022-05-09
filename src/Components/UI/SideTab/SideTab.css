@@ -27,8 +27,10 @@
 
 .sideTab__header__user__img {
   width: 48px;
-  width: 48px;
-  aspect-ratio: auto 1 / 1;
+  height: fit-content;
+  aspect-ratio: 1/1;
+  max-width: 48px;
+  max-height: 48px;
   object-fit: cover;
   border-radius: 50%;
 }
