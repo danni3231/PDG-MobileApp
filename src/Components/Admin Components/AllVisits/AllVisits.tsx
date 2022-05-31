@@ -16,8 +16,8 @@ const AllVisits: React.FC<AllVisitsProps> = ({}) => {
 
   return (
     <article>
-      <Chip text="Reservas" />
-      <h1>Reservas de zonas</h1>
+      <Chip text="Visitas" />
+      <h1>Visitas</h1>
       <section className="scroll scroll--h">
         <div className="scroll__column bookingList">
           {AllVisits.length === 0 ? (
@@ -27,7 +27,7 @@ const AllVisits: React.FC<AllVisitsProps> = ({}) => {
                 alignSelf: "center",
               }}
             >
-              Aún no se ha reservado ninguna zona común.
+              Aún no se ha agendado ninguna visita.
             </p>
           ) : (
             AllVisits.map((visitor, i) => {
