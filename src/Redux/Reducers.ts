@@ -17,6 +17,9 @@ export interface AppState {
   news: news[];
   chats: chat[];
   pqrs: pqr[];
+  allBookings: booking[];
+  allpqrs: pqr[];
+  allVisits: visitor[];
 }
 
 const initState = {
@@ -36,6 +39,9 @@ const initState = {
   news: [],
   chats: [],
   pqrs: [],
+  allBookings: [],
+  allpqrs: [],
+  allVisits: [],
 };
 
 export const appReducer = (
@@ -181,6 +187,15 @@ export const appReducer = (
 
     case Actions.ADD_PQR:
       return { ...state, pqrs: [...state.pqrs, action.payload] };
+
+    case Actions.SET_ALL_BOOKINGS:
+      return { ...state, allBookings: action.payload };
+
+    case Actions.SET_ALL_PQRS:
+      return { ...state, allpqrs: action.payload };
+
+    case Actions.SET_ALL_VISITS:
+      return { ...state, allVisits: action.payload };
 
     default:
       return state;

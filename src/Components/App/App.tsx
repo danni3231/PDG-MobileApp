@@ -27,6 +27,9 @@ import PQRForm from "../Social components/PQR/PQRForm/PQRForm";
 import ProfileView from "../User Manage Components/ProfileView/ProfileView";
 import CreateSpace from "../Admin Components/CreateSpace/CreateSpace";
 import CreateNews from "../Admin Components/CreateNews/CreateNews";
+import AllReservations from "../Admin Components/AllReservations/AllReservations";
+import AllPqr from "../Admin Components/AllPqr/AllPqr";
+import AllVisits from "../Admin Components/AllVisits/AllVisits";
 
 function App() {
   const location = useLocation();
@@ -88,6 +91,10 @@ function App() {
           <Route path="Admin/createUser" element={<CreateUser />} />
           <Route path="Admin/createSpace" element={<CreateSpace />} />
           <Route path="Admin/createNotice" element={<CreateNews />} />
+          <Route path="Admin/AllReservations" element={<AllReservations />} />
+
+          <Route path="Admin/AllPqr" element={<AllPqr />} />
+          <Route path="Admin/AllVisits" element={<AllVisits />} />
         </Routes>
       </div>
     );

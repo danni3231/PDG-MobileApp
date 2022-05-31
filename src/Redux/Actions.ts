@@ -128,6 +128,27 @@ export const setPqrs = (Pqrs: pqr[]): Action => ({
   payload: Pqrs,
 });
 
+// * admin action
+
+export const setAllBookings = (bookings: booking[]): Action => ({
+  type: "@admin/setAllBookings",
+  payload: bookings,
+});
+
+export const setAllVisits = (visits: visitor[]): Action => ({
+  type: "@admin/setAllVisits",
+  payload: visits,
+});
+
+export const setAllPqrs = (pqrs: pqr[]): Action => ({
+  type: "@admin/setAllPqrs",
+  payload: pqrs,
+});
+
+export const SET_ALL_PQRS = "@admin/setAllPqrs";
+export const SET_ALL_BOOKINGS = "@admin/setAllBookings";
+export const SET_ALL_VISITS = "@admin/setAllVisits";
+
 export const SET_SPACES = "@spaces/setSpaces";
 export const ADD_SPACE = "@spaces/addSpace";
 

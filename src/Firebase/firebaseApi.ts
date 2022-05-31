@@ -34,6 +34,9 @@ import {
   editBooking,
   editVisit,
   removeChats,
+  setAllBookings,
+  setAllPqrs,
+  setAllVisits,
   setBookings,
   setNews,
   setPqrs,
@@ -390,6 +393,12 @@ export const validateUserState = (
 
       listenChats(userData.id, dispatch);
 
+      if (userData.apartment === "Administrador") {
+        getAllBookings(userData.condominiumId, dispatch);
+        getAllPqr(userData.condominiumId, dispatch);
+        getAllVisits(userData.condominiumId, dispatch);
+      }
+
       if (location === "/" || location === "/Registro") {
         navigate("/Inicio");
       }
@@ -650,4 +659,46 @@ export const createNews = async (
       }
     });
   });
+};
+
+const getAllBookings = async (condominiumId: string, dispatch: any) => {
+  const snapshot = await getDocs(
+    collection(db, bookingsCollectionRef(condominiumId))
+  );
+
+  const allBookings: booking[] = [];
+
+  snapshot.forEach((booking: any) => {
+    allBookings.push({ ...booking.data() });
+  });
+
+  dispatch(setAllBookings(allBookings));
+};
+
+const getAllVisits = async (condominiumId: string, dispatch: any) => {
+  const snapshot = await getDocs(
+    collection(db, visitorsCollectionRef(condominiumId))
+  );
+
+  const allVisits: visitor[] = [];
+
+  snapshot.forEach((v: any) => {
+    allVisits.push({ ...v.data() });
+  });
+
+  dispatch(setAllVisits(allVisits));
+};
+
+const getAllPqr = async (condominiumId: string, dispatch: any) => {
+  const snapshot = await getDocs(
+    collection(db, pqrsCollectionRef(condominiumId))
+  );
+
+  const allPqrs: pqr[] = [];
+
+  snapshot.forEach((p: any) => {
+    allPqrs.push({ ...p.data() });
+  });
+
+  dispatch(setAllPqrs(allPqrs));
 };
