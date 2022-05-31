@@ -16,8 +16,8 @@ const AllPqr: React.FC<AllPqrProps> = ({}) => {
 
   return (
     <article>
-      <Chip text="Reservas" />
-      <h1>Reservas de zonas</h1>
+      <Chip text="PQRS" />
+      <h1>PQRS</h1>
       <section className="scroll scroll--h">
         <div className="scroll__column bookingList">
           {AllPqrs.length === 0 ? (
@@ -27,7 +27,7 @@ const AllPqr: React.FC<AllPqrProps> = ({}) => {
                 alignSelf: "center",
               }}
             >
-              Aún no se ha reservado ninguna zona común.
+              Aún no se ha hecho ningun PQRS.
             </p>
           ) : (
             AllPqrs.map((pqr, i) => {
