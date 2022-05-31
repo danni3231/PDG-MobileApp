@@ -58,7 +58,8 @@ const VisitFormEdit: React.FC<VisitFormEditProps> = () => {
       const visitor: visitor = {
         id: visit.id,
         userId: currentUser.id,
-        name: `${name} ${surname}`,
+        name: name,
+        lastname: surname,
         date: dateParse,
         ccType: idType,
         cc: ~~idVisitor,
@@ -77,6 +78,7 @@ const VisitFormEdit: React.FC<VisitFormEditProps> = () => {
       id: "",
       userId: "",
       name: "",
+      lastname: "",
       date: 0,
       ccType: "",
       cc: 0,

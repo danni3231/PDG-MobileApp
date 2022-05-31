@@ -25,6 +25,8 @@ const ChatList: React.FC<ChatListProps> = ({}) => {
     (state) => state.chats
   );
 
+  console.log(chats);
+
   const chatsPreviews: chatPreview[] = [];
 
   chats.forEach((chat) => {

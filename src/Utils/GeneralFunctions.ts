@@ -62,6 +62,9 @@ export const castCondominiumId = (condominium: string) => {
     case "Boho U Living":
       return "kPDi38bfklEI4P9MWRMS";
 
+    case "Conjunto ICESI":
+      return "w8FVHhZx55FS5OszCPrA";
+
     default:
       return "";
   }

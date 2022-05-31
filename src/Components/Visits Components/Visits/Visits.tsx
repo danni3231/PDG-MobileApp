@@ -47,7 +47,7 @@ const Visits: React.FC<VisitsProps> = ({}) => {
                 <VisitCard
                   key={i}
                   id={visitor.id}
-                  name={visitor.name}
+                  name={`${visitor.name} ${visitor.lastname}`}
                   typeId={visitor.ccType}
                   visitorId={visitor.cc}
                   date={visitor.date}

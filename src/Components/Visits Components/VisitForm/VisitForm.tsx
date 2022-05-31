@@ -55,7 +55,8 @@ const VisitForm: React.FC<VisitFormProps> = () => {
       const visitor: visitor = {
         id: "",
         userId: currentUser.id,
-        name: `${name} ${surname}`,
+        name: name,
+        lastname: surname,
         date: dateParse,
         ccType: idType,
         cc: ~~id,

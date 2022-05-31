@@ -104,59 +104,62 @@ const Register: React.FC<RegisterProps> = ({}) => {
       </section>
 
       <section className="register__form__container">
-        <h1 className="purple">Registrarse</h1>
-        <section className="register__form">
-          <TextField
-            label="Correo electrónico"
-            onChange={(event) => {
-              setEmail(event.target.value);
-            }}
-          />
-
-          <TextField
-            label="Número de documento"
-            type="number"
-            onChange={(event) => {
-              setId(event.target.value);
-            }}
-          />
-
-          <TextField
-            label="Contraseña"
-            type="password"
-            onChange={(event) => {
-              setPassword(event.target.value);
-            }}
-          />
-
-          <FormControl>
-            <InputLabel id="selectC-label">Selecciona tu conjunto</InputLabel>
-            <Select
-              value={condominium}
-              labelId="selectC-label"
-              id="selectC"
-              //displayEmpty
-              //renderValue={(v) => (v !== "" ? v : "Selecciona tu conjunto")}
+        <div className="register__form__scroll__view">
+          <h1 className="purple">Registrarse</h1>
+          <section className="register__form">
+            <TextField
+              label="Correo electrónico"
               onChange={(event) => {
-                setCondominium(event.target.value);
+                setEmail(event.target.value);
               }}
-            >
-              <MenuItem value={"Guadalupe Alto"}>Guadalupe Alto</MenuItem>
-              <MenuItem value={"El Coral"}>El Coral</MenuItem>
-              <MenuItem value={"Boho U Living"}>Boho U Living</MenuItem>
-            </Select>
-          </FormControl>
+            />
 
-          <Btn
-            text="Registrarse"
-            variant=""
-            margin="18px"
-            action={handleSubmit()}
-          />
-        </section>
-        <p className="purple" onClick={() => navigate("/")}>
-          ¿Ya tienes una cuenta? <b>Inicia sesión</b>
-        </p>
+            <TextField
+              label="Número de documento"
+              type="number"
+              onChange={(event) => {
+                setId(event.target.value);
+              }}
+            />
+
+            <TextField
+              label="Contraseña"
+              type="password"
+              onChange={(event) => {
+                setPassword(event.target.value);
+              }}
+            />
+
+            <FormControl>
+              <InputLabel id="selectC-label">Selecciona tu conjunto</InputLabel>
+              <Select
+                value={condominium}
+                labelId="selectC-label"
+                id="selectC"
+                //displayEmpty
+                //renderValue={(v) => (v !== "" ? v : "Selecciona tu conjunto")}
+                onChange={(event) => {
+                  setCondominium(event.target.value);
+                }}
+              >
+                <MenuItem value={"Conjunto ICESI"}>Conjunto ICESI</MenuItem>
+                <MenuItem value={"Guadalupe Alto"}>Guadalupe Alto</MenuItem>
+                <MenuItem value={"El Coral"}>El Coral</MenuItem>
+                <MenuItem value={"Boho U Living"}>Boho U Living</MenuItem>
+              </Select>
+            </FormControl>
+
+            <Btn
+              text="Registrarse"
+              variant=""
+              margin="18px"
+              action={handleSubmit()}
+            />
+          </section>
+          <p className="purple" onClick={() => navigate("/")}>
+            ¿Ya tienes una cuenta? <b>Inicia sesión</b>
+          </p>
+        </div>
       </section>
     </article>
   );

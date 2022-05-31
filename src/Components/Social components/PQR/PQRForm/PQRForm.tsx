@@ -9,6 +9,7 @@ import {
 import { AppState } from "../../../../Redux/Reducers";
 import { pqr } from "../../../../Types/pqr";
 import { getTimeStamp } from "../../../../Utils/GeneralFunctions";
+import { useNavigate } from "react-router";
 import Btn from "../../../UI/Buttons/Btn";
 import Chip from "../../../UI/Chip/Chip";
 import Toast from "../../../UI/Toast/Toast";
@@ -19,6 +20,7 @@ interface PQRFormProps {}
 
 const PQRForm: React.FC<PQRFormProps> = ({}) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const inputFile = React.useRef<HTMLInputElement>(null);
   const imgPreview = React.useRef<HTMLImageElement>(null);
@@ -80,6 +82,7 @@ const PQRForm: React.FC<PQRFormProps> = ({}) => {
       if (file === undefined || file === null) {
         uploadPqr(pqr, currentUser.condominiumId, dispatch).then(() => {
           setIsUploading(false);
+          navigate("/Social");
         });
       } else {
         uploadPqrWithImage(
@@ -89,6 +92,7 @@ const PQRForm: React.FC<PQRFormProps> = ({}) => {
           dispatch
         ).then(() => {
           setIsUploading(false);
+          navigate("/Social");
         });
       }
     }

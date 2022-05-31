@@ -28,8 +28,8 @@ const Home: React.FC<HomeProps> = () => {
       <Header />
 
       <h1>
-        Hola Sr. {`${currentUser.firstname} ${currentUser.lastname}`}, <br />
-        ¿qué quiere hacer hoy?
+        Hola {`${currentUser.firstname} ${currentUser.lastname}`}, <br />
+        ¿Qué quieres hacer hoy?
       </h1>
 
       <div className="scroll scroll--h">

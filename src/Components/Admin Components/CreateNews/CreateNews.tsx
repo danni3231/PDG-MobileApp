@@ -145,6 +145,7 @@ const CreateNews: React.FC<CreateNewsProps> = ({}) => {
                 setCondominium(event.target.value);
               }}
             >
+              <MenuItem value={"Conjunto ICESI"}>Conjunto ICESI</MenuItem>
               <MenuItem value={"Guadalupe Alto"}>Guadalupe Alto</MenuItem>
               <MenuItem value={"El Coral"}>El Coral</MenuItem>
               <MenuItem value={"Boho U Living"}>Boho U Living</MenuItem>
